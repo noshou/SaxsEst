@@ -30,7 +30,6 @@ let load_xyz (fp : string) : Owl_dataframe.t =
                 let y_coord = Owl_dataframe.pack_float (float_of_string (Str.matched_group 3 row)) in
                 let z_coord = Owl_dataframe.pack_float (float_of_string (Str.matched_group 4 row)) in
                 let row = [|atom_nm;x_coord;y_coord;z_coord|] in
-
                 (* append to df *)
                 Owl_dataframe.append_row df row
 

@@ -3,7 +3,7 @@ exception Invalid_element of string
 
 
 (* loads a hashtable of f1/f2 factors  *)
-let lookup = from_file "124128eV_f1_f2.json"
+let lookup = from_file "data/anomolous_scattering_factors/124128eV_f1_f2.json"
 
 (* f1 and f2 values at 12.4128 keV *)
 let get_f1_f2 (elm : string) : float * float = 

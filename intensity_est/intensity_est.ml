@@ -1,0 +1,1 @@
+let classic = Classic.classic

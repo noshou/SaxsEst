@@ -1,7 +1,5 @@
-
-
-(* load df *)
-let df = Owl_dataframe.of_csv ~sep:',' "f0.csv"
+(* load hashtable *)
+let df = Owl_dataframe.of_csv ~sep:',' "data/regular_scattering_factor/f0.csv"
 
 (** gets f0 given a Q value, where:
 f_0(Q) = ∑a_i*e^(-b_i * (Q)^2) + c,
@@ -22,7 +20,6 @@ let get_f0 (q : float) (elm : string) : float =
     (* q * 100 must be even *)
     if (int_of_float (Float.round (q *. 100.)) mod 2) <> 0 then 
         raise (Invalid_argument "Q must be in increments of 0.02!") ;
-
 
     (* q = 0.02 * row# -> row# = floor (q/0.02) *)
     let row = int_of_float (floor (q /. 0.02)) in
@@ -54,5 +51,4 @@ let get_f0 (q : float) (elm : string) : float =
     in 
 
     (* fetch value at df[row;col] *)
-
     Owl_dataframe.unpack_float (Owl_dataframe.get df row col)

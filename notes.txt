@@ -46,6 +46,9 @@
         REMARK   1 CONSTITUTE MEDICAL OR OTHER PROFESSIONAL ADVICE. IT IS AVAILABLE FOR
         REMARK   1 ACADEMIC AND COMMERCIAL PURPOSES, UNDER CC-BY 4.0 LICENCE.
 -> saxs beamline @ CLS operates in 5-24 keV; choose whichever has best coverage in data within that range
--> Cromer Coefficients only valid from 0 -> 2 A⁻¹ (ATOMIC SCATRERING FACTORS AT HIGH ANGLES )Ç
+-> Cromer Coefficients only valid from 0 -> 2 A⁻¹ (ATOMIC SCATRERING FACTORS AT HIGH ANGLES )
 2025-10-11
 -> switched to perlecan from Alphafold prediction0
+2025-11-12
+-> classic algo time complexity is O(m + n²) where m = number of "q" values, and n is the total number of atoms
+-> this comes from our algo: 
