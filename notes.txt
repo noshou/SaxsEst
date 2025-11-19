@@ -8,47 +8,19 @@
 	all E_ev factors are rounded to nearest thousandth instead of ten-thousandth
 
 2025-11-10
--> Sourcing for XYZ file (converted from PDB file using OpenBable):
 
-        TITLE     ALPHAFOLD MONOMER V2.0 PREDICTION FOR TITIN HOMOLOG (G4SLH0-9)
-        COMPND    MOL_ID: 1;
-        COMPND   2 MOLECULE: TITIN HOMOLOG;
-        COMPND   3 CHAIN: A
-        SOURCE    MOL_ID: 1;
-        SOURCE   2 ORGANISM_SCIENTIFIC: CAENORHABDITIS ELEGANS;
-        SOURCE   3 ORGANISM_TAXID: 6239
-        REMARK   1
-        REMARK   1 REFERENCE 1
-        REMARK   1  AUTH   JOHN JUMPER, RICHARD EVANS, ALEXANDER PRITZEL, TIM GREEN,
-        REMARK   1  AUTH 2 MICHAEL FIGURNOV, OLAF RONNEBERGER, KATHRYN TUNYASUVUNAKOOL,
-        REMARK   1  AUTH 3 RUSS BATES, AUGUSTIN ZIDEK, ANNA POTAPENKO, ALEX BRIDGLAND,
-        REMARK   1  AUTH 4 CLEMENS MEYER, SIMON A A KOHL, ANDREW J BALLARD,
-        REMARK   1  AUTH 5 ANDREW COWIE, BERNARDINO ROMERA-PAREDES, STANISLAV NIKOLOV,
-        REMARK   1  AUTH 6 RISHUB JAIN, JONAS ADLER, TREVOR BACK, STIG PETERSEN,
-        REMARK   1  AUTH 7 DAVID REIMAN, ELLEN CLANCY, MICHAL ZIELINSKI,
-        REMARK   1  AUTH 8 MARTIN STEINEGGER, MICHALINA PACHOLSKA, TAMAS BERGHAMMER,
-        REMARK   1  AUTH 9 DAVID SILVER, ORIOL VINYALS, ANDREW W SENIOR,
-        REMARK   1  AUTH10 KORAY KAVUKCUOGLU, PUSHMEET KOHLI, DEMIS HASSABIS
-        REMARK   1  TITL   HIGHLY ACCURATE PROTEIN STRUCTURE PREDICTION WITH ALPHAFOLD
-        REMARK   1  REF    NATURE                        V. 596   583 2021
-        REMARK   1  REFN                   ISSN 0028-0836
-        REMARK   1  PMID   34265844
-        REMARK   1  DOI    10.1038/s41586-021-03819-2
-        REMARK   1
-        REMARK   1 DISCLAIMERS
-        REMARK   1 ALPHAFOLD DATA, COPYRIGHT (2021) DEEPMIND TECHNOLOGIES LIMITED. THE
-        REMARK   1 INFORMATION PROVIDED IS THEORETICAL MODELLING ONLY AND CAUTION SHOULD
-        REMARK   1 BE EXERCISED IN ITS USE. IT IS PROVIDED "AS-IS" WITHOUT ANY WARRANTY
-        REMARK   1 OF ANY KIND, WHETHER EXPRESSED OR IMPLIED. NO WARRANTY IS GIVEN THAT
-        REMARK   1 USE OF THE INFORMATION SHALL NOT INFRINGE THE RIGHTS OF ANY THIRD
-        REMARK   1 PARTY. THE INFORMATION IS NOT INTENDED TO BE A SUBSTITUTE FOR
-        REMARK   1 PROFESSIONAL MEDICAL ADVICE, DIAGNOSIS, OR TREATMENT, AND DOES NOT
-        REMARK   1 CONSTITUTE MEDICAL OR OTHER PROFESSIONAL ADVICE. IT IS AVAILABLE FOR
-        REMARK   1 ACADEMIC AND COMMERCIAL PURPOSES, UNDER CC-BY 4.0 LICENCE.
 -> saxs beamline @ CLS operates in 5-24 keV; choose whichever has best coverage in data within that range
 -> Cromer Coefficients only valid from 0 -> 2 A⁻¹ (ATOMIC SCATRERING FACTORS AT HIGH ANGLES )
+
 2025-10-11
--> switched to perlecan from Alphafold prediction0
+-> switched to perlecan from Alphafold prediction
+
 2025-11-12
--> classic algo time complexity is O(m + n²) where m = number of "q" values, and n is the total number of atoms
--> this comes from our algo: 
+-> classic algo time complexity is O(mn²) where m = number of "q" values, and n is the total number of atoms
+
+2025-11-20
+-> testing w/ wide range of proteins
+-> anon. factors are only for ground state and very spotty
+in coverage, so limited to ground state only on already
+limited amount of metals
+

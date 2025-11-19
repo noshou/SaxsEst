@@ -1,136 +1,130 @@
-open Load_xyz
-open Form_fact
+open Atom
 
-(** Calculates the scattering intensity [I(Q)] using the Debye scattering formula
-    sweep over [Q] values from [0.0] to [0.5] Å⁻¹:
-    
-    {[I(Q) = ∑ᵢ∑ⱼ fᵢ fⱼ* sin(Q |rᵢ - rⱼ|) / (Q |rᵢ - rⱼ|)]}
-    - [fᵢ] — form factor of atom [i]  
-    - [fⱼ*] — complex conjugate of the form factor of atom [j]  
-    - [rᵢ], [rⱼ] — positions of atoms [i] and [j], respectively  
-    - [Q] — scattering vector (in inverse ångströms)
-    @param xyz_file  Path to the input XYZ file containing atomic coordinates.  
-    @return A tuple consisting of:
-        - an Owl data frame containing [Q] vs [I(Q)]
-        - the elapsed execution (ns) *)
-let classic (fp: string) : Owl_dataframe.t * float = 
-    
-    (* load xyz data *)
-    let df_coords = load_xyz fp |> Owl_dataframe.to_rows in 
+(** Calculates the scattering intensity [I(Q)] using the Debye scattering approximation
+		over [[0.0, 0.5]] :
+{[I(Q) = ∑ᵢ∑ⱼ fᵢ fⱼ* sinc(Q ·||rᵢ - rⱼ||)]}
+
+Where:
+		- [fᵢ] — form factor of atom [i]  
+		- [fⱼ*] — complex conjugate of the form factor of atom [j]  
+		- [rᵢ], [rⱼ] — positions of atoms [i] and [j], respectively  
+		- [Q] — scattering vector (in Å⁻¹)
+		- {[
+				sinc(x) =
+					if x == 0 then
+						1
+					if x != 0 then
+						(sin x) / x 
+			]}
+
+The time complexity of the algorithm is [O(m·n²)] where [m] is 
+the number of [Q] values iterated over, and [n] is the number of atoms 
+in the xyz file.
+
+@param xyz_file  Path to the input XYZ file containing atomic coordinates.  
+@param tol optional precision; default is [1e-10]
+@param run optional stem of csv file; default is ["classic"] (WILL OVERWRITE EXISTING FILES!)
+@param clk optional output of timing as [<run>_timing.txt]; default is [false] (WILL OVERWRITE EXISTING FILES!)
+@return the time it took to run (nanoseconds)*)
+let classic fp ?(tol = 1e-10) ?(run = "classic") ?(clk = false) () : Int64.t = 
 	
-	  (* this is the normalization constant; makes I(Q) be in range [0,1] *)
-	  let normalize = (float_of_int (Array.length df_coords) *. float_of_int (Array.length df_coords)) in 
-
-    (* create empty dataframe for I(Q) values *)
-    let df_scatts = Owl_dataframe.make [|"Q"; "I_Q"|] in 
-
-    (* Q (Å⁻¹) iterate from 0.02 -> 0.5 in increments of 0.02 *)
-    let qa = ref 0.02 in 
+	(* returns sinc(x) = sin(x)/x, x!=0; 1 x == 0 *)
+	let sinc x =
+		if (Float.abs x) <= tol then 1.
+		else sin(x) /. x
+	in 
+	
+	(* load xyz file *)
+	let atoms = load_xyz fp in 
     
-    (* ref for total time spent on calculations *)
-    let tt = ref (Int64.of_float 0.) in 
+	(* this is the normalization constant (will be used to divide I(Q) by) *)
+	let normalize = float_of_int(List.length atoms) *. float_of_int(List.length atoms) in
 
-    (* increment for number of steps (25) *)
-    let ii = ref 0 in 
+	(* Q (Å⁻¹) iterate from 0.00 -> 0.5 in increments of 0.02 *)
+	let qa = ref 0. in 
+
+	(* containers for eventual writing to csv file;
+	must be strings so we can use Csv module *)
+	let csv_list  : string list list ref = ref [["q_inverse_angstrom"; "intensity"]] in
+
     
-	while !ii < 25 do 
-        
-        (* current I(Q) value *)
-        let qi = ref 0. in 
+	(* NOTE: hard coded at 0.5 for now (25 steps) *)
+	let steps = int_of_float (0.5 /. 0.02) in
+	let itr = ref 0 in 
+	let start_time = Mtime_clock.now () in 
 
-        (* calculate pairwise summation *)
-        Array.iter ( fun i -> 
-            
-            (* atom i *)
-            let i_e = i.(0) |> Owl_dataframe.unpack_string |> String.lowercase_ascii in
-            let i_x = i.(1) |> Owl_dataframe.unpack_float in
-            let i_y = i.(2) |> Owl_dataframe.unpack_float in
-            let i_z = i.(3) |> Owl_dataframe.unpack_float in
-            let i_f = form_fact !qa i_e in 
-            let i_r = [|i_x;i_y;i_z|] in 
-            
-            Array.iter( fun j -> 
-            
-                (* atom j *)
-                let j_e = j.(0) |> Owl_dataframe.unpack_string |> String.lowercase_ascii in
-                let j_x = j.(1) |> Owl_dataframe.unpack_float in
-                let j_y = j.(2) |> Owl_dataframe.unpack_float in 
-                let j_z = j.(3) |> Owl_dataframe.unpack_float in
-                let j_f = form_fact !qa j_e in  
-                let j_r = [|j_x;j_y;j_z|] in
-                
-                (* start timer *)
-                let start_time_1 = Mtime_clock.now () in 
-                
-                (* calculate |rᵢ - rⱼ| *)
-                let dist = sqrt (
-                    (i_r.(0) -. j_r.(0))**2.
-                    +. (i_r.(1)-.j_r.(1))**2. 
-                    +. (i_r.(2)-.j_r.(2)) **2.)
-                in 
-                
-                (* stop timer; calculate span and add to time spent *)
-                let end_time_1 = Mtime_clock.now () in 
-                let span1 = Mtime.span start_time_1 end_time_1 in
-
-                (* if |r_i - r_j| == 0, limit(x->0) of sin(x)/x = 1. Since we cannot divide by zero,
-				        we set sin(x)/x = 1 and our term becomes f_i * conjugate(f_i) *)
-                let contribution = 
-                    if Float.abs dist < 1e-12 then
-                        let start_time_2 = Mtime_clock.now () in
-                        let intensity = (Complex.mul i_f (Complex.conj i_f)).re in 
-                        let end_time_2 = Mtime_clock.now () in
-                        (intensity, Mtime.span start_time_2 end_time_2)
-                    else 
-                        let start_time_2 = Mtime_clock.now () in
-
-                        (* calculate Q * |r_i - r_j| *)
-                        let q_dist = !qa *. dist in 
-                        
-                        (* calculate  Q*|r_i-r_j*)
-                        let sin_q_dist = (sin q_dist) /. q_dist in
-
-                        (* calculate i_f * (conjugate(j_f)) 
-                        turns out because of weird symmetry we can 
-                        ignore the complex part (since the summation over
-                        all pairs is real) *)
-                        let facts = (Complex.mul i_f (Complex.conj j_f)).re in 
-
-                        (* calculate contribution *)
-                        let intensity = facts *. sin_q_dist in
-                        let end_time_2 = Mtime_clock.now() in 
-                        (intensity, Mtime.span start_time_2 end_time_2)
-                in 
-                
-                (* unpack tuple *)
-                let (intensity, span2) = contribution in 
-
-                (* add to qi *)
-                let start_time_3 = Mtime_clock.now () in 				
-                qi := !qi +. intensity;
-                let end_time_3 = Mtime_clock.now () in 
-                let span3 = Mtime.span start_time_3 end_time_3 in 
-
-                (* sum spans, add to tracker of total time spent *)
-                let duration = Mtime.Span.add (Mtime.Span.add span1 span2) span3 in
-                tt := Int64.add !tt (Mtime.Span.to_uint64_ns duration);
-            
-            ) df_coords
-        ) df_coords; 
+	while !itr <= steps do 
 		
-		(*We have to pack qa and qi into an Owl_dataframe.elts array 
-		which can then be passed a row to the dataframe. Before we do this we must 
-		normalize the intensity*)		
-		let q = Owl_dataframe.pack_float !qa in
-		let i = !qi /. normalize |> Owl_dataframe.pack_float  in 
-        Owl_dataframe.append_row df_scatts [|q;i|];
-                
-        (* Print progress *)
-        Printf.printf "Q = %f, I(Q) = %f\n%!" !qa !qi; 
+		(* current I(Q) value *)
+		let qi = ref 0. in 
         
-        (* increment qa *)
-        qa := !qa +. 0.02;
-		ii := !ii + 1
-    done;
-    
-    (df_scatts, Int64.to_float !tt)
+		(* calculate pairwise summation *)
+		List.iter (fun atom_i ->  
+			List.iter (fun atom_j ->
+				
+				(* unpack atoms *)
+				let i_ff = form_factor atom_i !qa in 
+				let j_ff = form_factor atom_j !qa in 
+				let i_pt = xyz atom_i in 
+				let j_pt = xyz atom_j in 
+				(* calculate distance *)
+				let dist = sqrt (
+					(i_pt.x -. j_pt.x) ** 2. 
+					+. (i_pt.y -. j_pt.y) ** 2. 
+					+. (i_pt.z -. j_pt.z) ** 2.)
+				in 
+				
+				(* calculate radial contribution = sinc(Q * |r_i - r_j|) *)
+				let radial = sinc (!qa *. dist) in 
+				
+				(* calculate i_f * (conjugate(j_f)) 
+				turns out because of weird symmetry we can 
+				ignore the complex part (since the summation over
+				all pairs is real) *)
+				let facts = (Complex.mul i_ff (Complex.conj j_ff)).re in 
+				
+				(* add to qi *)
+				qi := !qi +. ((facts *. radial) /. normalize)
+			) atoms 
+		) atoms;
+		
+		(* create new row (I vs I(Q)) and preprend (not append due to time complexity) *)
+		let row = [string_of_float !qa; string_of_float !qi] in 
+		csv_list := row :: !csv_list;
+		
+		(* increment Q and iteration counter *)
+		qa := !qa +. 0.02;
+		itr := !itr + 1
+	done;
+	(* log time *)
+	let end_time = Mtime_clock.now () in 
+	let duration = (
+		Mtime.Span.to_uint64_ns (
+			Mtime.span start_time end_time
+			)
+		) 
+	in 
+
+	(* stdout *)
+  Printf.printf   "\n";
+	Printf.printf 	"RUN:           %s\n" run;
+	Printf.printf   "ALGORITHM:     DEBEYE-CLASSIC\n";
+	Printf.printf   "DURATION (ns): %f\n" (Int64.to_float(duration));
+  Printf.printf   "\n";
+	
+	if clk then begin
+		let line1 = Printf.sprintf "RUN:           %s\n" run in
+		let line2 = Printf.sprintf "ALGORITHM:     DEBEYE-CLASSIC\n" in 
+		let line3 = Printf.sprintf "DURATION (ns): %f\n" (Int64.to_float duration) in
+		let lines = line1 ^ line2 ^ line3 in
+		let f = run ^ "_timing.txt" in 
+		let oc = Out_channel.open_text f in 
+		Out_channel.output_string oc lines;
+		Out_channel.close oc
+    end;
+
+	(* save to csv file (note: must reverse csv list!) *)
+	Csv.save (run ^ ".csv") (List.rev !csv_list);
+
+  (* return duration *)
+  duration

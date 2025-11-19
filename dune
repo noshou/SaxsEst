@@ -1,6 +1,6 @@
 (executable
  (name main)
  (public_name main)
- (libraries owl-base intensity_est))
+ (libraries intensity_est))
 
 (data_only_dirs data)

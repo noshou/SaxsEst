@@ -1,12 +1,6 @@
-(* represents an <x,y,z> coordinate *)
-type point = {x: float; y: float; z: float}
+(* 
 
-(* wrapper for list *)
-type points = 
-    | Empty
-    | Points of point list 
-
-(* recursively defined kd tree (either empty, or a node w/ subtree) *)
+(* recursively defined kd tree (either empty, or a node w/ subtree)*)
 type kdtree = 
     | Empty
     | Node of node
@@ -22,4 +16,4 @@ and node = {
     dt: point;
     dm: int 
 }
-
+ *)
