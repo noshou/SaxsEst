@@ -1,3 +1,70 @@
+# SDKMan!
+.sdkmanrc
+
+## OS-SPECIFIC ##
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## EDITOR / OFFICE FILES ##
+.idea
+# Ignore lock and swap/backup files (LibreOffice, Kate, Vim, etc.)
+*.~lock*
+*.kate-swp
+*.swp
+*.swo
+*~
+.#*
+
+# Ignore temporary backup files (LibreOffice autosaves, crash recovery)
+*.bak
+*.tmp
+*.temp
+*.autosave
+
+# Temporary files
+~$*.doc*
+~$*.xls*
+~$*.ppt*
+
+# AutoRecover files
+*.asd
+*.wbk
+*.xar
+
+# Excel backup/cache files
+*.xlk
+*.xar
+*.tmp
+
+# PowerPoint autosave/temporary
+*.ppam
+*.pptx#
+*.pptm#
+
+# Office crash dumps
+*.log
+*.dmp
+
+# Misc editor
+*.orig
+*.rej
+
+# VSCode
+.vscode/*
+*.vsix
+
+# various OCaml intermediates
 *.annot
 *.cmo
 *.cma

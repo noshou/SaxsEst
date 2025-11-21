@@ -1,5 +1,3 @@
-(* 
-
 (* recursively defined kd tree (either empty, or a node w/ subtree)*)
 type kdtree = 
     | Empty
@@ -16,4 +14,4 @@ and node = {
     dt: point;
     dm: int 
 }
- *)
+

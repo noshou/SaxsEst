@@ -10,7 +10,7 @@
 2025-11-10
 
 -> saxs beamline @ CLS operates in 5-24 keV; choose whichever has best coverage in data within that range
--> Cromer Coefficients only valid from 0 -> 2 A⁻¹ (ATOMIC SCATRERING FACTORS AT HIGH ANGLES )
+-> Cromer Coefficients only valid from 0 -> 2 A⁻¹ (ATOMIC SCATTERING FACTORS AT HIGH ANGLES )
 
 2025-10-11
 -> switched to perlecan from Alphafold prediction
@@ -21,6 +21,8 @@
 2025-11-20
 -> testing w/ wide range of proteins
 -> anon. factors are only for ground state and very spotty
-in coverage, so limited to ground state only on already
-limited amount of metals
+in coverage, so f1/f2 limited to ground state only on already
+limited amount of metals; f0 is not limited by this though!
 
+2025-11-21
+-> mg f1/f2 factors at 12412.8eV not found, so used closet @ 12337.5

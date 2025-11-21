@@ -1,6 +1,6 @@
 (** Intensity Estimator - Process XYZ molecular structure files
     Usage: dune exec ./main.exe -- [OPTIONS] <file>.xyz
-    NOTE: Files are expected to be in the root of data/ .
+    NOTE: Files are expected to be in the root of data/xyz/ .
     Options:
         dune exec ./main.exe -- test.xyz (default: no clock logging)
         dune exec ./main.exe -- --clk molecule.xyz (enable clock logging to <run>_timing.txt)
@@ -22,6 +22,6 @@ let  () =
     exit 1
   end;
   let _ =
-    Intensity_est.classic ("data/" ^ !fp) ~tol:!tol ~run:!run ~clk:!clk ()
+    Intensity_est.classic ("data/xyz" ^ !fp) ~tol:!tol ~run:!run ~clk:!clk ()
   in 
   ()
