@@ -1,3 +1,0 @@
-(library
- (name kd_tree)
- (libraries atom))

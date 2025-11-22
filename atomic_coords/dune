@@ -1,0 +1,3 @@
+(library
+ (name load_xyz)
+ (libraries str atom))

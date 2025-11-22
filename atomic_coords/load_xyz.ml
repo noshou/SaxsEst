@@ -76,6 +76,7 @@ let load_xyz fp =
 	    (* parse rest of file *)
 		let itr = ref 1 in (* have already seen last first item *)
     while !itr <= size do 
+      print_endline (string_of_int !itr);
 			(* raise end of line expection if size == line *)
 			let row = String.trim (input_line f) in 
 

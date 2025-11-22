@@ -1,5 +1,4 @@
 (* re-export for public API *)
-
 exception Malformed_xyzEntry of string
 exception Malformed_xyzFile of string
 type coord = Atom_.coord = { x : float; y : float; z : float }
