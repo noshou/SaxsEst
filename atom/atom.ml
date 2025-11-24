@@ -9,3 +9,6 @@ let name = Atom_.name
 let form_factor = Atom_.form_fact 
 let to_string = Atom_.to_string
 let load_xyz = Load_xyz.load_xyz
+let cmp_by_axis = Atom_.cmp_by_axis
+let cmp_by_coords = Atom_.cmp_by_coords 
+let calc_distance = Atom_.calc_distance

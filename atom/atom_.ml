@@ -22,3 +22,19 @@ let to_string a ?(q = 0.) () : string =
     Printf.sprintf "\n\tname: %s;" a.name 
     ^
     Printf.sprintf "\n\tform_fact (Q=%f): {im=%f; re=%f}\n}" q im re
+
+let cmp_by_axis ref cmp axs =
+    match (String.lowercase_ascii axs) with 
+        | "x" -> Float.compare cmp.xyz.x ref.xyz.x
+        | "y" -> Float.compare cmp.xyz.y ref.xyz.y
+        | "z" -> Float.compare cmp.xyz.z ref.xyz.z
+        | _   -> raise(Invalid_argument(("expected 'x', 'y', or 'z' but got: ")^axs))
+
+let cmp_by_coords ref cmp = 
+    let same_x = Float.compare ref.xyz.x cmp.xyz.x == 0 in 
+    let same_y = Float.compare ref.xyz.y cmp.xyz.y == 0 in
+    let same_z = Float.compare ref.xyz.z cmp.xyz.z == 0 in
+    same_x && same_y && same_z
+
+let calc_distance a_start a_end = 
+    sqrt((a_end.x -. a_start.x)**2. +. (a_end.y -. a_start.y)**2. +. (a_end.z -. a_start.z)**2.)

@@ -26,3 +26,6 @@ limited amount of metals; f0 is not limited by this though!
 
 2025-11-21
 -> mg f1/f2 factors at 12412.8eV not found, so used closet @ 12337.5
+
+2025-11-13 
+-> normalization constant will be effected; have to keep track of the number of atoms visited and normalize that way
