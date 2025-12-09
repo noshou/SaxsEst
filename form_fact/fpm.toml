@@ -1,0 +1,21 @@
+name = "form_fact"
+version = "0.1.0"
+license = "MIT"
+author = "Your Name"
+
+[build]
+auto-executables = true
+auto-tests = false
+auto-examples = false
+
+[dependencies]
+stdlib = "*"
+
+[[executable]]
+name = "form_fact"
+source-dir = "app"
+main = "form_fact.f90"
+
+[fortran]
+implicit-typing = false
+source-form = "free"

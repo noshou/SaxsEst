@@ -12,10 +12,9 @@ take ~n:3 [10;20;30;40;50] ()
 │        │        └─ 30 :: [] = [30]
 │        └─ 20 :: [30] = [20; 30]
 └─ 10 :: [20; 30] = [10; 20; 30] *)
-let rec take ?(n=5) atms () : Atom.atom list = 
-	match (n, atms) with 
-		| (0,_)  | (_, []) ->  [] 
-		| (i, atm::atms)   ->  atm :: (take ~n:(n-1) atms ()) 
+let rec take ?(n=5) atms () : Atom.atom list = match (n, atms) with 
+    | (0,_)  | (_, []) ->  [] 
+    | (i, atm::atms)   ->  atm :: (take ~n:(n-1) atms ()) 
 
 (* drops the first n elements from a list and returns 
 the tail of the list.
@@ -26,21 +25,18 @@ drop ~n:3 [10;20;30;40;50] ()
 │        │        ├─  _ :: drop ~n:0 [40;50]
 │        │        │        │
 │        │        │        └─ [40;50] *)
-let rec drop ?(n=5) atms () : Atom.atom list =
-    match (n, atms) with 
-        | (0, _)        -> atms 
-        | (_, [])       -> []
-        | (n, _::atms)  -> drop ~n:(n-1) atms () 
+let rec drop ?(n=5) atms () : Atom.atom list = match (n, atms) with 
+    | (0, _)        -> atms 
+    | (_, [])       -> []
+    | (n, _::atms)  -> drop ~n:(n-1) atms () 
 
 (* groups list of atoms into list of lists of max size n *)
-let rec group ?(n=5) atms () : Atom.atom list list = 
-	match atms with 
-		| []	-> 
-        []
-		| _ 	->
-			let grp = take ~n=n atms () in 
-			let rem = drop ~n=n atms () in 
-			grp :: (group ~n=n rem())
+let rec group ?(n=5) atms () : Atom.atom list list =  match atms with 
+    | []	-> []
+    | _ 	->
+        let grp = take ~n=n atms () in 
+        let rem = drop ~n=n atms () in 
+        grp :: (group ~n=n rem())
 
 (** median of medians algorithm returns the 
 approximate median from an unordered list *)		
@@ -75,8 +71,8 @@ let rec moms atms hype : Atom.atom option =
             let medians = ref [] in 
             for i = 0 to (List.length groups) - 1 do  
                 let median_i = moms (List.nth groups i) hype in 
-                match median_i with 
-                    | None      -> () 
-                    | Some m    -> medians := m :: !medians 
+                    match median_i with 
+                        | None      -> () 
+                        | Some m    -> medians := m :: !medians 
             done;
-            moms !medians hype        
+            moms !medians hype

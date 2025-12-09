@@ -42,15 +42,16 @@ let rec kdt_creator atms ?(axis=X): kdt =
 		Empty
 	else 
 		
-    	(* get pivot from median of medians algorithm *)
+    (* get pivot from median of medians algorithm *)
 		let pivot = match Moms.moms atms axis with 
 			| Some atom -> atom
 			| None -> raise (Invalid_kdt_state "Cannot compute pivot!")
 		in 
-        (* divide into two groups: l.t. pivot, g.eq. pivot. Since we assume
-        all atoms occupy a unique space, if two elements have save value along same axis, 
-        distinguish if we are at pivot or if we are instead at a new point. Imperative 
-		method used for efficiency (but could be wrong abt that) *)
+    
+    (* divide into two groups: l.t. pivot, g.eq. pivot. Since we assume
+    all atoms occupy a unique space, if two elements have save value along same axis, 
+    distinguish if we are at pivot or if we are instead at a new point. 
+    Imperative method used for efficiency (but could be wrong abt that) *)
 		let left_tree  = ref [] in 
 		let right_tree = ref [] in
 		List.iter ( fun atom -> 
@@ -84,7 +85,7 @@ let ax_by_hype (n : node) h: float  =
         | X -> xyz.x
         | Y -> xyz.y
         | Z -> xyz.z
-
+(* 
 (** compares ref vs cmp by ref's hyperplane axis *)
 let cmp_node (ref : node) (cmp : node) : int = 
 
@@ -96,4 +97,4 @@ let cmp_node (ref : node) (cmp : node) : int =
     let c_c = ax_by_hype cmp axs in 
 
     (* return -1, 0, 1 *)
-    Float.compare r_c c_c *)
+    Float.compare r_c c_c *) *)
