@@ -1,6 +1,0 @@
-(executable
- (name main)
- (public_name main)
- (libraries intensity_est))
-
-(data_only_dirs data)

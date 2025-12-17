@@ -78,137 +78,137 @@ let f0_toFortran csv_fp =
 	Printf.fprintf oc "! Note: Q values are rounded to nearest 0.01 Å⁻¹\n";
 	Printf.fprintf oc "!===============================================================================\n";
 	Printf.fprintf oc "module f0_mod\n";
-	Printf.fprintf oc "\tuse iso_fortran_env, only: real64\n";
-	Printf.fprintf oc "\timplicit none\n\n";
-	Printf.fprintf oc "\tprivate\n\n";
+	Printf.fprintf oc "    use iso_fortran_env, only: real64\n";
+	Printf.fprintf oc "    implicit none\n\n";
+	Printf.fprintf oc "    private\n\n";
 	
-	Printf.fprintf oc "\t! Public interface\n";
-	Printf.fprintf oc "\tpublic :: n_elements, n_q_values\n";
-	Printf.fprintf oc "\tpublic :: get_f0\n\n";
+	Printf.fprintf oc "    ! Public interface\n";
+	Printf.fprintf oc "    public :: n_elements, n_q_values\n";
+	Printf.fprintf oc "    public :: get_f0\n\n";
 	
-	Printf.fprintf oc "\t!---------------------------------------------------------------------------\n";
-	Printf.fprintf oc "\t! Module Data\n";
-	Printf.fprintf oc "\t!---------------------------------------------------------------------------\n\n";
+	Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
+	Printf.fprintf oc "    ! Module Data\n";
+	Printf.fprintf oc "    !---------------------------------------------------------------------------\n\n";
 	
-	Printf.fprintf oc "\t! Number of elements and Q values in lookup table\n";
-	Printf.fprintf oc "\tinteger, parameter :: n_elements = %d\n" (List.length e); 
-	Printf.fprintf oc "\tinteger, parameter :: n_q_values = %d\n\n" (List.length q);
+	Printf.fprintf oc "    ! Number of elements and Q values in lookup table\n";
+	Printf.fprintf oc "    integer, parameter :: n_elements = %d\n" (List.length e); 
+	Printf.fprintf oc "    integer, parameter :: n_q_values = %d\n\n" (List.length q);
 	
 	(* write element names to array *)
-	Printf.fprintf oc "\t! Element/ion symbols (lowercase)\n";
-	Printf.fprintf oc "\tcharacter(len=4), parameter :: elements(%d) = [ &\n" (List.length e);
+	Printf.fprintf oc "    ! Element/ion symbols (lowercase)\n";
+	Printf.fprintf oc "    character(len=4), parameter :: elements(%d) = [ &\n" (List.length e);
 	List.iteri (
 		fun idx element -> 
         if (idx == 0) then 
-            Printf.fprintf oc "\t\t\t'%-4s'" element 
+            Printf.fprintf oc "            '%-4s'" element 
         else 
-            Printf.fprintf oc ", &\n\t\t\t'%-4s'" element 
+            Printf.fprintf oc ", &\n            '%-4s'" element 
 		) e;
     Printf.fprintf oc " ]\n\n";
     
 	(* write q values to array *)
-	Printf.fprintf oc "\t! Scattering vector magnitudes: Q = (sin θ)/λ in Å⁻¹\n";
-	Printf.fprintf oc "\t! Range: 0 to ~2.0 Å⁻¹ in increments of 0.01 Å⁻¹\n";
-	Printf.fprintf oc "\treal(real64), parameter :: q_values(%d) = [ &\n" (List.length q);
+	Printf.fprintf oc "    ! Scattering vector magnitudes: Q = (sin θ)/λ in Å⁻¹\n";
+	Printf.fprintf oc "    ! Range: 0 to ~2.0 Å⁻¹ in increments of 0.01 Å⁻¹\n";
+	Printf.fprintf oc "    real(real64), parameter :: q_values(%d) = [ &\n" (List.length q);
 	List.iteri (
     fun idx q -> 
         if (idx == 0) then 
-            Printf.fprintf oc "\t\t\t%f_real64" q 
+            Printf.fprintf oc "            %f_real64" q 
         else
-            Printf.fprintf oc ", &\n\t\t\t%f_real64" q
+            Printf.fprintf oc ", &\n            %f_real64" q
 	) q;
 	Printf.fprintf oc " ]\n\n";
 
 	(* write f0_data*)
-	Printf.fprintf oc "\t! Form factor data: f0(Q) for each element\n";
-	Printf.fprintf oc "\t! Rows: Q values, Columns: Elements\n";
-	Printf.fprintf oc "\t! f0 decreases with increasing Q due to destructive interference\n";
-	Printf.fprintf oc "\treal(real64), parameter :: f0_data(%d,%d) = reshape([ &\n" (List.length q) (List.length e);
+	Printf.fprintf oc "    ! Form factor data: f0(Q) for each element\n";
+	Printf.fprintf oc "    ! Rows: Q values, Columns: Elements\n";
+	Printf.fprintf oc "    ! f0 decreases with increasing Q due to destructive interference\n";
+	Printf.fprintf oc "    real(real64), parameter :: f0_data(%d,%d) = reshape([ &\n" (List.length q) (List.length e);
 	List.iter (
     let idx = ref 0 in 
     fun row -> List.iter (
         fun col -> 
-            if !idx == 0 then Printf.fprintf oc "\t\t\t%f_real64" col 
-            else Printf.fprintf oc ", &\n\t\t\t%f_real64" col;
+            if !idx == 0 then Printf.fprintf oc "            %f_real64" col 
+            else Printf.fprintf oc ", &\n            %f_real64" col;
         idx := !idx + 1;
     ) row  
 	) f;
-	Printf.fprintf oc " &\n\t], shape=[%d,%d], order=[2,1])\n\n" (List.length q) (List.length e);
+	Printf.fprintf oc " &\n    ], shape=[%d,%d], order=[2,1])\n\n" (List.length q) (List.length e);
 	
 	(* methods *)
 	Printf.fprintf oc "contains\n\n";
 
-  Printf.fprintf oc "\t! Convert string to lowercase\n";
-  Printf.fprintf oc "\tpure function to_lower(str) result(lower_str)\n";
-  Printf.fprintf oc "\t\t\tcharacter(len=*), intent(in) :: str\n";
-  Printf.fprintf oc "\t\t\tcharacter(len=len(str)) :: lower_str\n";
-  Printf.fprintf oc "\t\t\tinteger :: i, ic\n";
-  Printf.fprintf oc "\t\t\tlower_str = str\n";
-  Printf.fprintf oc "\t\t\tdo i = 1, len(str)\n";
-  Printf.fprintf oc "\t\t\t\t\tic = iachar(str(i:i))\n";
-  Printf.fprintf oc "\t\t\t\t\tif (ic >= 65 .and. ic <= 90) lower_str(i:i) = achar(ic + 32)\n";
-  Printf.fprintf oc "\t\t\tend do\n";
-  Printf.fprintf oc "\tend function to_lower\n\n";
+  Printf.fprintf oc "    ! Convert string to lowercase\n";
+  Printf.fprintf oc "    pure function to_lower(str) result(lower_str)\n";
+  Printf.fprintf oc "            character(len=*), intent(in) :: str\n";
+  Printf.fprintf oc "            character(len=len(str)) :: lower_str\n";
+  Printf.fprintf oc "            integer :: i, ic\n";
+  Printf.fprintf oc "            lower_str = str\n";
+  Printf.fprintf oc "            do i = 1, len(str)\n";
+  Printf.fprintf oc "                    ic = iachar(str(i:i))\n";
+  Printf.fprintf oc "                    if (ic >= 65 .and. ic <= 90) lower_str(i:i) = achar(ic + 32)\n";
+  Printf.fprintf oc "            end do\n";
+  Printf.fprintf oc "    end function to_lower\n\n";
 
 
 	(* initialize f0 data *)
-	Printf.fprintf oc "\t!---------------------------------------------------------------------------\n";
-	Printf.fprintf oc "\t! Function: get_f0\n";
-	Printf.fprintf oc "\t!\n";
-	Printf.fprintf oc "\t! Description:\n";
-	Printf.fprintf oc "\t!   Returns the atomic form factor for a given element at a specific Q.\n";
-	Printf.fprintf oc "\t!\n";
-	Printf.fprintf oc "\t! Arguments:\n";
-	Printf.fprintf oc "\t!   q       [in]  - Scattering vector magnitude (sin θ)/λ in Å⁻¹\n";
-	Printf.fprintf oc "\t!   element [in]  - Element symbol (case-insensitive, e.g., 'Fe', 'cu')\n";
-	Printf.fprintf oc "\t!\n";
-	Printf.fprintf oc "\t! Returns:\n";
-	Printf.fprintf oc "\t!   f0_val - Atomic form factor (electrons)\n";
-	Printf.fprintf oc "\t!\n";
-	Printf.fprintf oc "\t! Notes:\n";
-	Printf.fprintf oc "\t!   - Q is rounded to nearest 0.01 Å⁻¹ for lookup\n";
-	Printf.fprintf oc "\t!   - Program stops with error if element or Q not found\n";
-	Printf.fprintf oc "\t!---------------------------------------------------------------------------\n";
-	Printf.fprintf oc "\tfunction get_f0(q, element) result(f0_val)\n";
-	Printf.fprintf oc "\t\t\treal(real64), intent(in) :: q\n";
-	Printf.fprintf oc "\t\t\tcharacter(len=*), intent(in) :: element\n";
-	Printf.fprintf oc "\t\t\treal(real64) :: f0_val\n";
-	Printf.fprintf oc "\t\t\tinteger :: q_idx, elem_idx, i\n";
-	Printf.fprintf oc "\t\t\treal(real64) :: q_round\n";
-	Printf.fprintf oc "\t\t\tcharacter(len=10) :: element_lower\n\n";
-	Printf.fprintf oc "\t\t\t! Convert element to lower case\n";
-	Printf.fprintf oc "\t\t\telement_lower = to_lower(element)\n\n";
-	Printf.fprintf oc "\t\t\t! Round q to nearest 0.01 Å⁻¹\n";
-	Printf.fprintf oc "\t\t\tq_round = ceiling(q * 100_real64) / 100_real64\n\n";
-	Printf.fprintf oc "\t\t\t! Find element index\n";
-	Printf.fprintf oc "\t\t\telem_idx = -1\n";
-	Printf.fprintf oc "\t\t\tdo i = 1, n_elements\n";
-	Printf.fprintf oc "\t\t\t\t\tif (trim(elements(i)) == trim(element_lower)) then\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\telem_idx = i\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\tEXIT\n";
-	Printf.fprintf oc "\t\t\t\t\tend if\n";
-	Printf.fprintf oc "\t\t\tend do\n\n";
-	Printf.fprintf oc "\t\t\tif (elem_idx == -1) then\n";
-	Printf.fprintf oc "\t\t\t\t\twrite(*, '(A, A, A)') 'ERROR in get_f0: Element \"', &\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\ttrim(element), '\" not found'\n";
-	Printf.fprintf oc "\t\t\t\t\terror stop\n";
-	Printf.fprintf oc "\t\t\tend if\n\n";
-	Printf.fprintf oc "\t\t\t! Find Q index\n";
-	Printf.fprintf oc "\t\t\tq_idx = -1\n";
-	Printf.fprintf oc "\t\t\tdo i = 1, n_q_values\n";
-	Printf.fprintf oc "\t\t\t\t\tif (abs(q_values(i) - q_round) < 1.0e-6_real64) then\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\tq_idx = i\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\tEXIT\n";
-	Printf.fprintf oc "\t\t\t\t\tend if\n";
-	Printf.fprintf oc "\t\t\tend do\n\n";
-	Printf.fprintf oc "\t\t\tif (q_idx == -1) then\n";
-	Printf.fprintf oc "\t\t\t\t\twrite(*, '(A, F12.6, A)') 'ERROR in get_f0: Q value ', &\n";
-	Printf.fprintf oc "\t\t\t\t\t\t\tq_round, ' not found in table'\n";
-	Printf.fprintf oc "\t\t\t\t\terror stop\n";
-	Printf.fprintf oc "\t\t\tend if\n\n";
-	Printf.fprintf oc "\t\t\t! Access f0 value and return\n";
-	Printf.fprintf oc "\t\t\tf0_val = f0_data(q_idx, elem_idx)\n\n";
-	Printf.fprintf oc "\tend function get_f0\n\n";
+	Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
+	Printf.fprintf oc "    ! Function: get_f0\n";
+	Printf.fprintf oc "    !\n";
+	Printf.fprintf oc "    ! Description:\n";
+	Printf.fprintf oc "    !   Returns the atomic form factor for a given element at a specific Q.\n";
+	Printf.fprintf oc "    !\n";
+	Printf.fprintf oc "    ! Arguments:\n";
+	Printf.fprintf oc "    !   q       [in]  - Scattering vector magnitude (sin θ)/λ in Å⁻¹\n";
+	Printf.fprintf oc "    !   element [in]  - Element symbol (case-insensitive, e.g., 'Fe', 'cu')\n";
+	Printf.fprintf oc "    !\n";
+	Printf.fprintf oc "    ! Returns:\n";
+	Printf.fprintf oc "    !   f0_val - Atomic form factor (electrons)\n";
+	Printf.fprintf oc "    !\n";
+	Printf.fprintf oc "    ! Notes:\n";
+	Printf.fprintf oc "    !   - Q is rounded to nearest 0.01 Å⁻¹ for lookup\n";
+	Printf.fprintf oc "    !   - Program stops with error if element or Q not found\n";
+	Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
+	Printf.fprintf oc "    function get_f0(q, element) result(f0_val)\n";
+	Printf.fprintf oc "            real(real64), intent(in) :: q\n";
+	Printf.fprintf oc "            character(len=*), intent(in) :: element\n";
+	Printf.fprintf oc "            real(real64) :: f0_val\n";
+	Printf.fprintf oc "            integer :: q_idx, elem_idx, i\n";
+	Printf.fprintf oc "            real(real64) :: q_round\n";
+	Printf.fprintf oc "            character(len=10) :: element_lower\n\n";
+	Printf.fprintf oc "            ! Convert element to lower case\n";
+	Printf.fprintf oc "            element_lower = to_lower(element)\n\n";
+	Printf.fprintf oc "            ! Round q to nearest 0.01 Å⁻¹\n";
+	Printf.fprintf oc "            q_round = ceiling(q * 100_real64) / 100_real64\n\n";
+	Printf.fprintf oc "            ! Find element index\n";
+	Printf.fprintf oc "            elem_idx = -1\n";
+	Printf.fprintf oc "            do i = 1, n_elements\n";
+	Printf.fprintf oc "                    if (trim(elements(i)) == trim(element_lower)) then\n";
+	Printf.fprintf oc "                            elem_idx = i\n";
+	Printf.fprintf oc "                            EXIT\n";
+	Printf.fprintf oc "                    end if\n";
+	Printf.fprintf oc "            end do\n\n";
+	Printf.fprintf oc "            if (elem_idx == -1) then\n";
+	Printf.fprintf oc "                    write(*, '(A, A, A)') 'ERROR in get_f0: Element \"', &\n";
+	Printf.fprintf oc "                            trim(element), '\" not found'\n";
+	Printf.fprintf oc "                    error stop\n";
+	Printf.fprintf oc "            end if\n\n";
+	Printf.fprintf oc "            ! Find Q index\n";
+	Printf.fprintf oc "            q_idx = -1\n";
+	Printf.fprintf oc "            do i = 1, n_q_values\n";
+	Printf.fprintf oc "                    if (abs(q_values(i) - q_round) < 1.0e-6_real64) then\n";
+	Printf.fprintf oc "                            q_idx = i\n";
+	Printf.fprintf oc "                            EXIT\n";
+	Printf.fprintf oc "                    end if\n";
+	Printf.fprintf oc "            end do\n\n";
+	Printf.fprintf oc "            if (q_idx == -1) then\n";
+	Printf.fprintf oc "                    write(*, '(A, F12.6, A)') 'ERROR in get_f0: Q value ', &\n";
+	Printf.fprintf oc "                            q_round, ' not found in table'\n";
+	Printf.fprintf oc "                    error stop\n";
+	Printf.fprintf oc "            end if\n\n";
+	Printf.fprintf oc "            ! Access f0 value and return\n";
+	Printf.fprintf oc "            f0_val = f0_data(q_idx, elem_idx)\n\n";
+	Printf.fprintf oc "    end function get_f0\n\n";
 	Printf.fprintf oc "end module f0_mod\n";
 	
 	close_out oc
