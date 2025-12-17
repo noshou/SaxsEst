@@ -79,7 +79,6 @@ let f0_toFortran csv_fp =
 	Printf.fprintf oc "!===============================================================================\n";
 	Printf.fprintf oc "module f0_mod\n";
 	Printf.fprintf oc "\tuse iso_fortran_env, only: real64\n";
-	Printf.fprintf oc "\tuse stdlib_strings, only: to_lower\n";
 	Printf.fprintf oc "\timplicit none\n\n";
 	Printf.fprintf oc "\tprivate\n\n";
 	
@@ -97,13 +96,13 @@ let f0_toFortran csv_fp =
 	
 	(* write element names to array *)
 	Printf.fprintf oc "\t! Element/ion symbols (lowercase)\n";
-	Printf.fprintf oc "\tcharacter(len=10), parameter :: elements(%d) = [ &\n" (List.length e);
+	Printf.fprintf oc "\tcharacter(len=4), parameter :: elements(%d) = [ &\n" (List.length e);
 	List.iteri (
 		fun idx element -> 
         if (idx == 0) then 
-            Printf.fprintf oc "\t\t\t'%s'" element 
+            Printf.fprintf oc "\t\t\t'%-4s'" element 
         else 
-            Printf.fprintf oc ", &\n\t\t\t'%s'" element 
+            Printf.fprintf oc ", &\n\t\t\t'%-4s'" element 
 		) e;
     Printf.fprintf oc " ]\n\n";
     
@@ -138,6 +137,19 @@ let f0_toFortran csv_fp =
 	
 	(* methods *)
 	Printf.fprintf oc "contains\n\n";
+
+  Printf.fprintf oc "\t! Convert string to lowercase\n";
+  Printf.fprintf oc "\tpure function to_lower(str) result(lower_str)\n";
+  Printf.fprintf oc "\t\t\tcharacter(len=*), intent(in) :: str\n";
+  Printf.fprintf oc "\t\t\tcharacter(len=len(str)) :: lower_str\n";
+  Printf.fprintf oc "\t\t\tinteger :: i, ic\n";
+  Printf.fprintf oc "\t\t\tlower_str = str\n";
+  Printf.fprintf oc "\t\t\tdo i = 1, len(str)\n";
+  Printf.fprintf oc "\t\t\t\t\tic = iachar(str(i:i))\n";
+  Printf.fprintf oc "\t\t\t\t\tif (ic >= 65 .and. ic <= 90) lower_str(i:i) = achar(ic + 32)\n";
+  Printf.fprintf oc "\t\t\tend do\n";
+  Printf.fprintf oc "\tend function to_lower\n\n";
+
 
 	(* initialize f0 data *)
 	Printf.fprintf oc "\t!---------------------------------------------------------------------------\n";

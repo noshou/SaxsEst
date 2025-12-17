@@ -91,7 +91,7 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "    real(8), dimension(n_elements), parameter :: f1_values = [ &\n";
   List.iteri (fun i elm ->
     let (f1, _) = get_f1_f2 elm lookup in
-    Printf.fprintf oc "        %.15ed0%s\n" f1
+    Printf.fprintf oc "        %e%s\n" f1
       (if i < List.length elements - 1 then ", &" else " ]")
   ) elements;
   Printf.fprintf oc "\n";
@@ -102,7 +102,7 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "    real(8), dimension(n_elements), parameter :: f2_values = [ &\n";
   List.iteri (fun i elm ->
     let (_, f2) = get_f1_f2 elm lookup in
-    Printf.fprintf oc "        %.15ed0%s\n" f2
+    Printf.fprintf oc "        %e%s\n" f2
       (if i < List.length elements - 1 then ", &" else " ]")
   ) elements;
   Printf.fprintf oc "\n";

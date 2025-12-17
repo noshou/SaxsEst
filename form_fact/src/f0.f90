@@ -19,7 +19,6 @@
 !===============================================================================
 module f0_mod
 	use iso_fortran_env, only: real64
-	use stdlib_strings, only: to_lower
 	implicit none
 
 	private
@@ -37,30 +36,30 @@ module f0_mod
 	integer, parameter :: n_q_values = 26
 
 	! Element/ion symbols (lowercase)
-	character(len=10), parameter :: elements(23) = [ &
-			'se', &
+	character(len=4), parameter :: elements(23) = [ &
+			'se  ', &
 			'cu2+', &
 			'mn2+', &
-			'ca', &
-			'k', &
-			'ar', &
-			'cl', &
-			's', &
-			'p', &
-			'si', &
-			'al', &
-			'mg', &
-			'na', &
-			'ne', &
-			'f', &
-			'o', &
-			'n', &
-			'c', &
-			'b', &
-			'be', &
-			'li', &
-			'he', &
-			'h' ]
+			'ca  ', &
+			'k   ', &
+			'ar  ', &
+			'cl  ', &
+			's   ', &
+			'p   ', &
+			'si  ', &
+			'al  ', &
+			'mg  ', &
+			'na  ', &
+			'ne  ', &
+			'f   ', &
+			'o   ', &
+			'n   ', &
+			'c   ', &
+			'b   ', &
+			'be  ', &
+			'li  ', &
+			'he  ', &
+			'h   ' ]
 
 	! Scattering vector magnitudes: Q = (sin θ)/λ in Å⁻¹
 	! Range: 0 to ~2.0 Å⁻¹ in increments of 0.01 Å⁻¹
@@ -697,6 +696,18 @@ module f0_mod
 	], shape=[26,23], order=[2,1])
 
 contains
+
+	! Convert string to lowercase
+	pure function to_lower(str) result(lower_str)
+			character(len=*), intent(in) :: str
+			character(len=len(str)) :: lower_str
+			integer :: i, ic
+			lower_str = str
+			do i = 1, len(str)
+					ic = iachar(str(i:i))
+					if (ic >= 65 .and. ic <= 90) lower_str(i:i) = achar(ic + 32)
+			end do
+	end function to_lower
 
 	!---------------------------------------------------------------------------
 	! Function: get_f0
