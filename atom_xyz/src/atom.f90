@@ -4,7 +4,7 @@ module atom_mod
     implicit none
 
     private
-
+    
     ! Public types
     public :: coord, atom, create_atom
     
@@ -24,11 +24,10 @@ module atom_mod
         procedure :: dist_cart   => calc_distance_method
         procedure :: form_factor => form_factor_method
         procedure :: cmp_axis    => cmp_by_axis_method
+        procedure :: get_axis    => get_axis_method
     end type atom
 
 contains
-
-    ! Constructors
 
     !! Creates an atom from position and element name
     function create_atom(position, element_name) result(new_atom)
@@ -39,7 +38,7 @@ contains
         new_atom%xyz = position
         new_atom%element = trim(element_name)
     end function create_atom
-
+    
     !! Returns the form factor for an atom at a given Q value
     function form_factor_method(this, q) result(ff)
         use form_fact_mod

@@ -47,17 +47,17 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     integer :: start, finish, rate
 
     ! output data
-    type(estimate), intent(out) :: intensity_estimate
+    type(estimate) :: intensity_estimate
 
     ! variables for loop
     type(atom) :: atom_i
-	type(atom) :: atom_j
-	complex(real64) :: atom_i_ff
-	complex(real64) :: atom_j_ff
-	real(real64) :: radial_contrib !! sinc(|Q-dst|)/(|Q-dst)
-	real(real64) :: atomic_contrib !! ff_i * conj(ff_j)
-	real(real64) :: dst
-	real(real64) :: est ! estimate of intensity at I(Q) 
+    type(atom) :: atom_j
+    complex(real64) :: atom_i_ff
+    complex(real64) :: atom_j_ff
+    real(real64) :: radial_contrib !! sinc(|Q-dst|)/(|Q-dst)
+    real(real64) :: atomic_contrib !! ff_i * conj(ff_j)
+    real(real64) :: dst
+    real(real64) :: est ! estimate of intensity at I(Q) 
 
 
     ! start timer, do pairwise calculations
