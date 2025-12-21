@@ -1,12 +1,3 @@
-! need in parent: use imports for atom, iso env, and need to write sinc function
-!     type :: estimate
-!         real(c_double) :: timing 
-!         real(c_double), dimension(:) :: q_vals
-!         real(c_double), dimension(:) :: intensity
-!     end type results
-! constructor method called: new_estimate(t,q,i)
-
-
 !> Calculates the scattering intensity I(Q) using the Debye scattering 
 !! approximation
 !!

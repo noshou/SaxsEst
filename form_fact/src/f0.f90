@@ -1,6 +1,5 @@
-!> @brief Atomic form factors f0 for X-ray scattering calculations
+!> Atomic form factors f0 for X-ray scattering calculations
 !>
-!! @details
 !! Atomic form factors f0 for X-ray scattering calculations.
 !! f0(Q) represents the scattering amplitude of an atom as a function
 !! of the scattering vector Q = (sin θ)/λ.
@@ -690,7 +689,7 @@ module f0_mod
 
 contains
 
-    !> @brief Convert string to lowercase
+    !> Convert string to lowercase
     !! @param[in] str Input string
     !!
     !! @return lower_str Lowercase version of input string
@@ -705,17 +704,14 @@ contains
             end do
     end function to_lower
 
-    !> @brief Returns the atomic form factor for a given element at a specific Q
+    !> Returns the atomic form factor for a given element at a specific Q
     !>
-    !! @details
     !! Returns the atomic form factor for a given element at a specific Q.
     !!
     !! @param[in] q Scattering vector magnitude (sin θ)/λ in Å⁻¹
     !! @param[in] element Element symbol (case-insensitive, e.g., 'Fe', 'cu')
     !!
     !! @return f0_val Atomic form factor (electrons)
-    !!
-    !! @warning Program stops with error if element or Q not found
     function get_f0(q, element) result(f0_val)
             real(c_double), intent(in) :: q
             character(len=*), intent(in) :: element

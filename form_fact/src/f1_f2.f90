@@ -1,23 +1,9 @@
-!> @brief Anomalous scattering factors f1 and f2 for X-ray diffraction
+!> Anomalous scattering factors f1 and f2 for X-ray diffraction
 !>
-!! @details
 !! Provides anomalous scattering factors f1 and f2 for X-ray diffraction.
 !!
 !! Anomalous scattering factors (f' and f'', or f1 and f2) account for
-!! energy-dependent corrections to atomic scattering factors near
-!! absorption edges. These values are critical for accurate structure
-!! factor calculations in X-ray crystallography.
-!!
-!! @par Usage:
-!! @code{.f90}
-!!   use f1_f2_mod, only: get_f1_f2
-!!   real(8) :: f1, f2
-!!   integer :: status
-!!   call get_f1_f2('Fe', f1, f2, status)
-!!   if (status == 0) then
-!!       ! Successfully retrieved f1 and f2 for iron
-!!   end if
-!! @endcode
+!! energy-dependent corrections to atomic scattering factors near absorption edges.
 module f1_f2_mod
     implicit none
     private
@@ -270,9 +256,8 @@ module f1_f2_mod
 
 contains
 
-    !> @brief Retrieve anomalous scattering factors f1 and f2 for a given element
+    !> Retrieve anomalous scattering factors f1 and f2 for a given element
     !>
-    !! @details
     !! Retrieves the anomalous scattering factors f1 and f2 for a given energy level.
     !! Element symbol is case-insensitive and numeric suffixes are ignored.
     !!

@@ -58,9 +58,8 @@ let f0_toFortran csv_fp =
 	let oc = open_out "f0.f90" in 
 	
 	(* Write module header with documentation *)
-	Printf.fprintf oc "!> @brief Atomic form factors f0 for X-ray scattering calculations\n";
+	Printf.fprintf oc "!> Atomic form factors f0 for X-ray scattering calculations\n";
 	Printf.fprintf oc "!>\n";
-	Printf.fprintf oc "!! @details\n";
 	Printf.fprintf oc "!! Atomic form factors f0 for X-ray scattering calculations.\n";
 	Printf.fprintf oc "!! f0(Q) represents the scattering amplitude of an atom as a function\n";
 	Printf.fprintf oc "!! of the scattering vector Q = (sin θ)/λ.\n";
@@ -131,7 +130,7 @@ let f0_toFortran csv_fp =
 	(* methods *)
 	Printf.fprintf oc "contains\n\n";
 
-  Printf.fprintf oc "    !> @brief Convert string to lowercase\n";
+  Printf.fprintf oc "    !> Convert string to lowercase\n";
   Printf.fprintf oc "    !! @param[in] str Input string\n";
   Printf.fprintf oc "    !!\n";
   Printf.fprintf oc "    !! @return lower_str Lowercase version of input string\n";
@@ -148,17 +147,14 @@ let f0_toFortran csv_fp =
 
 
 	(* initialize f0 data *)
-	Printf.fprintf oc "    !> @brief Returns the atomic form factor for a given element at a specific Q\n";
+	Printf.fprintf oc "    !> Returns the atomic form factor for a given element at a specific Q\n";
 	Printf.fprintf oc "    !>\n";
-	Printf.fprintf oc "    !! @details\n";
 	Printf.fprintf oc "    !! Returns the atomic form factor for a given element at a specific Q.\n";
 	Printf.fprintf oc "    !!\n";
 	Printf.fprintf oc "    !! @param[in] q Scattering vector magnitude (sin θ)/λ in Å⁻¹\n";
 	Printf.fprintf oc "    !! @param[in] element Element symbol (case-insensitive, e.g., 'Fe', 'cu')\n";
 	Printf.fprintf oc "    !!\n";
 	Printf.fprintf oc "    !! @return f0_val Atomic form factor (electrons)\n";
-	Printf.fprintf oc "    !!\n";
-	Printf.fprintf oc "    !! @warning Program stops with error if element or Q not found\n";
 	Printf.fprintf oc "    function get_f0(q, element) result(f0_val)\n";
 	Printf.fprintf oc "            real(c_double), intent(in) :: q\n";
 	Printf.fprintf oc "            character(len=*), intent(in) :: element\n";

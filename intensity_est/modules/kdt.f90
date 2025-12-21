@@ -7,7 +7,7 @@ module kdt
     private
 
     ! public API
-    public :: kdt, hype, kdt_creator
+    public :: kdt, hype, kdt_creator, frequency, frequency_list
 
     !> Abstract base type representing a hyperplane axis in 3D space
     type, abstract :: hype
@@ -30,7 +30,9 @@ module kdt
     type :: kdt
         integer,    allocatable :: subtree_size
         type(node), allocatable :: root !< Root node of the tree (unallocated = empty tree)
-        contains;   procedure   :: radial_search => radial_search_method
+        type(frequency_list)    :: freq_dist
+        contains
+            procedure   :: radial_search => radial_search_method
     end type kdt
 
     !> K-D tree node
@@ -43,7 +45,86 @@ module kdt
         class(hype), allocatable :: axs !< The axis this node splits on
     end type node
 
+    !> Frequency distribution of a weight (form factor)
+    type :: frequency
+        complex(c_double) :: weight
+        integer :: freq
+    end type frequency
+
+    !> Container for frequency array
+    type :: frequency_list
+        character(len=4), allocatable :: names(:) ! list of weight names (element names) 
+        type(frequency), allocatable  :: items(:)
+        integer :: n_items = 0  ! Track how many are actually used
+    end type frequency_list
+
     contains
+
+        !> Adds and/or grows the frequency list
+        subroutine add_freq(flist, w, n)
+            type(frequency_list), intent(inout) :: flist
+            real(c_double), intent(in) :: w
+            character(len=4), intent(in) :: n
+            integer :: i, found_idx
+            logical :: found
+            type(frequency), allocatable :: temp(:)
+            character(len=4), allocatable :: temp_names(:)
+            integer :: new_capacity
+
+            found = .false.  ! Initialize here, not in declaration
+            found_idx = -1
+
+            ! Check if item is already in frequency list
+            if (allocated(flist%items)) then
+                do i = 1, flist%n_items
+                    if (n == flist%names(i)) then 
+                        found = .true.
+                        found_idx = i
+                        exit  ! Stop searching once found
+                    end if 
+                end do 
+            end if            ! check if item is already in frequency list
+            
+            if (found) then 
+                flist%items(found_idx)%freq = flist%items(found_idx)%freq + 1 
+            else 
+                ! Item doesn't exist - need to add it
+                if (.not. allocated(flist%items)) then
+                    ! First allocation
+                    allocate(flist%items(10))
+                    allocate(flist%names(10))
+                    flist%n_items = 0
+                else if (flist%n_items >= size(flist%items)) then
+                    ! Need more space - double capacity
+                    new_capacity = size(flist%items) * 2
+
+                    ! Reallocate items array
+                    allocate(temp(flist%n_items))
+                    temp = flist%items(1:flist%n_items)
+                    deallocate(flist%items)
+                    allocate(flist%items(new_capacity))
+                    flist%items(1:flist%n_items) = temp
+                    deallocate(temp)
+
+                    ! Reallocate names array
+                    allocate(temp_names(flist%n_items))
+                    temp_names = flist%names(1:flist%n_items)
+                    deallocate(flist%names)
+                    allocate(flist%names(new_capacity))
+                    flist%names(1:flist%n_items) = temp_names
+                    deallocate(temp_names)
+                end if
+                
+                    ! Add new item
+                    flist%n_items = flist%n_items + 1
+                    flist%items(flist%n_items)%weight = w
+                    flist%items(flist%n_items)%freq = 1  ! New item starts with freq=1
+                    flist%names(flist%n_items) = n
+            end if
+        end subroutine add_freq
+
+        ! !> Returns the GLOBAL frequency distribution of atomic form factors
+        ! function total_freq_method(this)
 
         !> Returns the hyperplane axis as a string
         !!
@@ -183,12 +264,11 @@ module kdt
         !! @param bin_size_opt Optional bin size for median algorithm (default: 5)
         !!
         !! @return Constructed K-D tree
-        recursive function kdt_creator(atoms, axs, bin_size_opt) result(t)
-
-            ! input variables
+        function kdt_creator(atoms, axs, bin_size_opt) result(t)
             type(atom), dimension(:), intent(in) :: atoms
             class(hype), intent(in) :: axs
-
+            type(kdt) :: t
+            
             ! optional bin size of splitting (defaults to 5)
             integer, intent(in), optional :: bin_size_opt
             integer :: bin_size
@@ -196,6 +276,31 @@ module kdt
                 bin_size = bin_size_opt
             else
                 bin_size = 5
+            end if
+            
+            ! call kdt_creator_method
+            t = call kdt_creator_method(atoms, axs, bin_size, .true.)
+
+        end function kdt_creator
+        
+        !> "real" private function
+        !! 
+        !! Function caches frequency so it needs to be reset 
+        !! across new function calls. Public API does not need it!
+        recursive function kdt_creator_method(atoms, axs, bin_size, reset) result(t)
+
+            ! input variables
+            type(atom), dimension(:), intent(in) :: atoms
+            class(hype), intent(in) :: axs
+            logical, intent(in) :: reset            
+            integer, intent(in) :: bin_size
+
+            ! logic for refreshing/updating frequency
+            type(frequency_list), save :: freq
+            if (reset) then
+                if (allocated(freq%items)) deallocate(freq%items)
+                if (allocated(freq%names)) deallocate(freq%names)
+                freq%n_items = 0
             end if
 
             ! local variables
@@ -245,18 +350,30 @@ module kdt
             allocate(t%root%atm, source=pivot); allocate(t%root%axs, source=axs)
             t%subtree_size = size(atoms)
 
+            ! update frequency
+            call add_freq(freq, pivot%form_factor, trim(pivot%element))
+
             ! build left subtree
             if (left_incr > 0) then
                 allocate(t%root%lch)
-                t%root%lch = kdt_creator(left_tree(1:left_incr), incr_axs(axs))
+                t%root%lch = kdt_creator_method(left_tree(1:left_incr), incr_axs(axs), bin_size, .false.)
             end if
 
             ! build right subtree
             if (right_incr > 0) then
                 allocate(t%root%rch)
-                t%root%rch = kdt_creator(right_tree(1:right_incr), incr_axs(axs))
+                t%root%rch = kdt_creator_method(right_tree(1:right_incr), incr_axs(axs), bin_size, .false.)
             end if
-        end function kdt_creator
+
+            ! clean subtree arrays
+            deallocate(left_tree)
+            deallocate(right_tree)
+
+
+            ! if root node, add frequency
+            if (reset) then; t%freq_dist = freq; end if
+
+        end function kdt_creator_method
 
         !> Performs search to find all atoms within a given radius of a
         !!

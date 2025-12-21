@@ -30,26 +30,12 @@ let generate_fortran_module json_fp =
   let lookup = from_file json_fp in
 
   (* Write module header with documentation *)
-  Printf.fprintf oc "!> @brief Anomalous scattering factors f1 and f2 for X-ray diffraction\n";
+  Printf.fprintf oc "!> Anomalous scattering factors f1 and f2 for X-ray diffraction\n";
   Printf.fprintf oc "!>\n";
-  Printf.fprintf oc "!! @details\n";
   Printf.fprintf oc "!! Provides anomalous scattering factors f1 and f2 for X-ray diffraction.\n";
   Printf.fprintf oc "!!\n";
   Printf.fprintf oc "!! Anomalous scattering factors (f' and f'', or f1 and f2) account for\n";
-  Printf.fprintf oc "!! energy-dependent corrections to atomic scattering factors near\n";
-  Printf.fprintf oc "!! absorption edges. These values are critical for accurate structure\n";
-  Printf.fprintf oc "!! factor calculations in X-ray crystallography.\n";
-  Printf.fprintf oc "!!\n";
-  Printf.fprintf oc "!! @par Usage:\n";
-  Printf.fprintf oc "!! @code{.f90}\n";
-  Printf.fprintf oc "!!   use f1_f2_mod, only: get_f1_f2\n";
-  Printf.fprintf oc "!!   real(8) :: f1, f2\n";
-  Printf.fprintf oc "!!   integer :: status\n";
-  Printf.fprintf oc "!!   call get_f1_f2('Fe', f1, f2, status)\n";
-  Printf.fprintf oc "!!   if (status == 0) then\n";
-  Printf.fprintf oc "!!       ! Successfully retrieved f1 and f2 for iron\n";
-  Printf.fprintf oc "!!   end if\n";
-  Printf.fprintf oc "!! @endcode\n";
+  Printf.fprintf oc "!! energy-dependent corrections to atomic scattering factors near absorption edges.\n";
   Printf.fprintf oc "module f1_f2_mod\n";
   Printf.fprintf oc "    implicit none\n";
   Printf.fprintf oc "    private\n\n";
@@ -106,9 +92,8 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "contains\n\n";
   
   (* Write lookup function *)
-  Printf.fprintf oc "    !> @brief Retrieve anomalous scattering factors f1 and f2 for a given element\n";
+  Printf.fprintf oc "    !> Retrieve anomalous scattering factors f1 and f2 for a given element\n";
   Printf.fprintf oc "    !>\n";
-  Printf.fprintf oc "    !! @details\n";
   Printf.fprintf oc "    !! Retrieves the anomalous scattering factors f1 and f2 for a given energy level.\n";
   Printf.fprintf oc "    !! Element symbol is case-insensitive and numeric suffixes are ignored.\n";
   Printf.fprintf oc "    !!\n";
