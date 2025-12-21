@@ -1,8 +1,8 @@
 ! need in parent: use imports for atom, iso env, and need to write sinc function
 !     type :: estimate
-!         real(real64) :: timing 
-!         real(real64), dimension(:) :: q_vals
-!         real(real64), dimension(:) :: intensity
+!         real(c_double) :: timing 
+!         real(c_double), dimension(:) :: q_vals
+!         real(c_double), dimension(:) :: intensity
 !     end type results
 ! constructor method called: new_estimate(t,q,i)
 
@@ -30,6 +30,7 @@
 !! @param norm      Normalization constant (I_real = I_calc/norm)
 !! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
 !! @param n_q       Number of q values
+!!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
 function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_estimate)
@@ -37,13 +38,13 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     ! set arrays
     type(atom), dimension(:), intent(in) :: atoms
     integer, intent(in) :: n_atoms
-    real(real64), dimension(n_q), intent(in) :: q_vals
-    real(real64), dimension(n_q) :: intensity
+    real(c_double), dimension(n_q), intent(in) :: q_vals
+    real(c_double), dimension(n_q) :: intensity
     integer :: i, j, q_ij
-    real(real64) :: q_val 
+    real(c_double) :: q_val 
 
     ! timing variables
-    real(0_real64) :: timing
+    real(0_c_double) :: timing
     integer :: start, finish, rate
 
     ! output data
@@ -52,12 +53,12 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     ! variables for loop
     type(atom) :: atom_i
     type(atom) :: atom_j
-    complex(real64) :: atom_i_ff
-    complex(real64) :: atom_j_ff
-    real(real64) :: radial_contrib !! sinc(|Q-dst|)/(|Q-dst)
-    real(real64) :: atomic_contrib !! ff_i * conj(ff_j)
-    real(real64) :: dst
-    real(real64) :: est ! estimate of intensity at I(Q) 
+    complex(c_double) :: atom_i_ff
+    complex(c_double) :: atom_j_ff
+    real(c_double) :: radial_contrib !! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double) :: atomic_contrib !! ff_i * conj(ff_j)
+    real(c_double) :: dst
+    real(c_double) :: est ! estimate of intensity at I(Q) 
 
 
     ! start timer, do pairwise calculations
@@ -85,7 +86,7 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
                     ! turns out because of weird symmetry we can 
                     ! ignore the complex part (since the summation over
                     ! all pairs is symmetric and therefore real)
-                    atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=real64)
+                    atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
                     radial_contrib = sinc(dst) / dst
 
                     est = est + atomic_contrib * radial_contrib

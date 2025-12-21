@@ -1,6 +1,17 @@
-!! Returns the form factor for a given element
+!> @brief Complete form factor calculation for X-ray scattering
+!>
+!! @details
+!! Computes the complete atomic form factor by combining the atomic form
+!! factor f0(Q) with anomalous scattering corrections f1 and f2:
+!!
+!!   form_fact(Q, elm) = f0(Q, elm) + f1(elm) + i*f2(elm)
+!!
+!! where:
+!!   - f0(Q) is the normal atomic scattering factor (Q-dependent)
+!!   - f1 is the real anomalous correction (dispersion correction)
+!!   - f2 is the imaginary anomalous correction (absorption)
 module form_fact_mod
-    use iso_fortran_env, only: real64
+    use iso_c_binding, only: c_double
     use f0_mod, only: get_f0
     use f1_f2_mod, only: get_f1_f2
     implicit none
@@ -10,21 +21,36 @@ module form_fact_mod
     
 contains
 
-    ! Computes form_fact(q, elm) = f0(q, elm) + f1(elm) + i*f2(elm)
+    !> @brief Compute complete atomic form factor with anomalous corrections
+    !>
+    !! @details
+    !! Computes the complex atomic form factor by combining:
+    !!   - f0(Q): Q-dependent atomic scattering factor
+    !!   - f1: Real anomalous scattering correction
+    !!   - f2: Imaginary anomalous scattering correction
+    !!
+    !! Result: ff = (f0 + f1) + i*f2
+    !! 
+    !! If element is not found, returns (0,0) and status = -1
+    !! @param[in]  q      Scattering vector magnitude (sin θ)/λ in Å⁻¹
+    !! @param[in]  elm    Element symbol (case-insensitive, e.g., 'Fe', 'Cu')
+    !! @param[out] status Return status: 0 = success, -1 = element not found
+    !! 
+    !! @return ff Complex form factor
     function form_fact(q, elm, status) result(ff)
-        real(real64), intent(in) :: q
+        real(c_double), intent(in) :: q
         character(len=*), intent(in) :: elm
         integer, intent(out) :: status
-        complex(real64) :: ff
+        complex(c_double) :: ff
         
-        real(real64) :: f0_val, f1, f2
+        real(c_double) :: f0_val, f1, f2
         
         ! Get anomalous scattering factors f1 and f2
         call get_f1_f2(elm, f1, f2, status)
         
         if (status /= 0) then
             ! Element not found, return zero and error status
-            ff = cmplx(0.0_real64, 0.0_real64, kind=real64)
+            ff = cmplx(0.0_c_double, 0.0_c_double, kind=c_double)
             return
         end if
         
@@ -32,7 +58,7 @@ contains
         f0_val = get_f0(q, elm)
         
         ! Construct complex result: real = f1 + f0, imaginary = f2
-        ff = cmplx(f1 + f0_val, f2, kind=real64)
+        ff = cmplx(f1 + f0_val, f2, kind=c_double)
         
     end function form_fact
 

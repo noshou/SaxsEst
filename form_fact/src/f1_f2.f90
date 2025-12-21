@@ -1,28 +1,23 @@
-!===============================================================================
-! Module: f1_f2_mod
-!
-! Description:
-!   Provides anomalous scattering factors f1 and f2 for X-ray diffraction
-!
-! Background:
-!   Anomalous scattering factors (f' and f'', or f1 and f2) account for
-!   energy-dependent corrections to atomic scattering factors near
-!   absorption edges. These values are critical for accurate structure
-!   factor calculations in X-ray crystallography.
-!
-! Usage:
-!   use f1_f2_mod, only: get_f1_f2
-!   real(8) :: f1, f2
-!   integer :: status
-!   call get_f1_f2('Fe', f1, f2, status)
-!   if (status == 0) then
-!       ! Successfully retrieved f1 and f2 for iron
-!   end if
-!
-! Public Interface:
-!   get_f1_f2(elm, f1, f2, status) - Retrieve f1 and f2 for an element
-!
-!===============================================================================
+!> @brief Anomalous scattering factors f1 and f2 for X-ray diffraction
+!>
+!! @details
+!! Provides anomalous scattering factors f1 and f2 for X-ray diffraction.
+!!
+!! Anomalous scattering factors (f' and f'', or f1 and f2) account for
+!! energy-dependent corrections to atomic scattering factors near
+!! absorption edges. These values are critical for accurate structure
+!! factor calculations in X-ray crystallography.
+!!
+!! @par Usage:
+!! @code{.f90}
+!!   use f1_f2_mod, only: get_f1_f2
+!!   real(8) :: f1, f2
+!!   integer :: status
+!!   call get_f1_f2('Fe', f1, f2, status)
+!!   if (status == 0) then
+!!       ! Successfully retrieved f1 and f2 for iron
+!!   end if
+!! @endcode
 module f1_f2_mod
     implicit none
     private
@@ -34,10 +29,10 @@ module f1_f2_mod
     ! Module Data
     !---------------------------------------------------------------------------
 
-    ! Number of elements in lookup table
+    !> Number of elements in lookup table
     integer, parameter :: n_elements = 75
 
-    ! Element symbols (lowercase)
+    !> Element symbols (lowercase)
     character(len=2), dimension(n_elements), parameter :: elements = [ &
         'ac', &
         'ag', &
@@ -115,8 +110,8 @@ module f1_f2_mod
         'yb', &
         'zn' ]
 
-    ! f1 values (real part of anomalous scattering factor)
-    ! Also known as f' or Δf'
+    !> f1 values (real part of anomalous scattering factor)
+    !! Also known as f' or Δf'
     real(8), dimension(n_elements), parameter :: f1_values = [ &
         8.431760e+01, &
         4.672180e+01, &
@@ -194,8 +189,8 @@ module f1_f2_mod
         6.781950e+01, &
         2.969520e+01 ]
 
-    ! f2 values (imaginary part of anomalous scattering factor)
-    ! Also known as f'' or Δf''
+    !> f2 values (imaginary part of anomalous scattering factor)
+    !! Also known as f'' or Δf''
     real(8), dimension(n_elements), parameter :: f2_values = [ &
         6.050520e+00, &
         2.003310e+00, &
@@ -275,24 +270,17 @@ module f1_f2_mod
 
 contains
 
-    !---------------------------------------------------------------------------
-    ! Subroutine: get_f1_f2
-    !
-    ! Description:
-    !   Retrieves the anomalous scattering factors f1 and f2 for a given energy level
-    !
-    ! Parameters:
-    !   elm    [in]  - Element symbol (e.g., 'Fe', 'Cu', 'Zn')
-    !                  Case-insensitive, numeric suffixes ignored
-    !   f1     [out] - Real part of anomalous scattering factor (f')
-    !   f2     [out] - Imaginary part of anomalous scattering factor (f'')
-    !   status [out] - Return status: 0 = success, -1 = element not found
-    !
-    ! Example:
-    !   real(8) :: f1_fe, f2_fe
-    !   integer :: stat
-    !   call get_f1_f2('Fe', f1_fe, f2_fe, stat)
-    !---------------------------------------------------------------------------
+    !> @brief Retrieve anomalous scattering factors f1 and f2 for a given element
+    !>
+    !! @details
+    !! Retrieves the anomalous scattering factors f1 and f2 for a given energy level.
+    !! Element symbol is case-insensitive and numeric suffixes are ignored.
+    !!
+    !! @param[in]  elm    Element symbol (e.g., 'Fe', 'Cu', 'Zn')
+    !! @param[out] f1     Real part of anomalous scattering factor (f')
+    !! @param[out] f2     Imaginary part of anomalous scattering factor (f'')
+    !! @param[out] status Return status: 0 = success, -1 = element not found
+    !!
     subroutine get_f1_f2(elm, f1, f2, status)
         character(len=*), intent(in) :: elm
         real(8), intent(out) :: f1, f2

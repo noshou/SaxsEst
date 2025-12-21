@@ -30,31 +30,26 @@ let generate_fortran_module json_fp =
   let lookup = from_file json_fp in
 
   (* Write module header with documentation *)
-  Printf.fprintf oc "!===============================================================================\n";
-  Printf.fprintf oc "! Module: f1_f2_mod\n";
-  Printf.fprintf oc "!\n";
-  Printf.fprintf oc "! Description:\n";
-  Printf.fprintf oc "!   Provides anomalous scattering factors f1 and f2 for X-ray diffraction\n";
-  Printf.fprintf oc "!\n";
-  Printf.fprintf oc "! Background:\n";
-  Printf.fprintf oc "!   Anomalous scattering factors (f' and f'', or f1 and f2) account for\n";
-  Printf.fprintf oc "!   energy-dependent corrections to atomic scattering factors near\n";
-  Printf.fprintf oc "!   absorption edges. These values are critical for accurate structure\n";
-  Printf.fprintf oc "!   factor calculations in X-ray crystallography.\n";
-  Printf.fprintf oc "!\n";
-  Printf.fprintf oc "! Usage:\n";
-  Printf.fprintf oc "!   use f1_f2_mod, only: get_f1_f2\n";
-  Printf.fprintf oc "!   real(8) :: f1, f2\n";
-  Printf.fprintf oc "!   integer :: status\n";
-  Printf.fprintf oc "!   call get_f1_f2('Fe', f1, f2, status)\n";
-  Printf.fprintf oc "!   if (status == 0) then\n";
-  Printf.fprintf oc "!       ! Successfully retrieved f1 and f2 for iron\n";
-  Printf.fprintf oc "!   end if\n";
-  Printf.fprintf oc "!\n";
-  Printf.fprintf oc "! Public Interface:\n";
-  Printf.fprintf oc "!   get_f1_f2(elm, f1, f2, status) - Retrieve f1 and f2 for an element\n";
-  Printf.fprintf oc "!\n";
-  Printf.fprintf oc "!===============================================================================\n";
+  Printf.fprintf oc "!> @brief Anomalous scattering factors f1 and f2 for X-ray diffraction\n";
+  Printf.fprintf oc "!>\n";
+  Printf.fprintf oc "!! @details\n";
+  Printf.fprintf oc "!! Provides anomalous scattering factors f1 and f2 for X-ray diffraction.\n";
+  Printf.fprintf oc "!!\n";
+  Printf.fprintf oc "!! Anomalous scattering factors (f' and f'', or f1 and f2) account for\n";
+  Printf.fprintf oc "!! energy-dependent corrections to atomic scattering factors near\n";
+  Printf.fprintf oc "!! absorption edges. These values are critical for accurate structure\n";
+  Printf.fprintf oc "!! factor calculations in X-ray crystallography.\n";
+  Printf.fprintf oc "!!\n";
+  Printf.fprintf oc "!! @par Usage:\n";
+  Printf.fprintf oc "!! @code{.f90}\n";
+  Printf.fprintf oc "!!   use f1_f2_mod, only: get_f1_f2\n";
+  Printf.fprintf oc "!!   real(8) :: f1, f2\n";
+  Printf.fprintf oc "!!   integer :: status\n";
+  Printf.fprintf oc "!!   call get_f1_f2('Fe', f1, f2, status)\n";
+  Printf.fprintf oc "!!   if (status == 0) then\n";
+  Printf.fprintf oc "!!       ! Successfully retrieved f1 and f2 for iron\n";
+  Printf.fprintf oc "!!   end if\n";
+  Printf.fprintf oc "!! @endcode\n";
   Printf.fprintf oc "module f1_f2_mod\n";
   Printf.fprintf oc "    implicit none\n";
   Printf.fprintf oc "    private\n\n";
@@ -72,11 +67,11 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
   Printf.fprintf oc "    ! Module Data\n";
   Printf.fprintf oc "    !---------------------------------------------------------------------------\n\n";
-  Printf.fprintf oc "    ! Number of elements in lookup table\n";
+  Printf.fprintf oc "    !> Number of elements in lookup table\n";
   Printf.fprintf oc "    integer, parameter :: n_elements = %d\n\n" (List.length elements);
   
   (* Write element names array *)
-  Printf.fprintf oc "    ! Element symbols (lowercase)\n";
+  Printf.fprintf oc "    !> Element symbols (lowercase)\n";
   Printf.fprintf oc "    character(len=2), dimension(n_elements), parameter :: elements = [ &\n";
   List.iteri (fun i elm ->
     let padding = String.make (max 0 (2 - String.length elm)) ' ' in
@@ -86,8 +81,8 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "\n";
   
   (* Write f1 values array *)
-  Printf.fprintf oc "    ! f1 values (real part of anomalous scattering factor)\n";
-  Printf.fprintf oc "    ! Also known as f' or Δf'\n";
+  Printf.fprintf oc "    !> f1 values (real part of anomalous scattering factor)\n";
+  Printf.fprintf oc "    !! Also known as f' or Δf'\n";
   Printf.fprintf oc "    real(8), dimension(n_elements), parameter :: f1_values = [ &\n";
   List.iteri (fun i elm ->
     let (f1, _) = get_f1_f2 elm lookup in
@@ -97,8 +92,8 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "\n";
   
   (* Write f2 values array *)
-  Printf.fprintf oc "    ! f2 values (imaginary part of anomalous scattering factor)\n";
-  Printf.fprintf oc "    ! Also known as f'' or Δf''\n";
+  Printf.fprintf oc "    !> f2 values (imaginary part of anomalous scattering factor)\n";
+  Printf.fprintf oc "    !! Also known as f'' or Δf''\n";
   Printf.fprintf oc "    real(8), dimension(n_elements), parameter :: f2_values = [ &\n";
   List.iteri (fun i elm ->
     let (_, f2) = get_f1_f2 elm lookup in
@@ -111,24 +106,17 @@ let generate_fortran_module json_fp =
   Printf.fprintf oc "contains\n\n";
   
   (* Write lookup function *)
-  Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
-  Printf.fprintf oc "    ! Subroutine: get_f1_f2\n";
-  Printf.fprintf oc "    !\n";
-  Printf.fprintf oc "    ! Description:\n";
-  Printf.fprintf oc "    !   Retrieves the anomalous scattering factors f1 and f2 for a given energy level\n";
-  Printf.fprintf oc "    !\n";
-  Printf.fprintf oc "    ! Parameters:\n";
-  Printf.fprintf oc "    !   elm    [in]  - Element symbol (e.g., 'Fe', 'Cu', 'Zn')\n";
-  Printf.fprintf oc "    !                  Case-insensitive, numeric suffixes ignored\n";
-  Printf.fprintf oc "    !   f1     [out] - Real part of anomalous scattering factor (f')\n";
-  Printf.fprintf oc "    !   f2     [out] - Imaginary part of anomalous scattering factor (f'')\n";
-  Printf.fprintf oc "    !   status [out] - Return status: 0 = success, -1 = element not found\n";
-  Printf.fprintf oc "    !\n";
-  Printf.fprintf oc "    ! Example:\n";
-  Printf.fprintf oc "    !   real(8) :: f1_fe, f2_fe\n";
-  Printf.fprintf oc "    !   integer :: stat\n";
-  Printf.fprintf oc "    !   call get_f1_f2('Fe', f1_fe, f2_fe, stat)\n";
-  Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
+  Printf.fprintf oc "    !> @brief Retrieve anomalous scattering factors f1 and f2 for a given element\n";
+  Printf.fprintf oc "    !>\n";
+  Printf.fprintf oc "    !! @details\n";
+  Printf.fprintf oc "    !! Retrieves the anomalous scattering factors f1 and f2 for a given energy level.\n";
+  Printf.fprintf oc "    !! Element symbol is case-insensitive and numeric suffixes are ignored.\n";
+  Printf.fprintf oc "    !!\n";
+  Printf.fprintf oc "    !! @param[in]  elm    Element symbol (e.g., 'Fe', 'Cu', 'Zn')\n";
+  Printf.fprintf oc "    !! @param[out] f1     Real part of anomalous scattering factor (f')\n";
+  Printf.fprintf oc "    !! @param[out] f2     Imaginary part of anomalous scattering factor (f'')\n";
+  Printf.fprintf oc "    !! @param[out] status Return status: 0 = success, -1 = element not found\n";
+  Printf.fprintf oc "    !!\n";
   Printf.fprintf oc "    subroutine get_f1_f2(elm, f1, f2, status)\n";
   Printf.fprintf oc "        character(len=*), intent(in) :: elm\n";
   Printf.fprintf oc "        real(8), intent(out) :: f1, f2\n";

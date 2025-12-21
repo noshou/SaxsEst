@@ -58,27 +58,19 @@ let f0_toFortran csv_fp =
 	let oc = open_out "f0.f90" in 
 	
 	(* Write module header with documentation *)
-	Printf.fprintf oc "!===============================================================================\n";
-	Printf.fprintf oc "! Module: f0_mod\n";
-	Printf.fprintf oc "!\n";
-	Printf.fprintf oc "! Description:\n";
-	Printf.fprintf oc "!   Atomic form factors f0 for X-ray scattering calculations.\n";
-	Printf.fprintf oc "!   f0(Q) represents the scattering amplitude of an atom as a function\n";
-	Printf.fprintf oc "!   of the scattering vector Q = (sin θ)/λ.\n";
-	Printf.fprintf oc "!\n";
-	Printf.fprintf oc "! Data Source:\n";
-	Printf.fprintf oc "!   International Tables for Crystallography Vol. C\n";
-	Printf.fprintf oc "!   DOI: 10.1107/97809553602060000600\n";
-	Printf.fprintf oc "!\n";
-	Printf.fprintf oc "! Usage:\n";
-	Printf.fprintf oc "!   use f0_mod, only: get_f0\n";
-	Printf.fprintf oc "!   real(real64) :: f0_value\n";
-	Printf.fprintf oc "!   f0_value = get_f0(q=0.25_real64, element='Fe')\n";
-	Printf.fprintf oc "!\n";
-	Printf.fprintf oc "! Note: Q values are rounded to nearest 0.01 Å⁻¹\n";
-	Printf.fprintf oc "!===============================================================================\n";
+	Printf.fprintf oc "!> @brief Atomic form factors f0 for X-ray scattering calculations\n";
+	Printf.fprintf oc "!>\n";
+	Printf.fprintf oc "!! @details\n";
+	Printf.fprintf oc "!! Atomic form factors f0 for X-ray scattering calculations.\n";
+	Printf.fprintf oc "!! f0(Q) represents the scattering amplitude of an atom as a function\n";
+	Printf.fprintf oc "!! of the scattering vector Q = (sin θ)/λ.\n";
+	Printf.fprintf oc "!!\n";
+	Printf.fprintf oc "!! Data Source:\n";
+	Printf.fprintf oc "!!   International Tables for Crystallography Vol. C\n";
+	Printf.fprintf oc "!!   DOI: 10.1107/97809553602060000600\n";
+	Printf.fprintf oc "!!\n";
 	Printf.fprintf oc "module f0_mod\n";
-	Printf.fprintf oc "    use iso_fortran_env, only: real64\n";
+	Printf.fprintf oc "    use iso_c_binding, only: c_double\n";
 	Printf.fprintf oc "    implicit none\n\n";
 	Printf.fprintf oc "    private\n\n";
 	
@@ -90,12 +82,13 @@ let f0_toFortran csv_fp =
 	Printf.fprintf oc "    ! Module Data\n";
 	Printf.fprintf oc "    !---------------------------------------------------------------------------\n\n";
 	
-	Printf.fprintf oc "    ! Number of elements and Q values in lookup table\n";
+	Printf.fprintf oc "    !> Number of elements in lookup table\n";
 	Printf.fprintf oc "    integer, parameter :: n_elements = %d\n" (List.length e); 
+	Printf.fprintf oc "    !> Number of Q values in lookup table\n";
 	Printf.fprintf oc "    integer, parameter :: n_q_values = %d\n\n" (List.length q);
 	
 	(* write element names to array *)
-	Printf.fprintf oc "    ! Element/ion symbols (lowercase)\n";
+	Printf.fprintf oc "    !> Element/ion symbols (lowercase)\n";
 	Printf.fprintf oc "    character(len=4), parameter :: elements(%d) = [ &\n" (List.length e);
 	List.iteri (
 		fun idx element -> 
@@ -107,29 +100,29 @@ let f0_toFortran csv_fp =
     Printf.fprintf oc " ]\n\n";
     
 	(* write q values to array *)
-	Printf.fprintf oc "    ! Scattering vector magnitudes: Q = (sin θ)/λ in Å⁻¹\n";
-	Printf.fprintf oc "    ! Range: 0 to ~2.0 Å⁻¹ in increments of 0.01 Å⁻¹\n";
-	Printf.fprintf oc "    real(real64), parameter :: q_values(%d) = [ &\n" (List.length q);
+	Printf.fprintf oc "    !> Scattering vector magnitudes: Q = (sin θ)/λ in Å⁻¹\n";
+	Printf.fprintf oc "    !! Range: 0 to ~2.0 Å⁻¹ in increments of 0.01 Å⁻¹\n";
+	Printf.fprintf oc "    real(c_double), parameter :: q_values(%d) = [ &\n" (List.length q);
 	List.iteri (
     fun idx q -> 
         if (idx == 0) then 
-            Printf.fprintf oc "            %f_real64" q 
+            Printf.fprintf oc "            %f_c_double" q 
         else
-            Printf.fprintf oc ", &\n            %f_real64" q
+            Printf.fprintf oc ", &\n            %f_c_double" q
 	) q;
 	Printf.fprintf oc " ]\n\n";
 
 	(* write f0_data*)
-	Printf.fprintf oc "    ! Form factor data: f0(Q) for each element\n";
-	Printf.fprintf oc "    ! Rows: Q values, Columns: Elements\n";
-	Printf.fprintf oc "    ! f0 decreases with increasing Q due to destructive interference\n";
-	Printf.fprintf oc "    real(real64), parameter :: f0_data(%d,%d) = reshape([ &\n" (List.length q) (List.length e);
+	Printf.fprintf oc "    !> Form factor data: f0(Q) for each element\n";
+	Printf.fprintf oc "    !! Rows: Q values, Columns: Elements\n";
+	Printf.fprintf oc "    !! f0 decreases with increasing Q due to destructive interference\n";
+	Printf.fprintf oc "    real(c_double), parameter :: f0_data(%d,%d) = reshape([ &\n" (List.length q) (List.length e);
 	List.iter (
     let idx = ref 0 in 
     fun row -> List.iter (
         fun col -> 
-            if !idx == 0 then Printf.fprintf oc "            %f_real64" col 
-            else Printf.fprintf oc ", &\n            %f_real64" col;
+            if !idx == 0 then Printf.fprintf oc "            %f_c_double" col 
+            else Printf.fprintf oc ", &\n            %f_c_double" col;
         idx := !idx + 1;
     ) row  
 	) f;
@@ -138,7 +131,10 @@ let f0_toFortran csv_fp =
 	(* methods *)
 	Printf.fprintf oc "contains\n\n";
 
-  Printf.fprintf oc "    ! Convert string to lowercase\n";
+  Printf.fprintf oc "    !> @brief Convert string to lowercase\n";
+  Printf.fprintf oc "    !! @param[in] str Input string\n";
+  Printf.fprintf oc "    !!\n";
+  Printf.fprintf oc "    !! @return lower_str Lowercase version of input string\n";
   Printf.fprintf oc "    pure function to_lower(str) result(lower_str)\n";
   Printf.fprintf oc "            character(len=*), intent(in) :: str\n";
   Printf.fprintf oc "            character(len=len(str)) :: lower_str\n";
@@ -152,34 +148,28 @@ let f0_toFortran csv_fp =
 
 
 	(* initialize f0 data *)
-	Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
-	Printf.fprintf oc "    ! Function: get_f0\n";
-	Printf.fprintf oc "    !\n";
-	Printf.fprintf oc "    ! Description:\n";
-	Printf.fprintf oc "    !   Returns the atomic form factor for a given element at a specific Q.\n";
-	Printf.fprintf oc "    !\n";
-	Printf.fprintf oc "    ! Arguments:\n";
-	Printf.fprintf oc "    !   q       [in]  - Scattering vector magnitude (sin θ)/λ in Å⁻¹\n";
-	Printf.fprintf oc "    !   element [in]  - Element symbol (case-insensitive, e.g., 'Fe', 'cu')\n";
-	Printf.fprintf oc "    !\n";
-	Printf.fprintf oc "    ! Returns:\n";
-	Printf.fprintf oc "    !   f0_val - Atomic form factor (electrons)\n";
-	Printf.fprintf oc "    !\n";
-	Printf.fprintf oc "    ! Notes:\n";
-	Printf.fprintf oc "    !   - Q is rounded to nearest 0.01 Å⁻¹ for lookup\n";
-	Printf.fprintf oc "    !   - Program stops with error if element or Q not found\n";
-	Printf.fprintf oc "    !---------------------------------------------------------------------------\n";
+	Printf.fprintf oc "    !> @brief Returns the atomic form factor for a given element at a specific Q\n";
+	Printf.fprintf oc "    !>\n";
+	Printf.fprintf oc "    !! @details\n";
+	Printf.fprintf oc "    !! Returns the atomic form factor for a given element at a specific Q.\n";
+	Printf.fprintf oc "    !!\n";
+	Printf.fprintf oc "    !! @param[in] q Scattering vector magnitude (sin θ)/λ in Å⁻¹\n";
+	Printf.fprintf oc "    !! @param[in] element Element symbol (case-insensitive, e.g., 'Fe', 'cu')\n";
+	Printf.fprintf oc "    !!\n";
+	Printf.fprintf oc "    !! @return f0_val Atomic form factor (electrons)\n";
+	Printf.fprintf oc "    !!\n";
+	Printf.fprintf oc "    !! @warning Program stops with error if element or Q not found\n";
 	Printf.fprintf oc "    function get_f0(q, element) result(f0_val)\n";
-	Printf.fprintf oc "            real(real64), intent(in) :: q\n";
+	Printf.fprintf oc "            real(c_double), intent(in) :: q\n";
 	Printf.fprintf oc "            character(len=*), intent(in) :: element\n";
-	Printf.fprintf oc "            real(real64) :: f0_val\n";
+	Printf.fprintf oc "            real(c_double) :: f0_val\n";
 	Printf.fprintf oc "            integer :: q_idx, elem_idx, i\n";
-	Printf.fprintf oc "            real(real64) :: q_round\n";
+	Printf.fprintf oc "            real(c_double) :: q_round\n";
 	Printf.fprintf oc "            character(len=10) :: element_lower\n\n";
 	Printf.fprintf oc "            ! Convert element to lower case\n";
 	Printf.fprintf oc "            element_lower = to_lower(element)\n\n";
 	Printf.fprintf oc "            ! Round q to nearest 0.01 Å⁻¹\n";
-	Printf.fprintf oc "            q_round = ceiling(q * 100_real64) / 100_real64\n\n";
+	Printf.fprintf oc "            q_round = ceiling(q * 100_c_double) / 100_c_double\n\n";
 	Printf.fprintf oc "            ! Find element index\n";
 	Printf.fprintf oc "            elem_idx = -1\n";
 	Printf.fprintf oc "            do i = 1, n_elements\n";
@@ -196,7 +186,7 @@ let f0_toFortran csv_fp =
 	Printf.fprintf oc "            ! Find Q index\n";
 	Printf.fprintf oc "            q_idx = -1\n";
 	Printf.fprintf oc "            do i = 1, n_q_values\n";
-	Printf.fprintf oc "                    if (abs(q_values(i) - q_round) < 1.0e-6_real64) then\n";
+	Printf.fprintf oc "                    if (abs(q_values(i) - q_round) < 1.0e-6_c_double) then\n";
 	Printf.fprintf oc "                            q_idx = i\n";
 	Printf.fprintf oc "                            EXIT\n";
 	Printf.fprintf oc "                    end if\n";

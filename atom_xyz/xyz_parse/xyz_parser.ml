@@ -137,7 +137,7 @@ let xyz_toFortran xyz_fp =
   Printf.fprintf oc "!! Atomic coordinate data from XYZ file\n";
   Printf.fprintf oc "!! This module provides raw coordinate data for use with atom_mod\n";
   Printf.fprintf oc "module %s_mod\n" base_name;
-  Printf.fprintf oc "    use iso_fortran_env, only: real64\n";
+  Printf.fprintf oc "    use iso_c_binding, only: c_double\n";
   Printf.fprintf oc "    implicit none\n\n";
   Printf.fprintf oc "    private\n\n";
   
@@ -164,34 +164,34 @@ let xyz_toFortran xyz_fp =
   
   (* write x coordinates *)
   Printf.fprintf oc "    ! X coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(real64), parameter :: x_coords(%d) = [ &\n" (List.length x_coords);
+  Printf.fprintf oc "    real(c_double), parameter :: x_coords(%d) = [ &\n" (List.length x_coords);
   List.iteri (fun idx x ->
     if idx == 0 then
-      Printf.fprintf oc "            %f_real64" x
+      Printf.fprintf oc "            %f_c_double" x
     else
-      Printf.fprintf oc ", &\n            %f_real64" x
+      Printf.fprintf oc ", &\n            %f_c_double" x
   ) x_coords;
   Printf.fprintf oc " ]\n\n";
   
   (* write y coordinates *)
   Printf.fprintf oc "    ! Y coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(real64), parameter :: y_coords(%d) = [ &\n" (List.length y_coords);
+  Printf.fprintf oc "    real(c_double), parameter :: y_coords(%d) = [ &\n" (List.length y_coords);
   List.iteri (fun idx y ->
     if idx == 0 then
-      Printf.fprintf oc "            %f_real64" y
+      Printf.fprintf oc "            %f_c_double" y
     else
-      Printf.fprintf oc ", &\n            %f_real64" y
+      Printf.fprintf oc ", &\n            %f_c_double" y
   ) y_coords;
   Printf.fprintf oc " ]\n\n";
   
   (* write z coordinates *)
   Printf.fprintf oc "    ! Z coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(real64), parameter :: z_coords(%d) = [ &\n" (List.length z_coords);
+  Printf.fprintf oc "    real(c_double), parameter :: z_coords(%d) = [ &\n" (List.length z_coords);
   List.iteri (fun idx z ->
     if idx == 0 then
-      Printf.fprintf oc "            %f_real64" z
+      Printf.fprintf oc "            %f_c_double" z
     else
-      Printf.fprintf oc ", &\n            %f_real64" z
+      Printf.fprintf oc ", &\n            %f_c_double" z
   ) z_coords;
   Printf.fprintf oc " ]\n\n";
   
