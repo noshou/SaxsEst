@@ -53,9 +53,10 @@ module kdt
 
     !> Container for frequency array
     type :: frequency_list
-        character(len=4), allocatable :: names(:) ! list of weight names (element names) 
-        type(frequency), allocatable  :: items(:)
-        integer :: n_items = 0  ! Track how many are actually used
+        character(len=4), allocatable :: names(:)       !> name of weights
+        type(frequency), allocatable  :: items(:)       !> list of weights
+        integer                       :: n_items = 0    !> number of weights
+        real(c_double), allocatable   :: probs(:)       !> probability of each weight
     end type frequency_list
 
     contains
@@ -67,8 +68,8 @@ module kdt
             character(len=4), intent(in) :: n
             integer :: i, found_idx
             logical :: found
-            type(frequency), allocatable :: temp(:)
-            character(len=4), allocatable :: temp_names(:)
+            type(frequency), allocatable    :: temp(:)
+            character(len=4), allocatable   :: temp_names(:)
             integer :: new_capacity
 
             found = .false.  ! Initialize here, not in declaration
@@ -260,15 +261,22 @@ module kdt
         !! Tree alternates splitting axes at each level (X -> Y -> Z -> X...).
         !!
         !! @param atoms Array of atoms to build tree from
-        !! @param axs Initial splitting axis (typically X)
+        !! @param axs_opt Initial splitting axis (default: X)
         !! @param bin_size_opt Optional bin size for median algorithm (default: 5)
         !!
         !! @return Constructed K-D tree
-        function kdt_creator(atoms, axs, bin_size_opt) result(t)
+        function kdt_creator(atoms, axs_opt, bin_size_opt) result(t)
             type(atom), dimension(:), intent(in) :: atoms
-            class(hype), intent(in) :: axs
-            type(kdt) :: t
             
+            ! get axs; default to X-axis
+            class(hype), intent(in), optional :: axs_opt
+            class(hype), allocatable :: axs            
+            if (present(axs_opt)) then 
+                allocate(axs, source=axs_opt)
+            else 
+                allocate(X :: axs)
+            end if 
+
             ! optional bin size of splitting (defaults to 5)
             integer, intent(in), optional :: bin_size_opt
             integer :: bin_size
@@ -279,6 +287,7 @@ module kdt
             end if
             
             ! call kdt_creator_method
+            type(kdt) :: t
             t = call kdt_creator_method(atoms, axs, bin_size, .true.)
 
         end function kdt_creator
@@ -300,6 +309,7 @@ module kdt
             if (reset) then
                 if (allocated(freq%items)) deallocate(freq%items)
                 if (allocated(freq%names)) deallocate(freq%names)
+                if (allocated(freq%probs)) deallocate(freq%probs)
                 freq%n_items = 0
             end if
 
@@ -308,7 +318,7 @@ module kdt
             type(atom) :: pivot
             type(atom), allocatable :: left_tree(:)
             type(atom), allocatable :: right_tree(:)
-            integer :: i, n, left_incr, right_incr
+            integer :: i, j, n, left_incr, right_incr
 
             ! allocate arrays for right and left subtree;
             ! to be safe we just made it the size of atoms,
@@ -369,6 +379,11 @@ module kdt
             deallocate(left_tree)
             deallocate(right_tree)
 
+            ! add probabilities
+            allocate(freq%probs(size(freq%items)))
+            do j = 1, size(freq%items) 
+                freq%probs(j) = real(freq%items(j)%freq, kind=c_double) / real(n_items, kind=c_double)
+            end do 
 
             ! if root node, add frequency
             if (reset) then; t%freq_dist = freq; end if
