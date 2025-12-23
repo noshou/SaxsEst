@@ -99,13 +99,13 @@ void fortran_to_ocaml(
 	}
 	
 	if (closure != NULL) {
-		caml_callback2(*closure, oc_lst, oc_nme);
+		caml_callback2(*closure, ocm_lst, ocm_nme);
 	}
 	
 	CAMLreturn0;
 }
 
 void init_ocaml() {
-    char *argv[] = { "oc_out", NULL };
+    char *argv[] = { "csv_out", NULL };
     caml_startup(argv);
 }
