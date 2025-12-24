@@ -21,12 +21,14 @@
 !! @param norm      Normalization constant (I_real = I_calc/norm)
 !! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
 !! @param n_q       Number of q values
+!! @param name      Name of dataset
 !!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_estimate)
+function debeye(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estimate)
 
     ! set arrays
+    character(len=*), intent(in) :: name
     type(atom), dimension(:), intent(in) :: atoms
     integer, intent(in) :: n_atoms
     real(c_double), dimension(n_q), intent(in) :: q_vals
@@ -35,7 +37,7 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     real(c_double) :: q_val 
 
     ! timing variables
-    real(0_c_double) :: timing
+    integer(0_c_int) :: timing
     integer :: start, finish, rate
 
     ! output data
@@ -46,10 +48,10 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     type(atom) :: atom_j
     complex(c_double) :: atom_i_ff
     complex(c_double) :: atom_j_ff
-    real(c_double) :: radial_contrib !! sinc(|Q-dst|)/(|Q-dst)
-    real(c_double) :: atomic_contrib !! ff_i * conj(ff_j)
+    real(c_double) :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double) :: atomic_contrib ! ff_i * conj(ff_j)
     real(c_double) :: dst
-    real(c_double) :: est ! estimate of intensity at I(Q) 
+    real(c_double) :: est            ! estimate of intensity at I(Q) 
 
 
     ! start timer, do pairwise calculations
@@ -89,9 +91,9 @@ function debeye_classic(atoms, n_atoms, norm, q_vals, n_q) result(intensity_esti
     
     ! stop timer
     call system_clock(finish)
-    timing = real(finish - start) / real(rate)
+    timing = (finish - start) / rate
     
     ! output results
-    intensity_estimate = new_estimate(timing, q_vals, intensity)
+    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
 
-end function debeye_classic
+end function debeye

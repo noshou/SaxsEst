@@ -12,8 +12,8 @@
 !! @param[in] e      Epsilon parameter, must satisfy 0 < epsilon < 1 
 !! @param[in] u      Rounding flag: .true. for ceiling, .false. for floor (logical)
 !!
-!! @return w_est     Estimated weight
-function propest(w, f, a, e, u) result(w_est)
+!! @return w_est     Estimated form factor weight (W)
+function prop_est(w, f, a, e, u) result(w_est)
     use, intrinsic :: iso_c_binding, only: c_double
     implicit none
     

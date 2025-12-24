@@ -9,7 +9,7 @@ subroutine add_freq(flist, w, n)
     character(len=4), allocatable   :: temp_names(:)
     integer :: new_capacity
 
-    found = .false.  ! Initialize here, not in declaration
+    found = .false.
     found_idx = -1
 
     ! Check if item is already in frequency list

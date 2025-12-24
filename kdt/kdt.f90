@@ -1,5 +1,5 @@
 !> K-D tree implementation
-module kdt
+module kdt_mod
 
     use iso_c_binding, only: c_double
     use atoms_mod
@@ -15,16 +15,13 @@ module kdt
     end type hype
 
     !> X-axis hyperplane
-    type, extends(hype) :: X
-    end type X
+    type, extends(hype) :: X; end type X
 
     !> Y-axis hyperplane
-    type, extends(hype) :: Y
-    end type Y
+    type, extends(hype) :: Y; end type Y
 
     !> Z-axis hyperplane
-    type, extends(hype) :: Z
-    end type Z
+    type, extends(hype) :: Z; end type Z
 
     !> K-D tree data structure (3 dimensions; X, Y, Z)
     type :: kdt
@@ -64,4 +61,4 @@ module kdt
         include "moms.f90"
         include "creator.f90"
         include "radial_search.f90"
-end module kdt
+end module kdt_mod
