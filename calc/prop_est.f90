@@ -10,19 +10,17 @@
 !! @param[in] f      Array of frequencies   (must be same size as w)
 !! @param[in] a      Advice parameter, should be >= number of nodes 
 !! @param[in] e      Epsilon parameter, must satisfy 0 < epsilon < 1 
-!! @param[in] u      Rounding flag: .true. for ceiling, .false. for floor (logical)
+!! @param[in] c      Rounding flag: .true. for ceiling, .false. for floor (logical)
 !!
 !! @return w_est     Estimated form factor weight (W)
-function prop_est(w, f, a, e, u) result(w_est)
-    use, intrinsic :: iso_c_binding, only: c_double
-    implicit none
+pure function prop_est(w, f, a, e, c) result(w_est)
     
     ! Input parameters
     complex(c_double), dimension(:), intent(in) :: w !< Array of weights
     integer, dimension(:), intent(in) :: f           !< Array of frequencies
     real(c_double), intent(in) :: a                  !< Advice parameter (>= # nodes)
     real(c_double), intent(in) :: e                  !< Epsilon (0 < e < 1)
-    logical, intent(in) :: u                         !< Ceiling flag
+    logical, intent(in) :: c                         !< Ceiling flag
     
     ! Return value
     complex(c_double) :: w_est                       !< Estimated weight
@@ -43,7 +41,7 @@ function prop_est(w, f, a, e, u) result(w_est)
     complex(c_double) :: sum                         !< Accumulator for weighted sum
     
     ! Calculate sample size based on rounding mode
-    if (u) then
+    if (c) then
         ! Ceiling: s = ⌈√(24*a)/e⌉ + 1
         s = ceiling(sqrt(24*a)/e) + 1
     else
@@ -105,4 +103,4 @@ function prop_est(w, f, a, e, u) result(w_est)
     ! Calculate estimated weight: w_est = C(s,2) / sum
     w_est = s_choose_2 / sum
     
-end function propest
+end function prop_est
