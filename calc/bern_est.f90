@@ -14,9 +14,6 @@
 !! @return bernoulli estimator:
 !          thresh is Complex threshold value, or NaN+NaN*i if no valid threshold exists
 function bern_est(w, f, e, l, n, err) result(bern)
-    use, intrinsic :: ieee_arithmetic
-    use, intrinsic :: iso_c_binding
-    implicit none
 
     ! function arguments/parameters
     complex(c_double), dimension(:), intent(in) :: w    !< Array of complex weights
