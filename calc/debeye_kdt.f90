@@ -1,5 +1,5 @@
 !> Calculates the scattering intensity I(Q) using the Debye scattering 
-!! approximation
+!! approximation where atoms j are within radius r of atom i.
 !!
 !!     I(Q) = ∑ᵢ∑ⱼ fᵢ fⱼ* sinc(Q · ||rᵢ - rⱼ||)
 !!
@@ -11,11 +11,15 @@
 !!   - sinc(x) = { 1           if x == 0
 !!               { sin(x) / x  if x != 0
 !!
-!! The time complexity of the algorithm is O(m·n²) where m is 
-!! the number of Q values iterated over, and n is the number of atoms 
-!! in the xyz file.
+!! The time complexity of the algorithm is O(m·k·n·log(n)) 
+!! with worst case O(m·n²). M m is the number of Q values
+!! iterated over, k is the average number of atoms queried in the radius,f
+!! n is the number of atoms in the dataset,
+!! and log(n) is the time it takes to query the kdt tree.
+!! in the xyz file, 
 !!
-!! @param tol       Precision
+!! @param k         kdt tree
+!! @param r         radius to search within
 !! @param atoms     List of atom objects in molecule
 !! @param n_atoms   Number of atoms
 !! @param norm      Normalization constant (I_real = I_calc/norm)
@@ -25,9 +29,10 @@
 !!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function debeye(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estimate)
+function debeye_kdt(k, r, atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estimate)
 
-    ! set arrays
+    type(kdt), intent(in) :: k
+    real(c_double), intent(in) :: r
     character(len=*), intent(in) :: name
     type(atom), dimension(:), intent(in) :: atoms
     integer, intent(in) :: n_atoms
@@ -44,6 +49,7 @@ function debeye(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estima
     type(estimate) :: intensity_estimate
 
     ! variables for loop
+    type(atom), dimension(:) :: atoms_found ! atoms within search radius
     type(atom) :: atom_i
     type(atom) :: atom_j
     complex(c_double) :: atom_i_ff
@@ -53,47 +59,38 @@ function debeye(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estima
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q) 
 
-
-    ! start timer, do pairwise calculations
+    ! start timer
     call system_clock(start, rate)
-        
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         est = 0
         do i = 1, n_atoms
-            atom_i = atoms(i)
-            atom_i_ff = atom_i%get_form_factor(q_val)
             
-            do j = 1, n_atoms    
-                
-                ! edge case: sin(x)/x is assumed to = 1,
-                ! therefore, when i == j (ie: we are at the same atom)
-                ! we add atom_i_ff * conjg(atom_i_ff)
-                if (i == j) then 
-                    est = est + atom_i_ff * conjg(atom_i_ff)
-                else 
-                    atom_j = atoms(j)
-                    atom_j_ff = atom_j%get_form_factor(q_val)
-                    dst = q_val * abs(atom_i%dist_cart(atom_j))
+            atom_i = atoms(i)
+            atom_i_ff = atom_i%get_form_factor(q_vals)
+            
+            ! do search, get list of atoms
+            atoms_found = k%radial_search(atom_i, r)
+            do j = 1, size(atoms_found)
+                atom_j = atoms_found(j)
+                atom_j_ff = atom_j%get_form_factor(q_val)
+                dst = q_val * abs(atom_i%dist_cart(atom_j))
+                atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
+                radial_contrib = sinc(dst)/dst
+                est = est + atomic_contrib * radial_contrib
+            end do 
 
-                    ! turns out because of weird symmetry we can 
-                    ! ignore the complex part (since the summation over
-                    ! all pairs is symmetric and therefore real)
-                    atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
-                    radial_contrib = sinc(dst) / dst
-
-                    est = est + atomic_contrib * radial_contrib
-                end if 
-            end do
-        end do
+            ! since self is not picked up in radial search, 
+            ! we add the case of atom_i_ff * conj(atom_i_ff)
+            est = est + atom_i_ff + conjg(atom_i_ff)
+        end do 
         intensity(q_ij) = est / norm
-    end do 
-    
+    end do
+
     ! stop timer
     call system_clock(finish)
     timing = (finish - start) / rate
-    
-    ! output results
-    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
 
-end function debeye
+    ! output estimate
+    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
+end function debeye_kdt

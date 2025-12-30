@@ -49,7 +49,7 @@ pure function prop_est(w, f, a, e, c) result(w_est)
         s = floor(sqrt(24*a)/e) + 1
     end if 
     
-    ! Calculate factorial of s: s!
+    ! Calculate factorial of s
     s_fact = 1
     s_incr = s
     do while (s_incr > 1)
@@ -57,7 +57,7 @@ pure function prop_est(w, f, a, e, c) result(w_est)
         s_incr = s_incr - 1
     end do 
     
-    ! Calculate factorial of (s-2): (s-2)!
+    ! Calculate factorial of (s-2)
     p_fact = 1
     p_incr = s - 2
     do while (p_incr > 1)

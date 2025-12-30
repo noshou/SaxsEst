@@ -47,7 +47,7 @@ recursive function kdt_creator_method(atoms, axs, bin_size, reset) result(t)
     integer, intent(in) :: bin_size
 
     ! logic for refreshing/updating frequency
-    type(frequency_list), save :: freq
+    type(frequencies), save :: freq
     if (reset) then
         if (allocated(freq%items)) deallocate(freq%items)
         if (allocated(freq%names)) deallocate(freq%names)

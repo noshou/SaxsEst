@@ -7,7 +7,7 @@ module kdt_mod
     private
 
     ! public API
-    public :: kdt, hype, kdt_creator, frequency, frequency_list
+    public :: kdt, hype, kdt_creator, frequency, frequencies
 
     !> Abstract base type representing a hyperplane axis in 3D space
     type, abstract :: hype
@@ -27,7 +27,7 @@ module kdt_mod
     type :: kdt
         integer,    allocatable :: subtree_size
         type(node), allocatable :: root !< Root node of the tree (unallocated = empty tree)
-        type(frequency_list)    :: freq_dist
+        type(frequencies)    :: freq_dist
         contains
             procedure   :: radial_search => radial_search_method
     end type kdt
@@ -49,14 +49,19 @@ module kdt_mod
     end type frequency
 
     !> Container for frequency array
-    type :: frequency_list
+    type :: frequencies
         character(len=4), allocatable :: names(:)       !> name of weights
         type(frequency), allocatable  :: items(:)       !> list of weights
         integer                       :: n_items = 0    !> number of weights
         real(c_double), allocatable   :: probs(:)       !> probability of each weight
-    end type frequency_list
+        contains
+            procedure :: weights
+            procedure :: as_list
+
+    end type frequencies
 
     contains
+        include "freq_helpers.f90"
         include "helpers.f90"
         include "moms.f90"
         include "creator.f90"

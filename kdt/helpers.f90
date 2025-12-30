@@ -1,6 +1,6 @@
 !> Adds and/or grows the frequency list
 subroutine add_freq(flist, w, n)
-    type(frequency_list), intent(inout) :: flist
+    type(frequencies), intent(inout) :: flist
     real(c_double), intent(in) :: w
     character(len=4), intent(in) :: n
     integer :: i, found_idx
