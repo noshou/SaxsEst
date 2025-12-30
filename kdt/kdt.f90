@@ -7,35 +7,27 @@ module kdt_mod
     private
 
     ! public API
-    public :: kdt, hype, kdt_creator, frequency, frequencies
+    public :: kdt, kdt_creator
 
     !> Abstract base type representing a hyperplane axis in 3D space
-    type, abstract :: hype
+    type, private, abstract :: hype
     contains; procedure :: str => str_method
     end type hype
 
     !> X-axis hyperplane
-    type, extends(hype) :: X; end type X
+    type, private, extends(hype) :: X; end type X
 
     !> Y-axis hyperplane
-    type, extends(hype) :: Y; end type Y
+    type, private, extends(hype) :: Y; end type Y
 
     !> Z-axis hyperplane
-    type, extends(hype) :: Z; end type Z
-
-    !> K-D tree data structure (3 dimensions; X, Y, Z)
-    type :: kdt
-        integer,    allocatable :: subtree_size
-        type(node), allocatable :: root !< Root node of the tree (unallocated = empty tree)
-        type(frequencies)    :: freq_dist
-        contains
-            procedure   :: radial_search => radial_search_method
-    end type kdt
-
+    type, private, extends(hype) :: Z; end type Z
+    
     !> K-D tree node
     !!
     !! Each node contains a point and partitions space along one axis
     type :: node
+        private
         type(kdt),   allocatable :: rch !< Right child subtree (points >= pivot on axis)
         type(kdt),   allocatable :: lch !< Left child subtree (points < pivot on axis)
         type(atom),  allocatable :: atm !< The point/atom stored at this node
@@ -44,6 +36,7 @@ module kdt_mod
 
     !> Frequency distribution of a weight (form factor)
     type :: frequency
+        private
         complex(c_double) :: weight
         integer :: freq
     end type frequency
@@ -54,14 +47,26 @@ module kdt_mod
         type(frequency), allocatable  :: items(:)       !> list of weights
         integer                       :: n_items = 0    !> number of weights
         real(c_double), allocatable   :: probs(:)       !> probability of each weight
-        contains
-            procedure :: weights
-            procedure :: as_list
-
     end type frequencies
 
+    !> K-D tree data structure (3 dimensions; X, Y, Z)
+    type :: kdt
+        private
+        type(node), allocatable :: root !< Root node of the tree (unallocated = empty tree)
+        type(frequencies) :: freq_dist
+        integer, allocatable :: subtree_size
+        type(atom), allocatable :: atm
+        contains
+            procedure :: radial_search => radial_search_method
+            procedure :: weights => get_weights
+            procedure :: freqs => get_freqs
+            procedure :: size  => get_size
+            procedure :: atoms => get_atoms
+            procedure :: empty => get_status
+    end type kdt
+
     contains
-        include "freq_helpers.f90"
+        include "kdt_methods.f90"
         include "helpers.f90"
         include "moms.f90"
         include "creator.f90"

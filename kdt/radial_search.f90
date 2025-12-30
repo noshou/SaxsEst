@@ -31,17 +31,18 @@ function radial_search_method(this, a, r) result(res)
     type(kdt) :: near_kdt, far_kdt
     real(c_double) :: plane_dist
 
+    ! check if tree is allocated; if not, return empty list
+    if (this%empty()) then
+        allocate(res(0))
+        return 
+    end if
+
     ! Initialize using tree size
     allocate(f(this%subtree_size))
     allocate(s(this%subtree_size))
     n_f = 0
-    n_s = 0
-
-    ! Push root to stack
-    if (.not. is_empty(this)) then
-        n_s = 1
-        s(1) = this
-    end if
+    n_s = 1
+    s(1) = this
 
     ! Main loop - process stack until empty
     do while (n_s > 0)

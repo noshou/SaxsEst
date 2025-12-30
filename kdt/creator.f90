@@ -3,35 +3,21 @@
 !! Tree alternates splitting axes at each level (X -> Y -> Z -> X...).
 !!
 !! @param atoms Array of atoms to build tree from
-!! @param axs_opt Initial splitting axis (default: X)
-!! @param bin_size_opt Optional bin size for median algorithm (default: 5)
 !!
 !! @return Constructed K-D tree
-function kdt_creator(atoms, axs_opt, bin_size_opt) result(t)
+function kdt_creator(atoms) result(t)
     type(atom), dimension(:), intent(in) :: atoms
-    
-    ! get axs; default to X-axis
-    class(hype), intent(in), optional :: axs_opt
-    class(hype), allocatable :: axs            
-    if (present(axs_opt)) then 
-        allocate(axs, source=axs_opt)
-    else 
-        allocate(X :: axs)
-    end if 
-
-    ! optional bin size of splitting (defaults to 5)
-    integer, intent(in), optional :: bin_size_opt
-    integer :: bin_size
-    if (present(bin_size_opt)) then
-        bin_size = bin_size_opt
-    else
-        bin_size = 5
-    end if
-    
-    ! call kdt_creator_method
+    class(hype), allocatable :: axs; allocate(X :: axs)           
+    integer :: bin_size; bin_size = 5
+    type(atom), allocatable :: atms(:)
     type(kdt) :: t
+
+    ! call kdt_creator_method
     t = call kdt_creator_method(atoms, axs, bin_size, .true.)
 
+    ! add atoms to kdt
+    allocate(atms, source=atoms)
+    t%atm = atms
 end function kdt_creator
 
 !> "real" private function
@@ -124,7 +110,7 @@ recursive function kdt_creator_method(atoms, axs, bin_size, reset) result(t)
     ! add probabilities
     allocate(freq%probs(size(freq%items)))
     do j = 1, size(freq%items) 
-        freq%probs(j) = real(freq%items(j)%freq, kind=c_double) / real(n_items, kind=c_double)
+        freq%probs(j) = real(freq%items(j)%freq, kind=c_double) / real(freq%n_items, kind=c_double)
     end do 
 
     ! if root node, add frequency

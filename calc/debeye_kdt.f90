@@ -67,7 +67,7 @@ function debeye_kdt(k, r, atoms, n_atoms, norm, q_vals, n_q, name) result(intens
         do i = 1, n_atoms
             
             atom_i = atoms(i)
-            atom_i_ff = atom_i%get_form_factor(q_vals)
+            atom_i_ff = atom_i%get_form_factor(q_val)
             
             ! do search, get list of atoms
             atoms_found = k%radial_search(atom_i, r)

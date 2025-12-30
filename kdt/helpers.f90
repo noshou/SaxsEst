@@ -8,7 +8,6 @@ subroutine add_freq(flist, w, n)
     type(frequency), allocatable    :: temp(:)
     character(len=4), allocatable   :: temp_names(:)
     integer :: new_capacity
-
     found = .false.
     found_idx = -1
 
@@ -66,8 +65,8 @@ end subroutine add_freq
 !! @param this The hyperplane object
 !!
 !! @return Single character string: "x", "y", or "z"
-function str_method(this) result(plane)
-    class(hype) :: this
+pure function str_method(this) result(plane)
+    class(hype), intent(in) :: this
     character(len=1) :: plane
     select type (this)
         type is (X); plane = "x"
@@ -82,11 +81,12 @@ end function str_method
 !! @param t The K-D tree to check
 !!
 !! @return True if tree is empty, false otherwise
-function is_empty(t) result(res)
+pure function is_empty(t) result(res)
     type(kdt), intent(in) :: t
     logical :: res
-    res = .not. allocated(t%root)
+    res = t%empty
 end function is_empty
+
 
 !> Increments to the next axis in cycle
 !! Cycles through axes in order: X -> Y -> Z -> X -> ...
@@ -94,7 +94,7 @@ end function is_empty
 !! @param cur_axs Current axis
 !!
 !! @return Next axis in the cycle
-function incr_axs(cur_axs) result(new_axs)
+pure function incr_axs(cur_axs) result(new_axs)
     class(hype), intent(in) :: cur_axs
     class(hype), allocatable :: new_axs
     select type (cur_axs)

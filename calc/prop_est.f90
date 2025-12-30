@@ -12,7 +12,7 @@
 !! @param[in] e      Epsilon parameter, must satisfy 0 < epsilon < 1 
 !! @param[in] c      Rounding flag: .true. for ceiling, .false. for floor (logical)
 !!
-!! @return w_est     Estimated form factor weight (W)
+!! @return w_est     Estimated complex conjugate  form factor weight (W)
 pure function prop_est(w, f, a, e, c) result(w_est)
     
     ! Input parameters
@@ -103,4 +103,7 @@ pure function prop_est(w, f, a, e, c) result(w_est)
     ! Calculate estimated weight: w_est = C(s,2) / sum
     w_est = s_choose_2 / sum
     
+    ! get complex conjugate of w_est
+    w_est = conjg(w_est)
+
 end function prop_est
