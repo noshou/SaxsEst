@@ -13,7 +13,7 @@ function kdt_creator(atoms) result(t)
     type(kdt) :: t
 
     ! call kdt_creator_method
-    t = call kdt_creator_method(atoms, axs, bin_size, .true.)
+    t = kdt_creator_method(atoms, axs, bin_size, .true.)
 
     ! add atoms to kdt
     allocate(atms, source=atoms)

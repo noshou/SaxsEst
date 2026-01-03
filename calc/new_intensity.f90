@@ -15,7 +15,7 @@ function new_intensity(t, q, i, n) result(e)
     
     ! input variables
     integer(c_int), intent(in) :: t
-    real(c_double), intent(in) :: q, i
+    real(c_double), dimension(:), intent(in) :: q, i
     character(len=*), intent(in) :: n
 
     ! targets for c arrays (need to be saved to persist!)
@@ -35,11 +35,11 @@ function new_intensity(t, q, i, n) result(e)
     n_cpy = trim(n) // c_null_char
     
     ! build output 
-    type(intensity_est) :: e
+    type(estimate) :: e
     e%q_vals = c_loc(q_cpy)
     e%i_vals = c_loc(i_cpy)
     e%timing = t
-    e%size   = integer(size(q), kind=c_int)
+    e%size   = int(size(q), kind=c_int)
     e%name   = c_loc(n_cpy)
 
 end function new_intensity

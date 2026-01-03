@@ -78,7 +78,7 @@ function debeye_radial(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity
                     ! ignore the complex part (since the summation over
                     ! all pairs is symmetric and therefore real)
                     atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
-                    radial_contrib = sinc(dst) / dst
+                    radial_contrib = sinc(dst)
 
                     est = est + atomic_contrib * radial_contrib
                 end if 

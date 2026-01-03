@@ -1,6 +1,5 @@
 !!
 !! @param k         kdt tree
-!! @param r         radius to search within
 !! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
 !! @param n_q       Number of q values
 !! @param[in] a      Advice parameter, should be >= number of nodes 
@@ -9,7 +8,7 @@
 !! @param name      Name of dataset
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
+function prop_radial(k, q_vals, n_q, a, e, c, name) result(intensity_estimate)
 
     type(kdt), intent(in) :: k
     real(c_double), intent(in) :: r
@@ -22,7 +21,7 @@ function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     real(c_double) :: q_val 
 
     ! timing variables
-    integer(0_c_int) :: timing
+    integer(c_int) :: timing
     integer :: start, finish, rate
 
     ! output data
@@ -59,27 +58,25 @@ function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
             
             atom_i = atoms(i)
             atom_i_ff = atom_i%get_form_factor(q_val)
-            radial_contrib = real(atom_i_ff * w_est, kind=c_double)
-            
-            ! do search, get list of atoms
-            atoms_found = k%radial_search(atom_i, r)
-            do j = 1, size(atoms_found)
-                dst = q_val * abs(atom_i%dist_cart(atoms(j)))
-                radial_contrib = sinc(dst)
-                est = est + atomic_contrib * radial_contrib
+            do j = 1, n_atoms
+                if (j /= i) then 
+                    dst = q_val * abs(atom_i%dist_cart(atoms(j)))
+                    radial_contrib = sinc(dst)
+                    est = est + atomic_contrib * radial_contrib
+                else
+                    ! since self is not picked up in radial search, 
+                    ! we add the case of atom_i_ff * conj(atom_i_ff)
+                    est = est + atom_i_ff * conjg(atom_i_ff)
+                end if
             end do 
-
-            ! since self is not picked up in radial search, 
-            ! we add the case of atom_i_ff * conj(atom_i_ff)
-            est = est + atom_i_ff * conjg(atom_i_ff)
         end do 
         intensity(q_ij) = est / norm
     end do
 
     ! stop timer
     call system_clock(finish)
-    timing = (finish - start) / rate
+    timing = integer((finish - start) / rate, kind=c_int)
 
     ! output estimate
     intensity_estimate = new_intensity(timing, q_vals, intensity, name)
-end function prop_kdt
+end function prop_radial

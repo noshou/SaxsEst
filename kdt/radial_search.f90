@@ -28,7 +28,7 @@ function radial_search_method(this, a, r) result(res)
     type(node) :: curr_node
     class(hype), allocatable :: curr_hype
     type(atom) :: curr_atom
-    type(kdt) :: near_kdt, far_kdt
+    type(kdt), allocatable :: near_kdt, far_kdt
     real(c_double) :: plane_dist
 
     ! check if tree is allocated; if not, return empty list
@@ -38,11 +38,11 @@ function radial_search_method(this, a, r) result(res)
     end if
 
     ! Initialize using tree size
-    allocate(f(this%subtree_size))
-    allocate(s(this%subtree_size))
-    n_f = 0
-    n_s = 1
-    s(1) = this
+    allocate(f(this%subtree_size)) ! list of atoms found within radius
+    allocate(s(this%subtree_size)) ! stack of atoms to search
+    n_f = 0     ! number of atoms found
+    n_s = 1     ! size of stack
+    s(1) = this ! init stack to root of kdt
 
     ! Main loop - process stack until empty
     do while (n_s > 0)
@@ -50,7 +50,7 @@ function radial_search_method(this, a, r) result(res)
         ! pop first node
         curr_node = s(n_s)%root
         n_s = n_s - 1
-        allocate(curr_hype, source=curr_node%axs)
+        allocate(curr_hype, source=curr_node%axs) ! allocate hyperplane axis
         curr_atom = curr_node%atm
 
         ! if ||a - curr|| <= r, add to found
@@ -62,11 +62,11 @@ function radial_search_method(this, a, r) result(res)
         ! if a.axis < curr.axis, left child is near, right is far
         ! else, left child is far, right child is near
         if (a%cmp_axis(curr_atom, curr_hype%str()) < 0) then
-            near_kdt = curr_node%lch
-            far_kdt = curr_node%rch
+            if (allocated(curr_node%lch)) allocate(near_kdt, source=curr_node%lch)
+            if (allocated(curr_node%rch)) allocate(far_kdt,  source=curr_node%rch)
         else
-            near_kdt = curr_node%rch
-            far_kdt = curr_node%lch
+            if (allocated(curr_node%rch)) allocate(near_kdt, source=curr_node%rch)
+            if (allocated(curr_node%lch)) allocate(far_kdt,  source=curr_node%lch)
         end if
 
         ! given a hyperplane (x,y, or z) we have to check
@@ -85,32 +85,36 @@ function radial_search_method(this, a, r) result(res)
         if (plane_dist <= r) then
 
             ! Push near child
-            if (.not. is_empty(near_kdt)) then
+            if (allocated(near_kdt) .and. .not. is_empty(near_kdt)) then
                 n_s = n_s + 1
                 s(n_s) = near_kdt
             end if
 
             ! Push far child
-            if (.not. is_empty(far_kdt)) then
+            if (allocated(far_kdt) .and. .not. is_empty(far_kdt)) then
                 n_s = n_s + 1
                 s(n_s) = far_kdt
             end if
         else
 
             ! Only push near child
-            if (.not. is_empty(near_kdt)) then
+            if (allocated(near_kdt) .and. .not. is_empty(near_kdt)) then
                 n_s = n_s + 1
                 s(n_s) = near_kdt
             end if
         end if
 
+        ! clean up allocated memory
+        if (allocated(near_kdt)) deallocate(near_kdt)
+        if (allocated(far_kdt))  deallocate(far_kdt)
         deallocate(curr_hype)
+        
     end do
 
     ! base case; no more atoms to find
     if (n_f > 0) then
-        allocate(res(n_f))
-        res = f(1:n_f)
+        allocate(res(n_f)) ! don't need whole of found array (contains unallocated garbage);
+        res = f(1:n_f)     ! so we only return needed slice
     else
         allocate(res(0))
     end if

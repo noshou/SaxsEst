@@ -6,21 +6,22 @@ module calc_mod
     
     implicit none 
     private 
-
+    public :: estimate, debeye_radial, debeye_kdt, prop_radial, prop_kdt
+    
     ! intensity estimate type
-    type, bind(C) :: intensity
+    type, bind(C) :: estimate
         type(c_ptr)     :: q_vals    
         type(c_ptr)     :: i_vals     
         integer(c_int)  :: timing
         integer(c_int)  :: size  
         type(c_ptr)     :: name       
-    end type intensity
+    end type estimate
 
-    ! bernoulli estimator type
-    type :: bernoulli
-        complex(c_double) :: thresh
-        real(c_double)    :: probab
-    end type bernoulli
+    ! ! bernoulli estimator type
+    ! type :: bernoulli
+    !     complex(c_double) :: thresh
+    !     real(c_double)    :: probab
+    ! end type bernoulli
 
     contains 
 

@@ -20,22 +20,19 @@
 !!
 !! @param k         kdt tree
 !! @param r         radius to search within
-!! @param atoms     List of atom objects in molecule
-!! @param n_atoms   Number of atoms
-!! @param norm      Normalization constant (I_real = I_calc/norm)
 !! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
 !! @param n_q       Number of q values
 !! @param name      Name of dataset
 !!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function debeye_kdt(k, r, atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estimate)
+function debeye_kdt(k, r, q_vals, n_q, name) result(intensity_estimate)
 
     type(kdt), intent(in) :: k
     real(c_double), intent(in) :: r
     character(len=*), intent(in) :: name
-    type(atom), dimension(:), intent(in) :: atoms
-    integer, intent(in) :: n_atoms
+    type(atom), dimension(:) :: atoms
+    integer:: n_atoms
     real(c_double), dimension(n_q), intent(in) :: q_vals
     real(c_double), dimension(n_q) :: intensity
     integer :: i, j, q_ij
@@ -61,6 +58,10 @@ function debeye_kdt(k, r, atoms, n_atoms, norm, q_vals, n_q, name) result(intens
 
     ! start timer
     call system_clock(start, rate)
+    n_atoms = k%size
+    atoms = k%atoms
+    norm = n_atoms ** 2
+
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         est = 0
@@ -76,13 +77,13 @@ function debeye_kdt(k, r, atoms, n_atoms, norm, q_vals, n_q, name) result(intens
                 atom_j_ff = atom_j%get_form_factor(q_val)
                 dst = q_val * abs(atom_i%dist_cart(atom_j))
                 atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
-                radial_contrib = sinc(dst)/dst
+                radial_contrib = sinc(dst)
                 est = est + atomic_contrib * radial_contrib
             end do 
 
             ! since self is not picked up in radial search, 
             ! we add the case of atom_i_ff * conj(atom_i_ff)
-            est = est + atom_i_ff + conjg(atom_i_ff)
+            est = est + atom_i_ff * conjg(atom_i_ff)
         end do 
         intensity(q_ij) = est / norm
     end do
