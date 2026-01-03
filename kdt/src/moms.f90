@@ -62,7 +62,7 @@ recursive function median(n, atoms, axs) result(med)
     class(hype), intent(in) :: axs
     type(atom) :: med
     type(atom), allocatable :: bin(:), medians(:), rest(:)
-    integer :: idx, num_bins, i, bin_size
+    integer :: num_bins, i, bin_size
 
     if (size(atoms) <= n) then
         bin = atoms

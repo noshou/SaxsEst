@@ -32,8 +32,8 @@ module atom_mod
     !!   - Form factor computation
     !!   - Axis-based comparisons
     type :: atom
-        type(coord) :: xyz               !< Atomic position in Cartesian coordinates
-        character(len=10) :: element     !< Element symbol (e.g., 'Fe', 'Cu')
+        type(coord), public :: xyz              !< Atomic position in Cartesian coordinates
+        character(len=10), public :: element    !< Element symbol (e.g., 'Fe', 'Cu')
     contains
         procedure :: to_string   => atom_to_string_method    !< Convert atom to string
         procedure :: dist_cart   => calc_distance_method     !< Calculate distance to another atom

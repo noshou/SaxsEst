@@ -2,7 +2,7 @@
 module kdt_mod
 
     use iso_c_binding, only: c_double
-    use atoms_mod
+    use atom_mod
     implicit none
     private
 
@@ -37,16 +37,16 @@ module kdt_mod
     !> Frequency distribution of a weight (form factor)
     type :: frequency
         private
-        complex(c_double) :: weight
+        character(len=4) :: name
+        type(atom) :: atm
         integer :: freq
     end type frequency
 
     !> Container for frequency array
     type :: frequencies
-        character(len=4), allocatable :: names(:)       !> name of weights
+        private
         type(frequency), allocatable  :: items(:)       !> list of weights
         integer                       :: n_items = 0    !> number of weights
-        real(c_double), allocatable   :: probs(:)       !> probability of each weight
     end type frequencies
 
     !> K-D tree data structure (3 dimensions; X, Y, Z)
@@ -55,7 +55,7 @@ module kdt_mod
         type(node), allocatable :: root !< Root node of the tree (unallocated = empty tree)
         type(frequencies) :: freq_dist
         integer, allocatable :: subtree_size
-        type(atom), allocatable :: atm
+        type(atom), allocatable :: atm(:)
         contains
             procedure :: radial_search => radial_search_method
             procedure :: weights => get_weights

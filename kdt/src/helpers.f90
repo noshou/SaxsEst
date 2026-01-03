@@ -1,63 +1,64 @@
-!> Adds and/or grows the frequency list
-subroutine add_freq(flist, w, n)
+subroutine add_freq(flist, n)
     type(frequencies), intent(inout) :: flist
-    real(c_double), intent(in) :: w
-    character(len=4), intent(in) :: n
-    integer :: i, found_idx
+    character(len=4), intent(in)  :: n
+    integer :: i, found_idx, new_capacity
     logical :: found
-    type(frequency), allocatable    :: temp(:)
-    character(len=4), allocatable   :: temp_names(:)
-    integer :: new_capacity
+    type(frequency), allocatable :: temp(:)
+    type(coord) :: coords
+
     found = .false.
     found_idx = -1
 
-    ! Check if item is already in frequency list
+    ! if atom already in frequencies, increment freq
     if (allocated(flist%items)) then
-        do i = 1, flist%n_items
-            if (n == flist%names(i)) then 
+        do i=1, flist%n_items
+            if (n == flist%items(i)%name) then
                 found = .true.
                 found_idx = i
-                exit  ! Stop searching once found
+                exit
             end if 
         end do 
-    end if            ! check if item is already in frequency list
-    
-    if (found) then 
-        flist%items(found_idx)%freq = flist%items(found_idx)%freq + 1 
-    else 
-        ! Item doesn't exist - need to add it
-        if (.not. allocated(flist%items)) then
-            ! First allocation
-            allocate(flist%items(10))
-            allocate(flist%names(10))
-            flist%n_items = 0
-        else if (flist%n_items >= size(flist%items)) then
-            ! Need more space - double capacity
-            new_capacity = size(flist%items) * 2
+    end if
 
-            ! Reallocate items array
+    ! atom found; increment frequency
+    if (found) then
+        flist%items(found_idx)%freq = flist%items(found_idx)%freq + 1
+        
+    ! atom not found
+    else
+
+        ! if flist is empty, allocate ten empty positions
+        if (.not. allocated(flist%items)) then
+            allocate(flist%items(10))
+            flist%n_items = 0
+
+        ! check if we need to increase size of array
+        ! first we allocate space for a temp list 
+        ! which holds current size + 10 uninitialized spots.
+        ! second we copy over flist's items into this temp 
+        ! then deallocate flist items
+        ! third we allocate flist items to temp's size 
+        ! and copy over the values from temp; we then
+        ! deallocate tmp
+        else if (flist%n_items >= size(flist%items)) then
+            new_capacity = size(flist%items) + 10
             allocate(temp(flist%n_items))
             temp = flist%items(1:flist%n_items)
             deallocate(flist%items)
             allocate(flist%items(new_capacity))
             flist%items(1:flist%n_items) = temp
             deallocate(temp)
-
-            ! Reallocate names array
-            allocate(temp_names(flist%n_items))
-            temp_names = flist%names(1:flist%n_items)
-            deallocate(flist%names)
-            allocate(flist%names(new_capacity))
-            flist%names(1:flist%n_items) = temp_names
-            deallocate(temp_names)
         end if
-        
-            ! Add new item
-            flist%n_items = flist%n_items + 1
-            flist%items(flist%n_items)%weight = w
-            flist%items(flist%n_items)%freq = 1  ! New item starts with freq=1
-            flist%names(flist%n_items) = n
-    end if
+
+        ! allocate new atom w/ dummy coordinate (since they not needed)
+        coords%x=real(0.0, kind=c_double) 
+        coords%y=real(0.0, kind=c_double)
+        coords%z=real(0.0, kind=c_double)
+        flist%items(flist%n_items+1)%atm  = create_atom(coords, n)
+        flist%items(flist%n_items+1)%name = n
+        flist%items(flist%n_items+1)%freq = 1
+        flist%n_items = flist%n_items + 1
+    end if 
 end subroutine add_freq
 
 !> Returns the hyperplane axis as a string
@@ -81,12 +82,11 @@ end function str_method
 !! @param t The K-D tree to check
 !!
 !! @return True if tree is empty, false otherwise
-pure function is_empty(t) result(res)
+function is_empty(t) result(res)
     type(kdt), intent(in) :: t
     logical :: res
-    res = t%empty
+    res = t%empty()
 end function is_empty
-
 
 !> Increments to the next axis in cycle
 !! Cycles through axes in order: X -> Y -> Z -> X -> ...

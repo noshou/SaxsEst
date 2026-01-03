@@ -37,6 +37,14 @@ AXY_DATA_DIR = $(AXY_DIR)/data
 AXY_TMP_DIR  = $(AXY_SRC_DIR)/xyz_tmp
 AXY_PARSE_DIR=$(AXY_DIR)/xyz_parse
 
+# kdt directories
+KDT_DIR 	 = kdt
+KDT_SRC_DIR	 = $(KDT_DIR)/src
+KDT_BLD_DIR  = $(KDT_DIR)/_build
+KDT_MOD_DIR  = $(KDT_BLD_DIR)/mod
+KDT_LIB_DIR  = $(KDT_BLD_DIR)/lib
+
+
 # ============================================================================
 # FORM_FACT LIBRARY CONFIGURATION
 # ============================================================================
@@ -75,18 +83,25 @@ AXY_LIB      = $(AXY_LIB_DIR)/atom_xyz.a
 AXY_LST 	 = $(AXY_BLD_DIR)/xyz_modules.txt
 
 # ============================================================================
+# KDT LIBRARY CONFIGURATION
+# ============================================================================
+KDT_SRC 	 = $(KDT_SRC_DIR)/kdt.f90
+KDT_OBJ		 = $(KDT_BLD_DIR)/kdt.o
+KDT_LIB		 = $(KDT_LIB_DIR)/kdt.a
+
+# ============================================================================
 # PHONY TARGETS
 # ============================================================================
 .PHONY: all form_fact atom_xyz clean clean-form_fact clean-atom_xyz \
         parse-f0 parse-f1_f2 parse-xyz check-ocaml check-deps-csv \
         check-deps-yojson check-deps-str help clean-formfacts \
 		clean-objects build-dirs-atom_xyz parse-xyz tabulate-xyz \
-		postamble \
+		postamble kdt build-dirs-kdt clean-kdt
 
 # ============================================================================
 # MAIN TARGETS
 # ============================================================================
-all: form_fact atom_xyz clean-objects postamble
+all: form_fact atom_xyz kdt clean-objects postamble
 
 help:
 	@echo "Available targets:"
@@ -203,6 +218,21 @@ $(AXY_LIB): $(AXY_ATM_OBJ) $(AXY_XYZ_OBJ) | $(AXY_LIB_DIR)
 	@rm -rf $(AXY_TMP_DIR)
 
 # ============================================================================
+# KDT LIBRARY BUILD
+# ============================================================================
+kdt: clean-kdt build-dirs-kdt $(KDT_LIB)
+build-dirs-kdt:
+	@rm -rf $(KDT_BLD_DIR)
+	@mkdir $(KDT_BLD_DIR)
+	@mkdir $(KDT_MOD_DIR)
+	@mkdir $(KDT_LIB_DIR)
+
+$(KDT_OBJ): $(KDT_SRC) | $(KDT_BLD_DIR) $(KDT_MOD_DIR) $(KDT_LIB_DIR)
+	@$(FC) $(FFLAGS) -I$(FF_MOD_DIR) -I$(AXY_MOD_DIR) -J$(KDT_MOD_DIR) -c $< -o $@
+$(KDT_LIB): $(KDT_OBJ)
+	@ar rcs $@ $^
+
+# ============================================================================
 # OCAML DEPENDENCY CHECKING
 # ============================================================================
 
@@ -248,7 +278,6 @@ define check_and_install
 	fi
 endef
 
-
 # ============================================================================
 # postamble
 # ============================================================================
@@ -271,6 +300,8 @@ clean-atom_xyz:
 	@rm -rf $(AXY_BLD_DIR)
 	@rm -rf $(AXY_TMP_DIR)
 	@rm -rf $(AXY_DIR)/*.o
+clean-kdt:
+	@rm -rf $(KDT_BLD_DIR)
 clean-objects:
 	@find . -type f -name '*.o' -delete
 clean-formfacts: clean
