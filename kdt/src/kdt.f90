@@ -56,6 +56,7 @@ module kdt_mod
         type(frequencies) :: freq_dist
         integer, allocatable :: subtree_size
         type(atom), allocatable :: atm(:)
+        integer :: unique
         contains
             procedure :: radial_search => radial_search_method
             procedure :: weights => get_weights
@@ -63,12 +64,13 @@ module kdt_mod
             procedure :: size  => get_size
             procedure :: atoms => get_atoms
             procedure :: empty => get_status
+            procedure :: n_unique => get_number_unique
     end type kdt
 
     contains
-        include "kdt_methods.f90"
-        include "helpers.f90"
-        include "moms.f90"
-        include "creator.f90"
-        include "radial_search.f90"
+        include "func/kdt_methods.f90"
+        include "func/helpers.f90"
+        include "func/moms.f90"
+        include "func/creator.f90"
+        include "func/radial_search.f90"
 end module kdt_mod

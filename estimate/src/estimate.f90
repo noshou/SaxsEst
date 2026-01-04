@@ -1,4 +1,4 @@
-module calc_mod
+module estimate_mod
     use, intrinsic :: ieee_arithmetic
     use, intrinsic :: iso_c_binding
     use kdt_mod
@@ -17,20 +17,18 @@ module calc_mod
         type(c_ptr)     :: name       
     end type estimate
 
-    ! ! bernoulli estimator type
+    ! bernoulli estimator type
     ! type :: bernoulli
     !     complex(c_double) :: thresh
     !     real(c_double)    :: probab
     ! end type bernoulli
 
     contains 
-
-        ! helper functions
-        include "new_intensity.f90"
-        include "prop_est.f90"
-        include "sinc.f90"
-        include "debeye_radial.f90"
-        include "debeye_kdt.f90"
-        include "prop_radial.f90"
-        include "prop_kdt.f90"
-end module calc_mod
+        include "func/new_intensity.f90"
+        include "func/prop_est/prop_est.f90"
+        include "func/sinc.f90"
+        include "func/debeye/debeye_radial.f90"
+        include "func/debeye/debeye_kdt.f90"
+        include "func/prop_est/prop_radial.f90"
+        include "func/prop_est/prop_kdt.f90"
+end module estimate_mod

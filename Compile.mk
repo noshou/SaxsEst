@@ -1,11 +1,6 @@
 # ============================================================================
-# MASTER MAKEFILE - Builds form_fact and atom_xyz libraries
-# ============================================================================
-
-# ============================================================================
 # COMPILER CONFIGURATION
-# generated files can be extrremly large so compiler loves complaining: 
-# -w suppresses them
+# generated files can be extremely large so compiler loves complaining
 # ============================================================================
 FC          = gfortran
 CFLAGS      = -w -std=f2023 -O3 -march=native -mcmodel=large -fmax-array-constructor=500000
@@ -14,12 +9,6 @@ CFLAGS      = -w -std=f2023 -O3 -march=native -mcmodel=large -fmax-array-constru
 OCAMLFIND    = ocamlfind
 OC           = $(OCAMLFIND) ocamlopt
 OPAM         = opam
-
-# ============================================================================
-# DIRECTORY STRUCTURE
-# ============================================================================
-
-# kdt directories
 
 # ============================================================================
 # FORM_FACT LIBRARY CONFIGURATION
@@ -95,7 +84,23 @@ KDT_OBJ		 = $(KDT_BLD_DIR)/kdt.o
 KDT_LIB		 = $(KDT_LIB_DIR)/kdt.a
 
 # ============================================================================
-# PDB_TO_XYZ LIBRARY CONFIGURATION
+# ESTIMATE LIBRARY CONFIGURATION
+# ============================================================================
+
+# Directories
+EST_DIR 	 = estimate
+EST_SRC_DIR  = $(EST_DIR)/src
+EST_BLD_DIR  = $(EST_DIR)/_build
+EST_MOD_DIR  = $(EST_BLD_DIR)/mod
+EST_LIB_DIR  = $(EST_BLD_DIR)/lib
+
+# Files
+EST_SRC 	 = $(EST_SRC_DIR)/estimate.f90
+EST_OBJ		 = $(EST_BLD_DIR)/estimate.o
+EST_LIB 	 = $(EST_LIB_DIR)/estimate.a
+
+# ============================================================================
+# PDB_TO_XYZ EXECUTABLE CONFIGURATION
 # ============================================================================
 
 # Directories
@@ -117,21 +122,22 @@ PDB_EXE 	 = $(PDB_EXE_DIR)/pdb_to_xyz
         check-deps-yojson check-deps-str help clean-formfacts \
 		clean-objects build-dirs-atom_xyz parse-xyz tabulate-xyz \
 		postamble kdt build-dirs-kdt clean-kdt compile-pdb-2-xyz clean-pdb-2-xyz \
-		build-dirs-pdb-2-xyz
+		build-dirs-pdb-2-xyz build-dirs-estimate clean-estimate estimate
 
 # ============================================================================
 # MAIN TARGETS
 # ============================================================================
-all: form_fact atom_xyz kdt compile-pdb-2-xyz clean-objects postamble
+all: form_fact atom_xyz kdt estimate compile-pdb-2-xyz clean-objects postamble
 
 help:
 	@echo "Usage: make -f Compile.mk <target>"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  all              - Build all libraries (form_fact, atom_xyz, kdt, pdb_to_xyz)"
+	@echo "  all              - Builds executables saxs_est and pdb_to_xyz"
 	@echo "  form_fact        - Build form_fact library only"
 	@echo "  atom_xyz         - Build atom_xyz library only"
 	@echo "  kdt              - Build kdt library only"
+	@echo "  estimate 		  - Build estimate library only"
 	@echo "  compile-pdb-2-xyz- Build pdb_to_xyz converter"
 	@echo "  pdb-2-xyz        - Run pdb_to_xyz converter (prompts for filename)"
 	@echo ""
@@ -145,12 +151,10 @@ help:
 	@echo "  clean-form_fact  - Clean form_fact build artifacts"
 	@echo "  clean-atom_xyz   - Clean atom_xyz build artifacts"
 	@echo "  clean-kdt        - Clean kdt build artifacts"
-	@echo "  clean-pdb-2-xyz  - Clean pdb_to_xyz build artifacts"
+	@echo "  clean-estimate   - Clean estimate build artifacts"
 	@echo "  clean-formfacts  - Remove generated f0 and f1_f2 modules (manual)"
-	@echo "  clean-objects    - Remove all generated object files"
-# ============================================================================
-# PREAMBLE (shows AXY_LST) growing
-# ============================================================================
+	@echo "  clean-pdb-2-xyz  - Clean pdb_to_xyz build artifacts"
+	@echo "  clean-objects    - Remove all generated object files recursively from root"
 
 # ============================================================================
 # FORM_FACT LIBRARY BUILD
@@ -259,8 +263,22 @@ build-dirs-kdt:
 	@mkdir $(KDT_LIB_DIR)
 
 $(KDT_OBJ): $(KDT_SRC) | $(KDT_BLD_DIR) $(KDT_MOD_DIR) $(KDT_LIB_DIR)
-	@$(FC) $(CFLAGS) -I$(FF_MOD_DIR) -I$(AXY_MOD_DIR) -J$(KDT_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(AXY_MOD_DIR) -J$(KDT_MOD_DIR) -c $< -o $@
 $(KDT_LIB): $(KDT_OBJ)
+	@ar rcs $@ $^
+
+# ============================================================================
+# ESTIMATE LIBRARY BUILD
+# ============================================================================
+estimate: clean-estimate build-dirs-estimate $(EST_LIB)
+build-dirs-estimate:
+	@rm -rf $(EST_BLD_DIR)
+	@mkdir $(EST_BLD_DIR)
+	@mkdir $(EST_MOD_DIR)
+	@mkdir $(EST_LIB_DIR)
+$(EST_OBJ): $(EST_SRC) | $(EST_BLD_DIR) $(EST_MOD_DIR) $(EST_LIB_DIR)
+	@$(FC) $(CFLAGS) -I$(AXY_MOD_DIR) -I$(KDT_MOD_DIR) -J$(EST_MOD_DIR) -c $< -o $@
+$(EST_LIB): $(EST_OBJ)
 	@ar rcs $@ $^
 
 # ============================================================================
@@ -340,12 +358,12 @@ postamble:
 	@echo "compiled xyz molecules: $(AXY_LST)"
 	@echo "=================================="
 
-
 # ============================================================================
 # CLEAN TARGETS
 # ============================================================================
 
-clean: clean-form_fact clean-atom_xyz clean-objects clean-pdb-2-xyz
+clean:	clean-form_fact clean-atom_xyz clean-objects \
+		clean-pdb-2-xyz clean-estimate
 clean-form_fact:
 	@rm -rf $(FF_BLD_DIR)
 clean-atom_xyz:
@@ -360,3 +378,5 @@ clean-formfacts: clean
 	@rm -rf $(FF_F0_SRC) $(FF_F12_SRC)
 clean-pdb-2-xyz:
 	@rm -rf $(PDB_BLD_DIR)
+clean-estimate:
+	@rm -rf $(EST_BLD_DIR)

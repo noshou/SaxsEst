@@ -22,6 +22,9 @@ function new_intensity(t, q, i, n) result(e)
     real(c_double), dimension(:), allocatable, save, target :: q_cpy, i_cpy
     character(len=:), allocatable, save, target :: n_cpy
 
+    ! output variable
+    type(estimate) :: e
+
     ! check if targets allocated - free if they are
     if (allocated(q_cpy)) then; deallocate(q_cpy); end if
     if (allocated(i_cpy)) then; deallocate(i_cpy); end if
@@ -35,7 +38,6 @@ function new_intensity(t, q, i, n) result(e)
     n_cpy = trim(n) // c_null_char
     
     ! build output 
-    type(estimate) :: e
     e%q_vals = c_loc(q_cpy)
     e%i_vals = c_loc(i_cpy)
     e%timing = t

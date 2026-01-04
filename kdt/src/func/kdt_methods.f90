@@ -35,6 +35,12 @@ function get_size(this) result(n)
     n = this%subtree_size
 end function get_size
 
+function get_number_unique(this) result(n)
+    class(kdt), intent(in) :: this
+    integer :: n
+    n = this%freq_dist%n_items
+end function get_number_unique
+
 function get_atoms(this) result(atoms)
     class(kdt), intent(in) :: this
     type(atom), allocatable :: atoms(:)

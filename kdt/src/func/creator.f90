@@ -119,4 +119,5 @@ function kdt_creator(atoms) result(tree)
     ! add atoms to kdt
     allocate(atms, source=atoms)
     tree%atm = atms
+
 end function kdt_creator

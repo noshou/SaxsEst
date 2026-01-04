@@ -13,7 +13,7 @@
 !!
 !! The time complexity of the algorithm is O(m·k·n·log(n)) 
 !! with worst case O(m·n²). M m is the number of Q values
-!! iterated over, k is the average number of atoms queried in the radius,f
+!! iterated over, k is the average number of atoms queried in the radius,
 !! n is the number of atoms in the dataset,
 !! and log(n) is the time it takes to query the kdt tree.
 !! in the xyz file, 
@@ -27,26 +27,29 @@
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
 function debeye_kdt(k, r, q_vals, n_q, name) result(intensity_estimate)
-
     type(kdt), intent(in) :: k
     real(c_double), intent(in) :: r
     character(len=*), intent(in) :: name
-    type(atom), dimension(:) :: atoms
-    integer:: n_atoms
-    real(c_double), dimension(n_q), intent(in) :: q_vals
-    real(c_double), dimension(n_q) :: intensity
+    integer, intent(in) :: n_q                              
+    real(c_double), dimension(:), intent(in) :: q_vals
+    
+    ! Local variables
+    type(atom), dimension(:), allocatable :: atoms          
+    integer :: n_atoms
+    real(c_double), dimension(:), allocatable :: intensity  
     integer :: i, j, q_ij
     real(c_double) :: q_val 
-
+    real(c_double) :: norm                                  
+    
     ! timing variables
-    integer(0_c_int) :: timing
+    integer(c_int) :: timing
     integer :: start, finish, rate
-
+    
     ! output data
     type(estimate) :: intensity_estimate
-
+    
     ! variables for loop
-    type(atom), dimension(:) :: atoms_found ! atoms within search radius
+    type(atom), dimension(:), allocatable :: atoms_found    
     type(atom) :: atom_i
     type(atom) :: atom_j
     complex(c_double) :: atom_i_ff
@@ -55,43 +58,52 @@ function debeye_kdt(k, r, q_vals, n_q, name) result(intensity_estimate)
     real(c_double) :: atomic_contrib ! ff_i * conj(ff_j)
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q) 
-
+    
     ! start timer
     call system_clock(start, rate)
-    n_atoms = k%size
-    atoms = k%atoms
-    norm = n_atoms ** 2
-
+    
+    n_atoms = k%size()
+    allocate(atoms(n_atoms))                                
+    allocate(intensity(n_q))                                
+    atoms = k%atoms()
+    norm = real(n_atoms ** 2, kind=c_double)                
+    
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         est = 0
+        
         do i = 1, n_atoms
-            
             atom_i = atoms(i)
-            atom_i_ff = atom_i%get_form_factor(q_val)
+            atom_i_ff = atom_i%form_factor(q_val)
             
             ! do search, get list of atoms
             atoms_found = k%radial_search(atom_i, r)
+            
             do j = 1, size(atoms_found)
                 atom_j = atoms_found(j)
-                atom_j_ff = atom_j%get_form_factor(q_val)
+                atom_j_ff = atom_j%form_factor(q_val)
                 dst = q_val * abs(atom_i%dist_cart(atom_j))
                 atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
                 radial_contrib = sinc(dst)
                 est = est + atomic_contrib * radial_contrib
             end do 
-
+            
             ! since self is not picked up in radial search, 
             ! we add the case of atom_i_ff * conj(atom_i_ff)
-            est = est + atom_i_ff * conjg(atom_i_ff)
+            est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double) 
         end do 
+        
         intensity(q_ij) = est / norm
     end do
-
+    
     ! stop timer
     call system_clock(finish)
-    timing = (finish - start) / rate
-
+    timing = int((finish - start) / rate, kind=c_int)      
+    
     ! output estimate
     intensity_estimate = new_intensity(timing, q_vals, intensity, name)
+    
+    ! Clean up
+    deallocate(atoms, intensity)                            
+    
 end function debeye_kdt
