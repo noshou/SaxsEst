@@ -8,7 +8,7 @@
 # -w suppresses them
 # ============================================================================
 FC          = gfortran
-FFLAGS      = -w -std=f2023 -O3 -march=native -mcmodel=large -fmax-array-constructor=500000
+CFLAGS      = -w -std=f2023 -O3 -march=native -mcmodel=large -fmax-array-constructor=500000
 
 # OCaml tools
 OCAMLFIND    = ocamlfind
@@ -18,7 +18,14 @@ OPAM         = opam
 # ============================================================================
 # DIRECTORY STRUCTURE
 # ============================================================================
-# form_fact directories
+
+# kdt directories
+
+# ============================================================================
+# FORM_FACT LIBRARY CONFIGURATION
+# ============================================================================
+
+# Directories
 FF_DIR       = form_fact
 FF_SRC_DIR   = $(FF_DIR)/src
 FF_BLD_DIR   = $(FF_DIR)/_build
@@ -27,27 +34,6 @@ FF_LIB_DIR   = $(FF_BLD_DIR)/lib
 FF_DATA_DIR  = $(FF_DIR)/data
 FF_PARSE_DIR = $(FF_DIR)/data_parsing
 
-# atom_xyz directories
-AXY_DIR      = atom_xyz
-AXY_SRC_DIR  = $(AXY_DIR)/src
-AXY_BLD_DIR  = $(AXY_DIR)/_build
-AXY_MOD_DIR  = $(AXY_BLD_DIR)/mod
-AXY_LIB_DIR  = $(AXY_BLD_DIR)/lib
-AXY_DATA_DIR = $(AXY_DIR)/data
-AXY_TMP_DIR  = $(AXY_SRC_DIR)/xyz_tmp
-AXY_PARSE_DIR=$(AXY_DIR)/xyz_parse
-
-# kdt directories
-KDT_DIR 	 = kdt
-KDT_SRC_DIR	 = $(KDT_DIR)/src
-KDT_BLD_DIR  = $(KDT_DIR)/_build
-KDT_MOD_DIR  = $(KDT_BLD_DIR)/mod
-KDT_LIB_DIR  = $(KDT_BLD_DIR)/lib
-
-
-# ============================================================================
-# FORM_FACT LIBRARY CONFIGURATION
-# ============================================================================
 # Source files
 FF_F0_SRC    = $(FF_SRC_DIR)/f0.f90
 FF_F12_SRC   = $(FF_SRC_DIR)/f1_f2.f90
@@ -69,6 +55,16 @@ FF_F12_DATA  = $(FF_DATA_DIR)/f1_f2_factors/(12412.8)eV_f1_f2.json
 # ATOM_XYZ LIBRARY CONFIGURATION
 # ============================================================================
 
+# Directories
+AXY_DIR      = atom_xyz
+AXY_SRC_DIR  = $(AXY_DIR)/src
+AXY_BLD_DIR  = $(AXY_DIR)/_build
+AXY_MOD_DIR  = $(AXY_BLD_DIR)/mod
+AXY_LIB_DIR  = $(AXY_BLD_DIR)/lib
+AXY_DATA_DIR = $(AXY_DIR)/data
+AXY_TMP_DIR  = $(AXY_SRC_DIR)/xyz_tmp
+AXY_PARSE_DIR=$(AXY_DIR)/xyz_parse
+
 # Source files
 AXY_ATM_SRC  = $(AXY_SRC_DIR)/atom.f90
 
@@ -85,9 +81,33 @@ AXY_LST 	 = $(AXY_BLD_DIR)/xyz_modules.txt
 # ============================================================================
 # KDT LIBRARY CONFIGURATION
 # ============================================================================
+
+# Directories
+KDT_DIR 	 = kdt
+KDT_SRC_DIR	 = $(KDT_DIR)/src
+KDT_BLD_DIR  = $(KDT_DIR)/_build
+KDT_MOD_DIR  = $(KDT_BLD_DIR)/mod
+KDT_LIB_DIR  = $(KDT_BLD_DIR)/lib
+
+# Files
 KDT_SRC 	 = $(KDT_SRC_DIR)/kdt.f90
 KDT_OBJ		 = $(KDT_BLD_DIR)/kdt.o
 KDT_LIB		 = $(KDT_LIB_DIR)/kdt.a
+
+# ============================================================================
+# PDB_TO_XYZ LIBRARY CONFIGURATION
+# ============================================================================
+
+# Directories
+PDB_DIR 	 = pdb_to_xyz
+PDB_SRC_DIR  = $(PDB_DIR)/src
+PDB_BLD_DIR  = $(PDB_DIR)/_build
+PDB_EXE_DIR  = $(PDB_BLD_DIR)/exe
+
+# Files
+PDB_SRC 	 = $(PDB_SRC_DIR)/pdb_to_xyz.f90
+PDB_OBJ		 = $(PDB_BLD_DIR)/pdb_to_xyz.o
+PDB_EXE 	 = $(PDB_EXE_DIR)/pdb_to_xyz
 
 # ============================================================================
 # PHONY TARGETS
@@ -96,27 +116,38 @@ KDT_LIB		 = $(KDT_LIB_DIR)/kdt.a
         parse-f0 parse-f1_f2 parse-xyz check-ocaml check-deps-csv \
         check-deps-yojson check-deps-str help clean-formfacts \
 		clean-objects build-dirs-atom_xyz parse-xyz tabulate-xyz \
-		postamble kdt build-dirs-kdt clean-kdt
+		postamble kdt build-dirs-kdt clean-kdt compile-pdb-2-xyz clean-pdb-2-xyz \
+		build-dirs-pdb-2-xyz
 
 # ============================================================================
 # MAIN TARGETS
 # ============================================================================
-all: form_fact atom_xyz kdt clean-objects postamble
+all: form_fact atom_xyz kdt compile-pdb-2-xyz clean-objects postamble
 
 help:
+	@echo "Usage: make -f Compile.mk <target>"
+	@echo ""
 	@echo "Available targets:"
-	@echo "  all              - Build both form_fact and atom_xyz libraries"
-	@echo "  clean            - Clean all build artifacts"
-	@echo "  clean-form_fact  - Clean form_fact build artifacts"
-	@echo "  clean-atom_xyz   - Clean atom_xyz build artifacts"
-	@echo "	 clean-formfacts  - Removes generated f0 and f1_f2 modules (MUST BE MANUALLY CALLED)"
-	@echo "  clean-objects	  - Removes all generated object files"
+	@echo "  all              - Build all libraries (form_fact, atom_xyz, kdt, pdb_to_xyz)"
 	@echo "  form_fact        - Build form_fact library only"
 	@echo "  atom_xyz         - Build atom_xyz library only"
+	@echo "  kdt              - Build kdt library only"
+	@echo "  compile-pdb-2-xyz- Build pdb_to_xyz converter"
+	@echo "  pdb-2-xyz        - Run pdb_to_xyz converter (prompts for filename)"
+	@echo ""
+	@echo "Parsing targets:"
 	@echo "  parse-f0         - Parse f0 scattering factors from CSV"
 	@echo "  parse-f1_f2      - Parse f1_f2 anomalous factors from JSON"
 	@echo "  parse-xyz        - Parse XYZ coordinate files"
-
+	@echo ""
+	@echo "Clean targets:"
+	@echo "  clean            - Clean all build artifacts"
+	@echo "  clean-form_fact  - Clean form_fact build artifacts"
+	@echo "  clean-atom_xyz   - Clean atom_xyz build artifacts"
+	@echo "  clean-kdt        - Clean kdt build artifacts"
+	@echo "  clean-pdb-2-xyz  - Clean pdb_to_xyz build artifacts"
+	@echo "  clean-formfacts  - Remove generated f0 and f1_f2 modules (manual)"
+	@echo "  clean-objects    - Remove all generated object files"
 # ============================================================================
 # PREAMBLE (shows AXY_LST) growing
 # ============================================================================
@@ -149,15 +180,15 @@ $(FF_BLD_DIR) $(FF_MOD_DIR) $(FF_LIB_DIR):
 
 # Compile f0 module
 $(FF_F0_OBJ): $(FF_F0_SRC) | $(FF_BLD_DIR) $(FF_MOD_DIR)
-	@$(FC) $(FFLAGS) -J$(FF_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -J$(FF_MOD_DIR) -c $< -o $@
 
 # Compile f1_f2 module
 $(FF_F12_OBJ): $(FF_F12_SRC) | $(FF_BLD_DIR) $(FF_MOD_DIR)
-	@$(FC) $(FFLAGS) -J$(FF_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -J$(FF_MOD_DIR) -c $< -o $@
 
 # Compile form_fact module (depends on f0 and f1_f2)
 $(FF_FF_OBJ): $(FF_FF_SRC) $(FF_F0_OBJ) $(FF_F12_OBJ) | $(FF_BLD_DIR) $(FF_MOD_DIR)
-	@$(FC) $(FFLAGS) -I$(FF_MOD_DIR) -J$(FF_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(FF_MOD_DIR) -J$(FF_MOD_DIR) -c $< -o $@
 
 # Check and parse f0 if needed
 $(FF_F0_SRC): | check-deps-csv
@@ -207,10 +238,10 @@ tabulate-xyz:
 
 # compile files
 $(AXY_ATM_OBJ): $(AXY_ATM_SRC) | $(AXY_BLD_DIR) $(AXY_MOD_DIR) $(FF_MOD_DIR)
-	@$(FC) $(FFLAGS) -I$(FF_MOD_DIR) -J$(AXY_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(FF_MOD_DIR) -J$(AXY_MOD_DIR) -c $< -o $@
 $(AXY_BLD_DIR)/xyz_%.o: $(AXY_TMP_DIR)/xyz_%.f90 | $(AXY_BLD_DIR) $(AXY_MOD_DIR)
 	@echo "compiling: $<"
-	@$(FC) $(FFLAGS) -I$(AXY_MOD_DIR) -J$(AXY_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(AXY_MOD_DIR) -J$(AXY_MOD_DIR) -c $< -o $@
 
 # create static library
 $(AXY_LIB): $(AXY_ATM_OBJ) $(AXY_XYZ_OBJ) | $(AXY_LIB_DIR)
@@ -228,7 +259,7 @@ build-dirs-kdt:
 	@mkdir $(KDT_LIB_DIR)
 
 $(KDT_OBJ): $(KDT_SRC) | $(KDT_BLD_DIR) $(KDT_MOD_DIR) $(KDT_LIB_DIR)
-	@$(FC) $(FFLAGS) -I$(FF_MOD_DIR) -I$(AXY_MOD_DIR) -J$(KDT_MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(FF_MOD_DIR) -I$(AXY_MOD_DIR) -J$(KDT_MOD_DIR) -c $< -o $@
 $(KDT_LIB): $(KDT_OBJ)
 	@ar rcs $@ $^
 
@@ -279,6 +310,27 @@ define check_and_install
 endef
 
 # ============================================================================
+# PDB TO XYZ FILE CONVERTER
+# ============================================================================
+
+build-dirs-pdb-2-xyz: 
+	@rm -rf $(PDB_BLD_DIR)
+	@mkdir $(PDB_BLD_DIR)
+	@mkdir $(PDB_EXE_DIR)
+
+compile-pdb-2-xyz: build-dirs-pdb-2-xyz $(PDB_EXE)
+$(PDB_OBJ): $(PDB_SRC) | $(PDB_BLD_DIR)
+	@$(FC) $(CFLAGS) -J$(PDB_BLD_DIR) -c $< -o $@
+$(PDB_EXE): $(PDB_OBJ) | $(PDB_EXE_DIR)
+	@$(FC) $(PDB_OBJ) -o $(PDB_EXE)
+
+pdb-2-xyz:
+	@read -p "Enter xyz filename: " file; \
+	./$(PDB_EXE) $$file; \
+	mv *.xyz $(AXY_DATA_DIR); \
+	
+
+# ============================================================================
 # postamble
 # ============================================================================
 
@@ -293,7 +345,7 @@ postamble:
 # CLEAN TARGETS
 # ============================================================================
 
-clean: clean-form_fact clean-atom_xyz clean-objects
+clean: clean-form_fact clean-atom_xyz clean-objects clean-pdb-2-xyz
 clean-form_fact:
 	@rm -rf $(FF_BLD_DIR)
 clean-atom_xyz:
@@ -305,4 +357,6 @@ clean-kdt:
 clean-objects:
 	@find . -type f -name '*.o' -delete
 clean-formfacts: clean
-	@rm -f $(FF_F0_SRC) $(FF_F12_SRC)
+	@rm -rf $(FF_F0_SRC) $(FF_F12_SRC)
+clean-pdb-2-xyz:
+	@rm -rf $(PDB_BLD_DIR)
