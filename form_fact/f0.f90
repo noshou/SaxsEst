@@ -16,7 +16,7 @@ module f0_mod
 
     ! Public interface
     public :: n_elements, n_q_values
-    public :: get_f0
+    public :: get_f0, get_q_vals
 
     !---------------------------------------------------------------------------
     ! Module Data
@@ -761,4 +761,8 @@ contains
 
     end function get_f0
 
+    function get_q_vals() result(q_vals)
+        real(c_double), allocatable :: q_vals(:)
+        allocate(q_vals, source=q_values)
+    end function get_q_vals
 end module f0_mod

@@ -68,9 +68,9 @@ module kdt_mod
     end type kdt
 
     contains
-        include "func/kdt_methods.f90"
-        include "func/helpers.f90"
-        include "func/moms.f90"
-        include "func/creator.f90"
-        include "func/radial_search.f90"
+        include "inc/kdt_methods.inc"
+        include "inc/helpers.inc"
+        include "inc/moms.inc"
+        include "inc/creator.inc"
+        include "inc/radial_search.inc"
 end module kdt_mod

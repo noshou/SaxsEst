@@ -1,4 +1,28 @@
-function prop_est(k, q, a, e, c) result(w_est)
+!! Computes an estimated weight for the propagator based on a k-d tree structure
+!! containing weights and their frequencies. The estimation uses a sample size
+!! determined by the accuracy parameter epsilon and scaling factor a.
+!!
+!! The sample size is calculated as:
+!! - If ceiling mode: s = ⌈√(24*a)/e⌉ + 1
+!! - If floor mode:   s = ⌊√(24*a)/e⌋ + 1
+!!
+!! The weight estimate is computed using the formula:
+!! \f$ \hat{w} = \overline{\frac{C(s,2)}{\sum_{i=1}^{n} \frac{C(f_i,2)}{w_i}}} \f$
+!!
+!! where:
+!! - C(n,k) is the binomial coefficient "n choose k"
+!! - f_i is the frequency of the i-th unique weight
+!! - w_i is the i-th unique weight
+!! - The overline denotes complex conjugate
+!!
+!! @param[in] k      K-d tree structure containing weights and frequencies
+!! @param[in] q      Query parameter for weight extraction
+!! @param[in] a      Scaling factor for sample size calculation
+!! @param[in] e      Epsilon, accuracy parameter (must satisfy 0 < e < 1)
+!! @param[in] c      Ceiling flag: if .true. use ceiling, if .false. use floor
+!!
+!! @return w_est    Complex conjugate of the estimated propagator weight
+function propEst(k, q, a, e, c) result(w_est)
     
     ! Input parameters
     type(kdt), intent(in) :: k
@@ -95,4 +119,4 @@ function prop_est(k, q, a, e, c) result(w_est)
     w_est = s_choose_2 / sum
     w_est = conjg(w_est)
 
-end function prop_est
+end function propEst

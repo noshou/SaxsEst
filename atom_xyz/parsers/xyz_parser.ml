@@ -145,7 +145,8 @@ let xyz_toFortran xyz_fp =
   Printf.fprintf oc "    ! Public interface\n";
   Printf.fprintf oc "    public  :: n_atoms\n";
   Printf.fprintf oc "    private :: elements, x_coords, y_coords, z_coords\n";
-  Printf.fprintf oc "    public  :: get_atoms\n\n";
+  Printf.fprintf oc "    public  :: get_atoms_%s" base_name;
+
   
   (* module data *)
   Printf.fprintf oc "    ! Module data\n";
@@ -201,7 +202,7 @@ let xyz_toFortran xyz_fp =
   (* get_atoms function - returns array of atom objects *)
   Printf.fprintf oc "    ! Returns all atoms as an array of atom objects\n";
   Printf.fprintf oc "    ! Requires: use atom_mod, only: atom, coord, create_atom\n";
-  Printf.fprintf oc "    function get_atoms() result(atoms)\n";
+  Printf.fprintf oc "    function get_atoms_%s() result(atoms)\n" base_name;
   Printf.fprintf oc "        use atom_mod, only: atom, coord, create_atom\n";
   Printf.fprintf oc "        type(atom) :: atoms(n_atoms)\n";
   Printf.fprintf oc "        type(coord) :: position\n";
@@ -212,7 +213,7 @@ let xyz_toFortran xyz_fp =
   Printf.fprintf oc "            position%%z = z_coords(i)\n";
   Printf.fprintf oc "            atoms(i) = create_atom(position, elements(i))\n";
   Printf.fprintf oc "        end do\n";
-  Printf.fprintf oc "    end function get_atoms\n\n";
+  Printf.fprintf oc "    end function get_atoms_%s\n\n" base_name;
   
   (* close module *)
   Printf.fprintf oc "end module %s_mod\n" base_name;

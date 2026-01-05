@@ -16,26 +16,19 @@
 !! in the xyz file.
 !!
 !! @param atoms     List of atom objects in molecule
-!! @param n_atoms   Number of atoms
-!! @param norm      Normalization constant (I_real = I_calc/norm)
 !! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
-!! @param n_q       Number of q values
-!! @param name      Name of dataset
 !!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function debeye_radial(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity_estimate)
+function debeyeEst_radial(atoms, q_vals) result(intensity_estimate)
     ! input parameters
-    character(len=*), intent(in) :: name
     type(atom), dimension(:), intent(in) :: atoms
-    integer, intent(in) :: n_atoms, n_q
-    real(c_double), intent(in) :: norm
     real(c_double), dimension(:), intent(in) :: q_vals
 
     ! local variables
     real(c_double), dimension(:), allocatable :: intensity
-    integer :: i, j, q_ij
-    real(c_double) :: q_val
+    integer :: i, j, q_ij, n_atoms, n_q
+    real(c_double) :: q_val, norm
 
     ! timing variables
     integer(c_int) :: timing
@@ -54,11 +47,17 @@ function debeye_radial(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q)
 
+    ! initialize variables norm
+    n_q = size(q_vals)
+    n_atoms = size(atoms)
+    norm = real(n_atoms ** 2, kind=c_double)
+
     ! allocate intensity array
     allocate(intensity(n_q))
 
     ! start timer, do pairwise calculations
     call system_clock(start, rate)
+
 
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
@@ -96,8 +95,8 @@ function debeye_radial(atoms, n_atoms, norm, q_vals, n_q, name) result(intensity
     timing = int((finish - start) / rate, kind=c_int)
 
     ! output results
-    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
+    intensity_estimate = new_intensity(timing, q_vals, intensity)
 
     ! clean up
     deallocate(intensity)
-end function debeye_radial
+end function debeyeEst_radial

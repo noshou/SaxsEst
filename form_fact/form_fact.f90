@@ -12,18 +12,15 @@
 !!   - f2 is the imaginary anomalous correction (absorption)
 module form_fact_mod
     use iso_c_binding, only: c_double
-    use f0_mod, only: get_f0
+    use f0_mod, only: get_f0, get_q_vals
     use f1_f2_mod, only: get_f1_f2
     implicit none
     
     private
-    public :: form_fact
+    public :: form_fact, get_q_values
     
 contains
 
-    !> @brief Compute complete atomic form factor with anomalous corrections
-    !>
-    !! @details
     !! Computes the complex atomic form factor by combining:
     !!   - f0(Q): Q-dependent atomic scattering factor
     !!   - f1: Real anomalous scattering correction
@@ -61,5 +58,11 @@ contains
         ff = cmplx(f1 + f0_val, f2, kind=c_double)
         
     end function form_fact
+
+    !! @return the list of available q values
+    function get_q_values() result(qvals)
+        real(c_double), allocatable :: qvals(:)
+        allocate(qvals, source=get_q_vals())
+    end function get_q_values
 
 end module form_fact_mod

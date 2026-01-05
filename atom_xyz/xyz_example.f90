@@ -12,7 +12,7 @@ module xyz_chignolin_mod
     ! Public interface
     public  :: n_atoms
     private :: elements, x_coords, y_coords, z_coords
-    public  :: get_atoms
+    public  :: get_atoms_chignolin
 
     ! Module data
     integer, parameter :: n_atoms = 135
@@ -573,7 +573,7 @@ contains
 
     ! Returns all atoms as an array of atom objects
     ! Requires: use atom_mod, only: atom, coord, create_atom
-    function get_atoms() result(atoms)
+    function get_atoms_xyz_chignolin() result(atoms)
             use atom_mod, only: atom, coord, create_atom
             type(atom) :: atoms(n_atoms)
             type(coord) :: position
@@ -585,6 +585,6 @@ contains
                     position%z = z_coords(i)
                     atoms(i) = create_atom(position, elements(i))
             end do
-    end function get_atoms
+    end function get_atoms_xyz_chignolin
 
 end module xyz_chignolin_mod

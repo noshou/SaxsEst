@@ -8,38 +8,38 @@
 // maximum size of number (way more than needed, but just 2 b safe)
 #define MAX_DOUBLE_STR 32
 
-/** C-interoperable intensity_est type */
+/** C-interoperable estimate type */
 typedef struct {
     double *q_vals;    /**< Pointer to Q-values array */
     double *i_vals;    /**< Pointer to intensity array */
     int timing;        /**< Timing in milliseconds */
     int size;          /**< Number of data points */
-    char *name;        /**< Null-terminated dataset name */
-} intensity_est;
+} estimate;
 
 /**
  * Convert Fortran intensity estimate to OCaml CSV structure and call data_out.
  *
  * Creates: [["q_inverse_angstrom"; "intensity"]; ["q0"; "i0"]; ["q1"; "i1"]; ...]
  *
- * @param est    Pointer to intensity_est structure from Fortran
- *
+ * @param est    Pointer to estimate structure from Fortran
+ * @param fp     Pointer to full file path
  * @pre init_ocaml() must be called first
  * @pre OCaml "data_out" function registered via Callback.register
  * @pre est->q_vals and est->i_vals must have est->size elements each
- * @pre est->name must be null-terminated
+ * @pre pth must be null-terminated
  * @pre No headers in arrays - function adds them
  */
-void fortran_to_ocaml(intensity_est *est) {
+void fortran_to_ocaml(estimate *est, char *pth) {
     CAMLparam0(); // expects no ocaml arguments
     
     // 5 ocaml variables:
-    //  - ocm_lst  -> csv list of lists (Q vs Intensity)
-    //  - row_lst -> single nested row (Q; Intensity)
-    //  - cns_opi -> cons: "elm"  :: [row]  (inner cons)
-    //  - cns_opo -> cons: [row1] :: [row2] (outer cons)
-    //  - ocm_nme -> name of run/file
-    CAMLlocal5(ocm_lst, row_lst, cns_opi, cns_opo, ocm_nme);
+    CAMLlocal5(
+        ocm_lst,    //  - ocm_lst -> csv list of lists (Q vs Intensity)
+        row_lst,    //  - row_lst -> single nested row (Q; Intensity)
+        cns_opi,    //  - cns_opi -> cons: "elm"  :: [row]  (inner cons)
+        cns_opo,    //  - cns_opo -> cons: [row1] :: [row2] (outer cons)
+        ocm_nme     //  - ocm_nme -> file path
+    );
     
     // initialize empty ocaml list
     ocm_lst = Val_emptylist;
@@ -90,7 +90,7 @@ void fortran_to_ocaml(intensity_est *est) {
     ocm_lst = cns_opo;
     
     // allocate file name (null-terminated, so use caml_copy_string)
-    ocm_nme = caml_copy_string(est->name);
+    ocm_nme = caml_copy_string(pth);
     
     // Call OCaml function
     static const value *closure = NULL; 

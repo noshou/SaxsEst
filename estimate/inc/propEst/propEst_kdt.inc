@@ -1,19 +1,20 @@
+!! Performs radius-based searches in the k-d tree for each provided Q value
+!! and computes intensity estimates. Returns both the computation time and
+!! the resulting intensity data as a function of Q.
 !!
-!! @param k         kdt tree
-!! @param r         radius to search within
-!! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
-!! @param n_q       Number of q values
-!! @param[in] a      Advice parameter, should be >= number of nodes 
-!! @param[in] e      Epsilon parameter, must satisfy 0 < epsilon < 1 
-!! @param[in] c      Rounding flag: .true. for ceiling, .false. for floor (logical)
-!! @param name      Name of dataset
-!! @return          The time it took to run (nanoseconds) and
-!!                  array of q vs I_real (intensity_estimate type)
-function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
+!! @param[in] k         K-d tree structure containing the data
+!! @param[in] r         Search radius for nearest neighbor queries
+!! @param[in] q_vals    Array of Q values to calculate I(Q) at (must be in valid range)
+!! @param[in] a         Advice parameter for estimation (should be >= number of nodes)
+!! @param[in] e         Epsilon parameter for accuracy control (must satisfy 0 < e < 1)
+!! @param[in] c         Rounding mode flag: .true. for ceiling, .false. for floor
+!!
+!! @return              Returns a tuple containing:
+!!                      - Execution time in nanoseconds (integer)
+!!                      - Array of intensity_estimate type with Q vs I_real values
+function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     type(kdt), intent(in) :: k
     real(c_double), intent(in) :: r
-    integer, intent(in) :: n_q
-    character(len=*), intent(in) :: name
     real(c_double), intent(in) :: a  !< Advice parameter (>= # nodes)
     real(c_double), intent(in) :: e  !< Epsilon (0 < e < 1)
     logical, intent(in) :: c         !< Ceiling flag
@@ -21,10 +22,10 @@ function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     ! Local variables
     type(atom), dimension(:), allocatable :: atoms             
     integer :: n_atoms
-    real(c_double), dimension(n_q), intent(in) :: q_vals
-    real(c_double), dimension(n_q) :: intensity
+    real(c_double), dimension(:), intent(in) :: q_vals
+    real(c_double), dimension(:), allocatable :: intensity
     real(c_double) :: norm                                 
-    integer :: i, j, q_ij
+    integer :: i, j, q_ij, n_q
     real(c_double) :: q_val 
     
     ! timing variables
@@ -47,14 +48,17 @@ function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     ! start timer, initialize
     call system_clock(start, rate)
     
+    ! initialize local variables
+    n_q = size(q_vals)
     n_atoms = k%size()
-    allocate(atoms(n_atoms))                                   
+    allocate(atoms(n_atoms))
+    allocate(intensity(n_q))                                   
     atoms = k%atoms()
     norm = real(n_atoms ** 2, kind=c_double)
     
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
-        w_est = prop_est(k, q_val, a, e, c)
+        w_est = propEst(k, q_val, a, e, c)
         est = 0
         
         do i = 1, n_atoms
@@ -84,9 +88,9 @@ function prop_kdt(k, r, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     timing = int((finish - start) / rate, kind=c_int)
     
     ! output estimate
-    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
+    intensity_estimate = new_intensity(timing, q_vals, intensity)
     
     ! cleanup
     deallocate(atoms)
     
-end function prop_kdt
+end function propEst_kdt

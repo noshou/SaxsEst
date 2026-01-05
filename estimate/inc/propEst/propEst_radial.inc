@@ -1,24 +1,35 @@
+!! Computes scattering intensity I(Q) for a given set of Q values using a radial
+!! contribution method with proportional weight estimation. The intensity is calculated
+!! using atomic form factors and pairwise distance contributions via the sinc function.
 !!
-!! @param k         kdt tree
-!! @param q_vals    Q values to calculate I(Q); NOTE: assumed to be in valid range!
-!! @param n_q       Number of q values
-!! @param[in] a      Advice parameter, should be >= number of nodes 
-!! @param[in] e      Epsilon parameter, must satisfy 0 < epsilon < 1 
-!! @param[in] c      Rounding flag: .true. for ceiling, .false. for floor (logical)
-!! @param name      Name of dataset
-!! @return          The time it took to run (nanoseconds) and
-!!                  array of q vs I_real (intensity_estimate type)
-function prop_radial(k, q_vals, n_q, a, e, c, name) result(intensity_estimate)
+!! The algorithm performs the following steps for each Q value:
+!! 1. Estimates proportional weights using the propEst function
+!! 2. Computes pairwise contributions: f_i * w_est * sinc(Q * r_ij) for all atom pairs
+!! 3. Adds self-contribution: f_i * conj(f_i) for each atom
+!! 4. Normalizes the total intensity by N^2 where N is the number of atoms
+!!
+!! The intensity calculation follows the form:
+!! \f$ I(Q) = \frac{1}{N^2} \sum_{i=1}^{N} \sum_{j=1}^{N} f_i(Q) w_{est}(Q) \frac{\sin(Q r_{ij})}{Q r_{ij}} \f$
+!!
+!! @param[in] k         K-d tree structure containing atomic positions and data
+!! @param[in] q_vals    Array of Q values at which to calculate intensity
+!! @param[in] a         Advice parameter for weight estimation (should be >= number of nodes)
+!! @param[in] e         Epsilon parameter for accuracy control (must satisfy 0 < e < 1)
+!! @param[in] c         Rounding mode flag: .true. for ceiling, .false. for floor
+!!
+!! @return              intensity_estimate type containing:
+!!                      - Execution time in nanoseconds
+!!                      - Q values array
+!!                      - Calculated intensity values I(Q)
+function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     type(kdt), intent(in) :: k
-    character(len=*), intent(in) :: name
-    integer, intent(in) :: n_q 
     real(c_double), intent(in) :: a  !< Advice parameter (>= # nodes)
     real(c_double), intent(in) :: e  !< Epsilon (0 < e < 1)
     logical, intent(in) :: c         !< Ceiling flag
     
     ! Local variables
     type(atom), dimension(:), allocatable :: atoms
-    integer :: n_atoms
+    integer :: n_atoms, n_q
     real(c_double), dimension(:), intent(in) :: q_vals
     real(c_double), dimension(:), allocatable :: intensity
     real(c_double) :: norm
@@ -44,6 +55,8 @@ function prop_radial(k, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     ! start timer, initialize
     call system_clock(start, rate)
     
+    ! initialize variables
+    n_q = size(q_vals)
     n_atoms = k%size()
     allocate(atoms(n_atoms))
     allocate(intensity(n_q))
@@ -54,7 +67,7 @@ function prop_radial(k, q_vals, n_q, a, e, c, name) result(intensity_estimate)
         q_val = q_vals(q_ij)
         
         ! get estimate of weight
-        w_est = prop_est(k, q_val, a, e, c)
+        w_est = propEst(k, q_val, a, e, c)
         est = 0
         
         do i = 1, n_atoms
@@ -83,9 +96,9 @@ function prop_radial(k, q_vals, n_q, a, e, c, name) result(intensity_estimate)
     timing = int((finish - start) / rate, kind=c_int)
     
     ! output estimate
-    intensity_estimate = new_intensity(timing, q_vals, intensity, name)
+    intensity_estimate = new_intensity(timing, q_vals, intensity)
     
     ! cleanup
     deallocate(atoms, intensity)
     
-end function prop_radial
+end function propEst_radial
