@@ -56,7 +56,7 @@ module kdt_mod
         type(frequencies) :: freq_dist
         integer, allocatable :: subtree_size
         type(atom), allocatable :: atm(:)
-        integer :: unique
+        integer :: unique ! number of unique items
         contains
             procedure :: radial_search => radial_search_method
             procedure :: weights => get_weights

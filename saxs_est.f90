@@ -134,6 +134,7 @@ contains
             deby_rad = debeyeEst_radial(atoms, q_vals)
             path    = trim(out_dir)//"/"//"debeye_radial_"//trim(name)//".csv"
             call est_wrap(deby_rad, path)
+            print*, "timing: ", deby_rad%timing, "s"
             print*, "analysis saved at: ", trim(path)
             print*, ""
 
@@ -141,6 +142,7 @@ contains
             deby_kdt = debeyeEst_kdt(kdt_tree, r, q_vals)
             path    = trim(out_dir)//"/"//"debeye_kdt_"//trim(name)//".csv"
             call est_wrap(deby_kdt, path)
+            print*, "timing: ", deby_kdt%timing, "s"
             print*, "analysis saved at: ", trim(path)
             print*, ""
 
@@ -148,6 +150,7 @@ contains
             prop_rad = propEst_radial(kdt_tree, q_vals, a, e, c)
             path     = trim(out_dir)//"/"//"prop_radial_"//trim(name)//".csv"
             call est_wrap(prop_rad, path)
+            print*, "timing: ", prop_rad%timing, "s"
             print*, "analysis saved at: ", trim(path)
             print*, ""
 
@@ -155,6 +158,7 @@ contains
             prop_kdt = propEst_kdt(kdt_tree, r, q_vals, a, e, c)
             path     = trim(out_dir)//"/"//"prop_kdt_"//trim(name)//".csv"
             call est_wrap(prop_kdt, path)
+            print*, "timing: ", prop_kdt%timing, "s"
             print*, "analysis saved at: ", trim(path)
             print*, ""
             

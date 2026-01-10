@@ -9,10 +9,10 @@ module estimate_mod
     
     ! intensity estimate type
     type, bind(C) :: estimate
-        type(c_ptr)     :: q_vals    
-        type(c_ptr)     :: i_vals     
-        integer(c_int)  :: timing
-        integer(c_int)  :: size  
+        type(c_ptr)             :: q_vals    
+        type(c_ptr)             :: i_vals     
+        real(c_int), public     :: timing
+        integer(c_int), public  :: size  
     end type estimate
 
     contains 
@@ -23,4 +23,5 @@ module estimate_mod
         include "inc/debeyeEst/debeyeEst_kdt.inc"
         include "inc/propEst/propEst_radial.inc"
         include "inc/propEst/propEst_kdt.inc"
+        
 end module estimate_mod

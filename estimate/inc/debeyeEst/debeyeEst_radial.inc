@@ -31,8 +31,8 @@ function debeyeEst_radial(atoms, q_vals) result(intensity_estimate)
     real(c_double) :: q_val, norm
 
     ! timing variables
-    integer(c_int) :: timing
-    integer :: start, finish, rate
+    integer :: start, finish
+    real    :: rate
 
     ! output data
     type(estimate) :: intensity_estimate
@@ -92,10 +92,9 @@ function debeyeEst_radial(atoms, q_vals) result(intensity_estimate)
 
     ! stop timer
     call system_clock(finish)
-    timing = int((finish - start) / rate, kind=c_int)
 
     ! output results
-    intensity_estimate = new_intensity(timing, q_vals, intensity)
+    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity)
 
     ! clean up
     deallocate(intensity)

@@ -7,7 +7,7 @@
 # ============================================================================
 CC           = gcc -w -g 
 FC           = gfortran
-CFLAGS       = -std=f2023 -w -std=f2023 -g -fbacktrace -fcheck=all -O0 -march=native -mcmodel=large -fmax-array-constructor=500000
+CFLAGS       = -w -std=f2023 -g -fbacktrace -fcheck=all -O0 -march=native -mcmodel=large -fmax-array-constructor=500000
 
 # OCaml tools
 OCAMLFIND    = ocamlfind

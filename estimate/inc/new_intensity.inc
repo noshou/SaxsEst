@@ -5,16 +5,21 @@
 !! The returned structure contains pointers to SAVE variables that are
 !! overwritten on the next call to this function. 
 !!  
-!! @param[in] t     Timing value in milliseconds
+!! @param[in] s     Start  time of clock
+!! @param[in] f     Finish time of clock
+!! @param[in] r     Ticks/second of clock 
 !! @param[in] q     Array of Q values
 !! @param[in] i     Array of intensity estimates
-!!
 !! @return e        C-interoperable intensity_est structure with pointers to allocated data
-function new_intensity(t, q, i) result(e)
+function new_intensity(s, f, r, q, i) result(e)
     
     ! input variables
-    integer(c_int), intent(in) :: t
+    integer, intent(in) :: s, f
+    real ,   intent(in) :: r
     real(c_double), dimension(:), intent(in) :: q, i
+
+    ! execution time
+    real(c_double) :: t
 
     ! targets for c arrays (need to be saved to persist!)
     real(c_double), dimension(:), allocatable, save, target :: q_cpy, i_cpy
@@ -32,10 +37,13 @@ function new_intensity(t, q, i) result(e)
     q_cpy = q  
     i_cpy = i  
     
+    ! calculate execution time
+    t = real(f - s, kind=c_double) / real(r, kind=c_double)
+
     ! build output 
     e%q_vals = c_loc(q_cpy)
     e%i_vals = c_loc(i_cpy)
     e%timing = t
-    e%size   = int(size(q), kind=c_int)
+    e%size   = real(size(q), kind=c_double)
 
 end function new_intensity

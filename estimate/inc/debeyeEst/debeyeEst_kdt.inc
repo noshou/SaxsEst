@@ -39,8 +39,8 @@ function debeyeEst_kdt(k, r, q_vals) result(intensity_estimate)
     real(c_double) :: norm                                  
     
     ! timing variables
-    integer(c_int) :: timing
-    integer :: start, finish, rate
+    integer :: start, finish
+    real    :: rate
     
     ! output data
     type(estimate) :: intensity_estimate
@@ -97,10 +97,9 @@ function debeyeEst_kdt(k, r, q_vals) result(intensity_estimate)
     
     ! stop timer
     call system_clock(finish)
-    timing = int((finish - start) / rate, kind=c_int)      
     
     ! output estimate
-    intensity_estimate = new_intensity(timing, q_vals, intensity)
+    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity)
     
     ! Clean up
     deallocate(atoms, intensity)                            

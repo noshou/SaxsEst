@@ -32,91 +32,44 @@ function propEst(k, q, a, e, c) result(w_est)
     logical, intent(in) :: c        !< Ceiling flag
     
     ! Return value
-    complex(c_double) :: w_est                       !< Estimated weight
+    complex(c_double) :: w_est
     
     ! Local variables
-    complex(c_double), allocatable :: w(:)           !< Array of weights
-    integer, allocatable :: f(:)                     !< Array of frequencies
-    integer :: s                                     !< Sample size
-    integer :: s_fact                                !< Factorial of s
-    integer :: s_incr                                !< Incrementer for s factorial
-    integer :: s_choose_2                            !< Binomial coefficient C(s,2)
-    integer :: p_fact                                !< Factorial of (s-2)
-    integer :: p_incr                                !< Incrementer for p factorial
-    integer :: k_fact                                !< Factorial of (f(i)-2)
-    integer :: k_incr                                !< Incrementer for k factorial
-    integer :: i                                     !< Loop counter
-    integer :: c_choose_2                            !< Binomial coefficient C(f(i),2)
-    integer :: c_fact                                !< Factorial of f(i)
-    integer :: c_incr                                !< Incrementer for c factorial
-    complex(c_double) :: sum                         !< Accumulator for weighted sum
+    complex(c_double), allocatable :: w(:)
+    integer, allocatable :: f(:)
+    integer :: s, s_choose_2, c_choose_2, i
+    complex(c_double) :: sum
     
     ! Allocate space for list of weights and frequencies
     allocate(w, source=k%weights(q)); allocate(f, source=k%freqs())
 
     ! Calculate sample size based on rounding mode
     if (c) then
-        ! Ceiling: s = ⌈√(24*a)/e⌉ + 1
         s = ceiling(sqrt(24*a)/e) + 1
     else
-        ! Floor: s = ⌊√(24*a)/e⌋ + 1
         s = floor(sqrt(24*a)/e) + 1
     end if 
     
-    ! Calculate factorial of s
-    s_fact = 1
-    s_incr = s
-    do while (s_incr > 1)
-        s_fact = s_fact * s_incr
-        s_incr = s_incr - 1
-    end do 
-    
-    ! Calculate factorial of (s-2)
-    p_fact = 1
-    p_incr = s - 2
-    do while (p_incr > 1)
-        p_fact = p_fact * p_incr
-        p_incr = p_incr - 1
-    end do
-    
-    ! Calculate binomial coefficient: C(s,2) = s! / (2! * (s-2)!)
-    s_choose_2 = s_fact / (2 * p_fact)
+    ! Calculate binomial coefficient: C(s,2) = s * (s-1) / 2
+    s_choose_2 = s * (s - 1) / 2
     
     ! Accumulate sum of (C(f(i),2) / w(i)) for all weights
     sum = cmplx(0.0, 0.0, kind=c_double)
     do i = 1, k%n_unique()
+        ! if (abs(w(i)) < 1.0e-15_c_double) cycle
+        
         ! Calculate binomial coefficient C(f(i),2)
-        if (f(i) == 1) then
-            ! Edge case: frequency = 1, C(1,2) is undefined, use 0
+        if (f(i) <= 1) then
             c_choose_2 = 0
         else 
-            ! Calculate f(i)!
-            c_fact = 1
-            c_incr = f(i)
-            do while(c_incr > 1)
-                c_fact = c_fact * c_incr
-                c_incr = c_incr - 1
-            end do
-            
-            ! Calculate (f(i)-2)!
-            k_fact = 1
-            k_incr = f(i) - 2
-            do while(k_incr > 1)
-                k_fact = k_fact * k_incr
-                k_incr = k_incr - 1
-            end do 
-            
-            ! C(f(i),2) = f(i)! / (2! * (f(i)-2)!)
-            c_choose_2 = c_fact / (2 * k_fact)
+            c_choose_2 = f(i) * (f(i) - 1) / 2
         end if 
         
         ! Accumulate: sum += C(f(i),2) / w(i)
         sum = sum + c_choose_2 / w(i)
     end do 
     
-    ! Calculate estimated weight: w_est = C(s,2) / sum
-    ! then get complex conjugate of w_est
-    w_est = s_choose_2 / sum
-    w_est = conjg(w_est)
+    ! Calculate estimated weight: w_est = conjg(C(s,2) / sum)
+    w_est = conjg(s_choose_2 / sum)
 
 end function propEst
