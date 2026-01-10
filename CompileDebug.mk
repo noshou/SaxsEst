@@ -1,5 +1,5 @@
 # ============================================================================
-# Compile.mk builds needed libraries and compiles main into an executable
+# Debug version of Compile.mk (no optimizations)
 # ============================================================================
 
 # ============================================================================
@@ -7,7 +7,7 @@
 # ============================================================================
 CC           = gcc -w -g 
 FC           = gfortran
-CFLAGS       = -w -std=f2023 -O3 -march=native -mcmodel=large -fmax-array-constructor=500000
+CFLAGS       = -std=f2023 -w -std=f2023 -g -fbacktrace -fcheck=all -O0 -march=native -mcmodel=large -fmax-array-constructor=500000
 
 # OCaml tools
 OCAMLFIND    = ocamlfind

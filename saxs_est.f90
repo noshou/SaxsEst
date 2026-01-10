@@ -17,7 +17,7 @@ contains
     subroutine cli(xyz_module_list_path, out_dir)
         
         ! file paths
-        character(len=*), intent(in) :: xyz_module_list_path  ! FIXED: Added
+        character(len=*), intent(in) :: xyz_module_list_path
         character(len=*), intent(in) :: out_dir
         character(len=:), allocatable :: path
         
@@ -28,7 +28,7 @@ contains
         character(len=256) :: name
         
         ! variables for file I/O
-        integer :: xyz_unit, iostat_val, s, end_pos, m, atms  ! FIXED: Added atms
+        integer :: xyz_unit, iostat_val, s, end_pos, m, atms
         character(len=256) :: buff, mode
         character(len=*), parameter :: xyz_start_match = "xyz_"
         character(len=*), parameter :: xyz_end_match = "_mod.mod"
@@ -110,7 +110,10 @@ contains
 
             ! prompt user for rounding mode
             do while (.true.)
-                print*, "Rounding mode: \n\tDOWN:\tround down\n\tUP:\tround up: "
+                print*, "Rounding mode:"
+                print*, "  DOWN: round down"
+                print*, "  UP:   round up"
+                write(*, '(A)', advance='no') "Enter choice: "
                 read(*,*) mode
                 if (mode .eq. "DOWN" ) then 
                     c = .false.
@@ -119,41 +122,40 @@ contains
                     c = .true.
                     exit
                 else 
-                    print*, "Invalid input!"
+                    print*, "Invalid input! Please enter DOWN or UP"
                 end if
-            end do
-            
+            end do            
             print*, ""
             print*, "===================="
-            print*, "Analyzing:\t", trim(name)
+            print*, "Analyzing:    ", trim(name)
             
             
             print*, "Running debeyeEst_radial..."
-            deby_rad = debeyeEst_radial(atoms, q_vals)  ! FIXED: atoms not kdt_tree
-            path    = out_dir//"/"//"debeye_radial_"//name//".csv"
+            deby_rad = debeyeEst_radial(atoms, q_vals)
+            path    = trim(out_dir)//"/"//"debeye_radial_"//trim(name)//".csv"
             call est_wrap(deby_rad, path)
-            print*, "analysis saved at: ", path
+            print*, "analysis saved at: ", trim(path)
             print*, ""
 
             print*, "Running debeyeEst_kdt..."
             deby_kdt = debeyeEst_kdt(kdt_tree, r, q_vals)
-            path    = out_dir//"/"//"debeye_kdt_"//name//".csv"
+            path    = trim(out_dir)//"/"//"debeye_kdt_"//trim(name)//".csv"
             call est_wrap(deby_kdt, path)
-            print*, "analysis saved at: ", path
+            print*, "analysis saved at: ", trim(path)
             print*, ""
 
             print*, "Running propEst_radial..."
             prop_rad = propEst_radial(kdt_tree, q_vals, a, e, c)
-            path     = out_dir//"/"//"prop_radial_"//name//".csv"
+            path     = trim(out_dir)//"/"//"prop_radial_"//trim(name)//".csv"
             call est_wrap(prop_rad, path)
-            print*, "analysis saved at: ", path
+            print*, "analysis saved at: ", trim(path)
             print*, ""
 
             print*, "Running propEst_kdt..."
             prop_kdt = propEst_kdt(kdt_tree, r, q_vals, a, e, c)
-            path     = out_dir//"/"//"prop_kdt"//name//".csv"
+            path     = trim(out_dir)//"/"//"prop_kdt_"//trim(name)//".csv"
             call est_wrap(prop_kdt, path)
-            print*, "analysis saved at: ", path
+            print*, "analysis saved at: ", trim(path)
             print*, ""
             
         end do 

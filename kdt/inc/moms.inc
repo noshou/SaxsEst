@@ -10,17 +10,18 @@ subroutine sort_bin(bin, axs)
     class(hype), intent(in) :: axs
     integer :: i, j
     type(atom) :: atom_i
+    
     do i = 2, size(bin)
         atom_i = bin(i)
         j = i - 1
-        do while (j >= 1 .and. bin(j)%cmp_axis(atom_i, axs%str()) > 0)
+        do while (j >= 1)
+            if (bin(j)%cmp_axis(atom_i, axs%str()) <= 0) exit
             bin(j+1) = bin(j)
             j = j - 1
         end do
         bin(j+1) = atom_i
     end do
 end subroutine sort_bin
-
 !> Takes the first n elements from an array
 !!
 !! @param n Number of elements to take
@@ -30,10 +31,11 @@ end subroutine sort_bin
 function take(n, atoms) result(res)
     integer, intent(in) :: n
     type(atom), intent(in) :: atoms(:)
-    type(atom) :: res(n)
-    res = atoms(:n)
+    type(atom) :: res(max(0,n))
+    if (n > 0) then
+        res = atoms(1:n)
+    end if
 end function take
-
 !> Drops the first n elements from an array
 !!
 !! @param n Number of elements to drop
@@ -43,10 +45,11 @@ end function take
 function drop(n, atoms) result(res)
     integer, intent(in) :: n
     type(atom), dimension(:), intent(in) :: atoms
-    type(atom), dimension(size(atoms)-n) :: res
-    res = atoms(n+1:)
+    type(atom), dimension(max(0, size(atoms)-n)) :: res
+    if (n < size(atoms)) then
+        res = atoms(n+1:size(atoms))
+    end if
 end function drop
-
 !> Finds the median of an array using median-of-medians algorithm
 !! Groups array into bins of size n, finds median of each bin,
 !! then recursively finds median of those medians.
@@ -78,6 +81,7 @@ recursive function median(n, atoms, axs) result(med)
 
     do i = 1, num_bins
         bin_size = min(n, size(rest))
+        if (bin_size <= 0) exit  ! Add this check!
         bin = take(bin_size, rest)
         call sort_bin(bin, axs)
         medians(i) = bin((size(bin)+1)/2)

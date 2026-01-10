@@ -17,14 +17,14 @@ typedef struct {
 } estimate;
 
 /**
- * Convert Fortran intensity estimate to OCaml CSV structure and call data_out.
+ * Convert Fortran intensity estimate to OCaml CSV structure and call oc_out.
  *
  * Creates: [["q_inverse_angstrom"; "intensity"]; ["q0"; "i0"]; ["q1"; "i1"]; ...]
  *
  * @param est    Pointer to estimate structure from Fortran
  * @param fp     Pointer to full file path
  * @pre init_ocaml() must be called first
- * @pre OCaml "data_out" function registered via Callback.register
+ * @pre OCaml "oc_out" function registered via Callback.register
  * @pre est->q_vals and est->i_vals must have est->size elements each
  * @pre pth must be null-terminated
  * @pre No headers in arrays - function adds them
@@ -95,7 +95,7 @@ void fortran_to_ocaml(estimate *est, char *pth) {
     // Call OCaml function
     static const value *closure = NULL; 
     if (closure == NULL) {
-        closure = caml_named_value("data_out");
+        closure = caml_named_value("oc_out");
     }
     if (closure != NULL) {
         caml_callback2(*closure, ocm_lst, ocm_nme);
