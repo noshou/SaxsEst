@@ -108,3 +108,5 @@ void init_ocaml() {
     char *argv[] = { "csv_out", NULL };
     caml_startup(argv);
 }
+
+/** writes a simple file of timings to stdout */

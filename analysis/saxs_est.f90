@@ -5,7 +5,7 @@ module main_mod
     use form_fact_mod; use csv_interface_mod
     
     ! generated atom modules "use"
-    include "_build/inc/mod_uses.inc"
+    include "mod_uses.inc"
 
     implicit none
     private
@@ -19,7 +19,7 @@ contains
         ! file paths
         character(len=*), intent(in) :: xyz_module_list_path
         character(len=*), intent(in) :: out_dir
-        character(len=:), allocatable :: path
+        character(len=:), allocatable :: path, path1, path2, path3, path4, cmd, cmd2
         
         ! input data
         type(kdt) :: kdt_tree
@@ -62,19 +62,22 @@ contains
             name = trim(buff(s+1:len_trim(buff) - end_pos))
             
             ! add switch cases here - defines which atom module to use
-            include "_build/inc/mod_switches.inc"
+            include "mod_switches.inc"
             atms = size(atoms)
 
             ! build KD-tree
             kdt_tree = kdt_creator(atoms)
             
+            print*, ""
+            print*, "===================="
+            print*, "Analyzing:    ", trim(name)
 
             ! display number of atoms
             print*, "Number of atoms (n):", atms
-            
+            print*, ""
             ! prompt user for advice
             do while (.true.)
-                print*, "Input advice parameter a (must be ≥ ñ): "
+                print*, "Input advice parameter ñ (must be ≥ n): "
                 read(*,*) a_
                 if (a_ .ge. atms) then
                     a = real(a_, kind=c_double)
@@ -125,50 +128,52 @@ contains
                     print*, "Invalid input! Please enter DOWN or UP"
                 end if
             end do            
-            print*, ""
-            print*, "===================="
-            print*, "Analyzing:    ", trim(name)
             
+            ! Run raw analysis
             
-            print*, "Running debeyeEst_radial..."
-            deby_rad = debeyeEst_radial(atoms, q_vals)
-            path    = trim(out_dir)//"/"//"debeye_radial_"//trim(name)//".csv"
+            print*, "Running debyeEst_radial..."
+            deby_rad = debyeEst_radial(atoms, q_vals)
+            path    = trim(out_dir)//"/"//"debye_radial_"//trim(name)//".csv"
             call est_wrap(deby_rad, path)
             print*, "timing: ", deby_rad%timing, "s"
-            print*, "analysis saved at: ", trim(path)
             print*, ""
-
-            print*, "Running debeyeEst_kdt..."
-            deby_kdt = debeyeEst_kdt(kdt_tree, r, q_vals)
-            path    = trim(out_dir)//"/"//"debeye_kdt_"//trim(name)//".csv"
+            path1    = path
+            
+            print*, "Running debyeEst_kdt..."
+            deby_kdt = debyeEst_kdt(kdt_tree, r, q_vals)
+            path    = trim(out_dir)//"/"//"debye_kdt_"//trim(name)//".csv"
             call est_wrap(deby_kdt, path)
             print*, "timing: ", deby_kdt%timing, "s"
-            print*, "analysis saved at: ", trim(path)
             print*, ""
+            path2    = path
 
             print*, "Running propEst_radial..."
             prop_rad = propEst_radial(kdt_tree, q_vals, a, e, c)
             path     = trim(out_dir)//"/"//"prop_radial_"//trim(name)//".csv"
             call est_wrap(prop_rad, path)
             print*, "timing: ", prop_rad%timing, "s"
-            print*, "analysis saved at: ", trim(path)
             print*, ""
+            path3   = path
 
             print*, "Running propEst_kdt..."
             prop_kdt = propEst_kdt(kdt_tree, r, q_vals, a, e, c)
             path     = trim(out_dir)//"/"//"prop_kdt_"//trim(name)//".csv"
             call est_wrap(prop_kdt, path)
             print*, "timing: ", prop_kdt%timing, "s"
-            print*, "analysis saved at: ", trim(path)
+            path4    = path
+
+            ! Run R analysis
+            cmd = "Rscript analysis/standardize.R "//trim(out_dir)//" "// &
+                trim(path1)//" "//trim(path2)//" "//trim(path3)//" "//trim(path4)
             print*, ""
-            
+            call execute_command_line(trim(cmd))
+
+            print*, "Finished analysis of ", trim(name)
+            print*, "===================="
+
         end do 
         
         print*, ""
-        print*, "===================="
-        print*, ""
-        print*, "Finished analysis!"
-        print*, "===================="
         close(xyz_unit)
     end subroutine cli
 

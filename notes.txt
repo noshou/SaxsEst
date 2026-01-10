@@ -29,3 +29,7 @@ limited amount of metals; f0 is not limited by this though!
 
 2025-11-13 
 -> normalization constant will be effected; have to keep track of the number of atoms visited and normalize that way
+
+2026-01-12
+-> accidententally unplugged monitor during perlecan debeyeEst_kdt; might not trust that
+-> why is kdt not consistantly faster??????

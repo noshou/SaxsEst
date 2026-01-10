@@ -5,7 +5,7 @@ module estimate_mod
     
     implicit none 
     private 
-    public :: estimate, debeyeEst_radial, debeyeEst_kdt, propEst_radial, propEst_kdt
+    public :: estimate, debyeEst_radial, debyeEst_kdt, propEst_radial, propEst_kdt
     
     ! intensity estimate type
     type, bind(C) :: estimate
@@ -19,8 +19,8 @@ module estimate_mod
         include "inc/new_intensity.inc"
         include "inc/propEst/propEst.inc"
         include "inc/sinc.inc"
-        include "inc/debeyeEst/debeyeEst_radial.inc"
-        include "inc/debeyeEst/debeyeEst_kdt.inc"
+        include "inc/debyeEst/debyeEst_radial.inc"
+        include "inc/debyeEst/debyeEst_kdt.inc"
         include "inc/propEst/propEst_radial.inc"
         include "inc/propEst/propEst_kdt.inc"
         

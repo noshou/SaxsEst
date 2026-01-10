@@ -20,7 +20,7 @@
 !!
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensity_estimate type)
-function debeyeEst_radial(atoms, q_vals) result(intensity_estimate)
+function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
     ! input parameters
     type(atom), dimension(:), intent(in) :: atoms
     real(c_double), dimension(:), intent(in) :: q_vals
@@ -98,4 +98,4 @@ function debeyeEst_radial(atoms, q_vals) result(intensity_estimate)
 
     ! clean up
     deallocate(intensity)
-end function debeyeEst_radial
+end function debyeEst_radial

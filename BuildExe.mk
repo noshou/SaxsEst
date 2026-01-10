@@ -1,23 +1,19 @@
 # ============================================================================
-# Debug version of Compile.mk (no optimizations)
+# BuildExe.mk - Shared build configuration and rules
 # ============================================================================
 
 # ============================================================================
-# COMPILER CONFIGURATION
+# COMPILER CONFIGURATIONS
 # ============================================================================
-CC           = gcc -w -g 
-FC           = gfortran
-CFLAGS       = -w -std=f2023 -g -fbacktrace -fcheck=all -O0 -march=native -mcmodel=large -fmax-array-constructor=500000
-
-# OCaml tools
-OCAMLFIND    = ocamlfind
-OC           = $(OCAMLFIND) ocamlopt
+CC           = gcc -w -g 			 # c compiler
+FC           = gfortran  			 # fortran compiler
+OCAMLFIND    = ocamlfind 
+OC           = $(OCAMLFIND) ocamlopt # ocaml compiler
 OPAM         = opam
 
 # ============================================================================
 # BUILD DIRECTORY CONFIGURATION
 # ============================================================================
-BLD_DIR      = _build
 OBJ_DIR      = $(BLD_DIR)/obj
 LIB_DIR      = $(BLD_DIR)/lib
 MOD_DIR      = $(BLD_DIR)/mod
@@ -110,27 +106,35 @@ PDB_EXE      = $(EXE_DIR)/pdb_to_xyz
 # ============================================================================
 # MAIN EXECUTABLE CONFIGURATION
 # ============================================================================
-MAIN_EXE	 = $(EXE_DIR)/saxs_est
-MAIN_SRC	 = saxs_est.f90
-MAIN_MOD 	 = $(MOD_DIR)/main_mod.mod
+MAIN_DIR 	 = analysis
+MAIN_SRC     = $(MAIN_DIR)/saxs_est.f90
+MAIN_MOD     = $(MOD_DIR)/main_mod.mod
 
 # ============================================================================
 # PHONY TARGETS
 # ============================================================================
-.PHONY: all form_fact atom_xyz clean clean-build \
+.PHONY: all all1 all2 form_fact atom_xyz clean clean-build \
         parse-f0 parse-f1_f2 parse-xyz check-ocaml check-deps-csv \
         check-deps-yojson check-deps-str help clean-formfacts \
         clean-objects parse-xyz tabulate-xyz estimate \
-        postamble kdt compile-pdb-2-xyz \
-        generate-xyz-includes csv-interface build-dirs
+        postamble kdt compile-pdb-2-xyz make-outdir \
+        generate-xyz-includes csv-interface help
 
 # ============================================================================
 # ALL TARGET
 # ============================================================================
-all: build-dirs form_fact atom_xyz kdt estimate compile-pdb-2-xyz csv-interface main clean-objects postamble
+all: all1 all2
+all1: build-dirs form_fact atom_xyz kdt estimate 
+all2: $(PDB_TARGET) csv-interface main clean-objects postamble
 
+# ============================================================================
+# HELP TARGET
+# ============================================================================
 help:
-	@echo "Usage: make -f Compile.mk <target>"
+	@echo "Usage: make -f $(MAKEFILE_NAME) <target>"
+	@echo ""
+	@echo "Build type: $(BUILD_TYPE)"
+	@echo "CFLAGS: $(CFLAGS)"
 	@echo ""
 	@echo "Available targets:"
 	@echo "  all              - Build all libraries and executables"
@@ -140,8 +144,10 @@ help:
 	@echo "  kdt              - Build kdt library only"
 	@echo "  estimate         - Build estimate library only"
 	@echo "  csv-interface    - Build csv_interface library only"
+ifdef PDB_TARGET
 	@echo "  compile-pdb-2-xyz- Build pdb_to_xyz converter"
 	@echo "  pdb-2-xyz        - Run pdb_to_xyz converter (prompts for filename)"
+endif
 	@echo ""
 	@echo "Parsing targets:"
 	@echo "  parse-f0         - Parse f0 scattering factors from CSV"
@@ -150,9 +156,10 @@ help:
 	@echo ""
 	@echo "Clean targets:"
 	@echo "  clean            - Remove all build artifacts (note: clean-formfact not run!)"
-	@echo "  clean-formfact   - Remove generated f0 and f1_f2 modules"
-	@echo "	 clean-build	  - Remove build directory"
+	@echo "  clean-formfacts  - Remove generated f0 and f1_f2 modules"
+	@echo "  clean-build      - Remove build directory"
 	@echo "  clean-objects    - Remove all generated object files"
+	@echo "  clean-all        - Run clean and clean-formfacts"
 
 # ============================================================================
 # BUILD DIRECTORIES
@@ -163,13 +170,13 @@ build-dirs:
 # ============================================================================
 # FORM_FACT LIBRARY BUILD
 # ============================================================================
-form_fact: build-dirs $(FF_LIB)
+form_fact: $(FF_LIB)
 
 parse-f0: check-deps-csv
 	@$(OC) -package csv -linkpkg $(FF_PARSE_DIR)/f0.ml -o f0_gen && \
 		./f0_gen "$(FF_F0_DATA)" && \
 		mv f0.f90 $(FF_SRC_DIR)/ && \
-		rm -rf f0_gen 
+		rm -rf f0_gen
 
 parse-f1_f2: check-deps-yojson
 	@$(OC) -package yojson,str -linkpkg $(FF_PARSE_DIR)/f1_f2.ml -o f1_f2_gen && \
@@ -201,12 +208,12 @@ $(FF_F12_SRC): | check-deps-yojson
 	@$(OC) -package yojson,str -linkpkg $(FF_PARSE_DIR)/f1_f2.ml -o f1_f2_gen && \
 		./f1_f2_gen "$(FF_F12_DATA)" && \
 		mv f1_f2.f90 $(FF_SRC_DIR)/ && \
-		rm -rf f1_f2_gen 
+		rm -rf f1_f2_gen
 
 # ============================================================================
 # ATOM_XYZ LIBRARY BUILD
 # ============================================================================
-atom_xyz: build-dirs parse-xyz tabulate-xyz generate-xyz-includes $(AXY_LIB)
+atom_xyz: parse-xyz tabulate-xyz generate-xyz-includes $(AXY_LIB)
 
 parse-xyz:
 	@rm -rf $(AXY_TMP_DIR)
@@ -242,7 +249,7 @@ $(AXY_LIB): $(AXY_ATM_OBJ) $(AXY_XYZ_OBJ)
 # ============================================================================
 # KDT LIBRARY BUILD
 # ============================================================================
-kdt: build-dirs $(KDT_LIB)
+kdt: $(KDT_LIB)
 
 $(KDT_OBJ): $(KDT_SRC)
 	@$(FC) $(CFLAGS) -I$(MOD_DIR) -J$(MOD_DIR) -c $< -o $@
@@ -253,10 +260,10 @@ $(KDT_LIB): $(KDT_OBJ)
 # ============================================================================
 # ESTIMATE LIBRARY BUILD
 # ============================================================================
-estimate: build-dirs $(EST_LIB)
+estimate: $(EST_LIB)
 
 $(EST_OBJ): $(EST_SRC)
-	@$(FC) $(CFLAGS)  -I$(MOD_DIR) -J$(MOD_DIR) -c $< -o $@
+	@$(FC) $(CFLAGS) -I$(MOD_DIR) -J$(MOD_DIR) -c $< -o $@
 
 $(EST_LIB): $(EST_OBJ)
 	@ar rcs $@ $^
@@ -264,7 +271,7 @@ $(EST_LIB): $(EST_OBJ)
 # ============================================================================
 # CSV_INTERFACE LIBRARY BUILD
 # ============================================================================
-csv-interface: build-dirs check-deps-csv $(CSV_LIB)
+csv-interface: check-deps-csv $(CSV_LIB)
 
 $(CSV_BRD_OBJ): $(CSV_BRD_SRC)
 	@$(CC) -I$(shell ocamlc -where) -DCAML_NAME_SPACE -fPIC -c -o $@ $<
@@ -282,12 +289,14 @@ $(CSV_LIB): $(CSV_BRD_OBJ) $(CSV_OUT_OBJ) $(CSV_API_OBJ)
 # MAIN EXECUTABLE BUILD
 # ============================================================================
 main: $(MAIN_EXE)
+
 $(MAIN_EXE): $(MAIN_SRC) $(wildcard $(LIB_DIR)/*.a)
-	@$(FC) $(CFLAGS) -I$(MOD_DIR) -J$(MOD_DIR) $(MAIN_SRC) \
-	$(FF_LIB) $(AXY_LIB) $(KDT_LIB) $(EST_LIB) \
-	$(CSV_BRD_OBJ) $(CSV_OUT_OBJ) $(CSV_API_OBJ) \
-	-L$(shell ocamlc -where) -lasmrun_pic -ldl -lm -lpthread \
-	-o $(MAIN_EXE)
+	@$(FC) $(CFLAGS) -I$(INC_DIR) -I$(MOD_DIR) -J$(MOD_DIR) $(MAIN_SRC) \
+		$(FF_LIB) $(AXY_LIB) $(KDT_LIB) $(EST_LIB) \
+		$(CSV_BRD_OBJ) $(CSV_OUT_OBJ) $(CSV_API_OBJ) \
+		-L$(shell ocamlc -where) -lasmrun_pic -ldl -lm -lpthread \
+		-o $(MAIN_EXE)
+		
 # ============================================================================
 # OCAML DEPENDENCY CHECKING
 # ============================================================================
@@ -298,13 +307,13 @@ check-ocaml:
 		exit 1)
 
 check-deps-csv: check-ocaml
-	@$(call check_and_install,csv)
+	$(call check_and_install,csv)
 
 check-deps-yojson: check-ocaml
-	@$(call check_and_install,yojson str)
+	$(call check_and_install,yojson str)
 
 check-deps-str: check-ocaml
-	@$(call check_and_install,str)
+	$(call check_and_install,str)
 
 define check_and_install
 	@missing="" ; \
@@ -331,7 +340,7 @@ endef
 # ============================================================================
 # PDB TO XYZ FILE CONVERTER
 # ============================================================================
-compile-pdb-2-xyz: build-dirs $(PDB_EXE)
+compile-pdb-2-xyz: $(PDB_EXE)
 
 $(PDB_OBJ): $(PDB_SRC)
 	@$(FC) $(CFLAGS) -J$(MOD_DIR) -c $< -o $@
@@ -344,12 +353,13 @@ pdb-2-xyz:
 	./$(PDB_EXE) $$file; \
 	mv *.xyz $(AXY_DATA_DIR)
 
+
 # ============================================================================
 # POSTAMBLE
 # ============================================================================
 postamble:
 	@echo "=================================="
-	@echo "Compilation complete"
+	@echo "Compilation complete ($(BUILD_TYPE))"
 	@echo "Compiled xyz molecules: $(AXY_LST)"
 	@echo "Executable: $(MAIN_EXE)"
 	@echo "=================================="
@@ -357,14 +367,5 @@ postamble:
 # ============================================================================
 # CLEAN TARGETS
 # ============================================================================
-clean: clean-objects clean-build
-
-clean-objects:
-	@rm -rf $(OBJ_DIR)
-	@find . -type f -name '*.o' -delete
-	@find . -type f -name '*.cmx' -delete
-	@find . -type f -name '*.cmi' -delete
-clean-build:
-	@rm -rf $(BLD_DIR)
-clean-formfacts:
-	@rm -rf $(FF_F0_SRC) $(FF_F12_SRC)
+clean clean-objects clean-build clean-formfacts clean-all:
+	@$(MAKE) -f BuildClean.mk $@

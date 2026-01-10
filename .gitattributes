@@ -1,0 +1,7 @@
+*.inc linguist-language=Fortran
+*.mk  linguist-language=Makefile
+*.R   linguist-language=R
+*.csv -linguist-detectable
+*.txt -linguist-detectable
+*.log -linguist-detectable
+*.xyz -linguist-detectable
