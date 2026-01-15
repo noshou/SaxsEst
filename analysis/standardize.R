@@ -42,6 +42,8 @@ main <- function() {
         # calculate RMSE
         rmse <- sqrt(sum((df[[name]]-df[[2]])^2) / nrow(df))
         cat("RMSE for ", name, ": ", rmse, "\n")
+
+        # output 1 +/- epsilon for two prop estimates
     }
 
     # write dataframes to csv

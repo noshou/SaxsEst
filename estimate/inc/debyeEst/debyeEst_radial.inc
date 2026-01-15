@@ -28,7 +28,7 @@ function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
     ! local variables
     real(c_double), dimension(:), allocatable :: intensity
     integer :: i, j, q_ij, n_atoms, n_q
-    real(c_double) :: q_val, norm
+    real(c_double) :: q_val
 
     ! timing variables
     integer :: start, finish
@@ -47,10 +47,9 @@ function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q)
 
-    ! initialize variables norm
+    ! initialize variables
     n_q = size(q_vals)
     n_atoms = size(atoms)
-    norm = real(n_atoms ** 2, kind=c_double)
 
     ! allocate intensity array
     allocate(intensity(n_q))
@@ -87,7 +86,7 @@ function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
             end do
         end do
 
-        intensity(q_ij) = est / norm
+        intensity(q_ij) = est
     end do
 
     ! stop timer

@@ -24,7 +24,6 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     integer :: n_atoms
     real(c_double), dimension(:), intent(in) :: q_vals
     real(c_double), dimension(:), allocatable :: intensity
-    real(c_double) :: norm                                 
     integer :: i, j, q_ij, n_q
     real(c_double) :: q_val 
     
@@ -54,7 +53,6 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     allocate(atoms(n_atoms))
     allocate(intensity(n_q))                                   
     atoms = k%atoms()
-    norm = real(n_atoms ** 2, kind=c_double)
     
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
@@ -80,7 +78,7 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
             est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double) 
         end do 
         
-        intensity(q_ij) = est / norm
+        intensity(q_ij) = est
     end do
     
     ! stop timer

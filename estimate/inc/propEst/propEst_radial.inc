@@ -32,7 +32,6 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     integer :: n_atoms, n_q
     real(c_double), dimension(:), intent(in) :: q_vals
     real(c_double), dimension(:), allocatable :: intensity
-    real(c_double) :: norm
     integer :: i, j, q_ij
     real(c_double) :: q_val 
     
@@ -61,8 +60,7 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     allocate(atoms(n_atoms))
     allocate(intensity(n_q))
     atoms = k%atoms()
-    norm = real(n_atoms ** 2, kind=c_double)
-    
+
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         
@@ -88,7 +86,7 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
             end do 
         end do 
         
-        intensity(q_ij) = est / norm
+        intensity(q_ij) = est
     end do
     
     ! stop timer

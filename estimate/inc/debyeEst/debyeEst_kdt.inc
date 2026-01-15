@@ -36,7 +36,6 @@ function debyeEst_kdt(k, r, q_vals) result(intensity_estimate)
     real(c_double), dimension(:), allocatable :: intensity  
     integer :: i, j, q_ij
     real(c_double) :: q_val 
-    real(c_double) :: norm                                  
     
     ! timing variables
     integer :: start, finish
@@ -65,7 +64,6 @@ function debyeEst_kdt(k, r, q_vals) result(intensity_estimate)
     allocate(atoms(n_atoms))                                
     allocate(intensity(n_q))                                
     atoms = k%atoms()
-    norm = real(n_atoms ** 2, kind=c_double)                
     
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
@@ -92,7 +90,7 @@ function debyeEst_kdt(k, r, q_vals) result(intensity_estimate)
             est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double) 
         end do 
         
-        intensity(q_ij) = est / norm
+        intensity(q_ij) = est
     end do
     
     ! stop timer

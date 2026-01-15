@@ -33,3 +33,7 @@ limited amount of metals; f0 is not limited by this though!
 2026-01-12
 -> accidententally unplugged monitor during perlecan debeyeEst_kdt; might not trust that
 -> why is kdt not consistantly faster??????
+
+2026-01-15
+-> removed normalization: need to figure this out in the future
+-> may need to rethink scaling...

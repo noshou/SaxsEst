@@ -1,0 +1,21 @@
+- each run normalized w/ 1/N^2 then normalized to range [1,0]
+- system info:
+Linux fedora 6.18.5-100.fc42.x86_64 #1 SMP PREEMPT_DYNAMIC Sun Jan 11 18:16:46 UTC 2026 x86_64 GNU/Linux
+Architecture:                x86_64
+  CPU op-mode(s):            32-bit, 64-bit
+  Address sizes:             39 bits physical, 48 bits virtual
+  Byte Order:                Little Endian
+CPU(s):                      8
+  On-line CPU(s) list:       0-7
+Vendor ID:                   GenuineIntel
+  Model name:                11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+    CPU family:              6
+    Model:                   140
+    Thread(s) per core:      2
+    Core(s) per socket:      4
+    Socket(s):               1
+    Stepping:                1
+    CPU(s) scaling MHz:      85%
+    CPU max MHz:             4200.0000
+    CPU min MHz:             400.0000
+    BogoMIPS:                4838.40
