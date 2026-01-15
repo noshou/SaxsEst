@@ -66,6 +66,7 @@ contains
         character(len=32) :: a_str, e_str, r_str, c_str
         character(len=512) :: exe_path
         character(len=2048) :: subprocess_cmd
+        logical :: molecule_found
 
         ! open xyz modules for analysis
         xyz_unit = 10
@@ -148,7 +149,7 @@ contains
                 print*, "Rounding mode:"
                 print*, "  DOWN: round down"
                 print*, "  UP:   round up"
-                write(*, '(A)', advance='no') "Enter choice: "
+                write(*, '(A)', advance='no') " Enter choice: "
                 read(*,*) mode
                 if (mode .eq. "DOWN" ) then
                     c = .false.
@@ -173,12 +174,12 @@ contains
             ! This isolates ERROR STOP failures to the subprocess, allowing
             ! the parent to catch the non-zero exit status and continue.
             subprocess_cmd = trim(exe_path)//" --run-single "// &
-                  trim(name)//" "// &
-                  trim(out_dir)//" "// &
-                  trim(adjustl(a_str))//" "// &
-                  trim(adjustl(e_str))//" "// &
-                  trim(adjustl(r_str))//" "// &
-                  trim(adjustl(c_str))
+                trim(name)//" "// &
+                trim(out_dir)//" "// &
+                trim(adjustl(a_str))//" "// &
+                trim(adjustl(e_str))//" "// &
+                trim(adjustl(r_str))//" "// &
+                trim(adjustl(c_str))
 
             call execute_command_line(trim(subprocess_cmd), wait=.true., exitstat=exit_status)
 
@@ -251,7 +252,7 @@ contains
         ! Run raw analysis
         ! Any ERROR STOP here will exit this subprocess with non-zero status,
         ! which the parent process will catch and handle gracefully.
-
+        print*,""
         print*, "Running debyeEst_radial..."
         deby_rad = debyeEst_radial(atoms, q_vals)
         path    = path1

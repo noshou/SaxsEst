@@ -199,9 +199,9 @@ let f0_toFortran csv_fp =
 	Printf.fprintf oc "    !>\n";
 	Printf.fprintf oc "    !! @return q_vals List of available q values\n";
 	Printf.fprintf oc "    function get_q_vals() result(q_vals)\n";
-	Printf.fprintf oc "            real(c_double), allocatable :: q_vals(:)";
-  Printf.fprintf oc "            allocate(q_vals, source=q_values)";
-  Printf.fprintf oc "    end function get_q_vals";
+	Printf.fprintf oc "            real(c_double), allocatable :: q_vals(:)\n";
+  Printf.fprintf oc "            allocate(q_vals, source=q_values)\n";
+  Printf.fprintf oc "    end function get_q_vals\n";
   Printf.fprintf oc "end module f0_mod\n";
 	
 	close_out oc

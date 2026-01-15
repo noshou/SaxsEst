@@ -38,7 +38,7 @@ let atom_cases xyz_mod_list =
         "    select case(trim(name))" 
         ^ cases 
         ^ "\n        case default\n                print*,"
-        ^ " \"Unknown module: \", trim(name)\n                cycle"
+        ^ " \"Unknown module: \", trim(name)"
         ^ "\n    end select" 
     in
     switch_cases
