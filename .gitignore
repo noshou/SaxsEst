@@ -1,3 +1,8 @@
+# log files
+*.log
+# track log files in output directory
+!out/**/*.log
+
 # SDKMan!
 .sdkmanrc
 
@@ -53,7 +58,6 @@ $RECYCLE.BIN/
 *.pptm#
 
 # Office crash dumps
-*.log
 *.dmp
 
 # Misc editor
@@ -87,7 +91,6 @@ _build/
 
 # oasis generated files
 setup.data
-setup.log
 
 # Merlin configuring file for Vim and Emacs
 .merlin
@@ -156,7 +159,6 @@ rsconnect/
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
-*.log
 *.lot
 *.fls
 *.out

@@ -1,0 +1,428 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.17.12-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Sun Dec 14 02:20:03 UTC 2025 aarch64 GNU/Linux
+===================
+=== Parameters ===
+ε = 0.1
+r = 25Å
+ROUNDING MODE: DOWN
+===================
+compiling: atom_xyz/xyz_tmp/xyz_arginase.f90
+compiling: atom_xyz/xyz_tmp/xyz_chignolin.f90
+compiling: atom_xyz/xyz_tmp/xyz_csgc.f90
+compiling: atom_xyz/xyz_tmp/xyz_gpx.f90
+compiling: atom_xyz/xyz_tmp/xyz_kdelr1.f90
+compiling: atom_xyz/xyz_tmp/xyz_myosinII_10s.f90
+compiling: atom_xyz/xyz_tmp/xyz_perlecan.f90
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+compiling: atom_xyz/xyz_tmp/xyz_plastocyanin.f90
+compiling: atom_xyz/xyz_tmp/xyz_rubisco.f90
+compiling: atom_xyz/xyz_tmp/xyz_strip1_iso2.f90
+compiling: atom_xyz/xyz_tmp/xyz_titin_homologue.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/saxs_est
+==================================
+ 
+ ====================
+ Analyzing:    arginase
+ Number of atoms (n):        9981
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    754.994995     s
+ 
+ Running debyeEst_kdt...
+ timing:    235.923996     s
+ 
+ Running propEst_radial...
+ timing:    43.1819992     s
+ 
+ Running propEst_kdt...
+ timing:    42.7360001     s
+ 
+RMSE for  debye_kdt_arginase :  0.2181687 
+RMSE for  prop_radial_arginase :  0.000630492 
+RMSE for  prop_kdt_arginase :  0.2183443 
+raw analysis saved at:         out/2026-01-15/arginase_raw.csv 
+normalized analysis saved at:  out/2026-01-15/arginase_normalized.csv 
+ Finished analysis of arginase
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    chignolin
+ Number of atoms (n):         135
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:   0.148000002     s
+ 
+ Running debyeEst_kdt...
+ timing:   0.148000002     s
+ 
+ Running propEst_radial...
+ timing:    7.00000022E-03 s
+ 
+ Running propEst_kdt...
+ timing:    1.70000009E-02 s
+ 
+RMSE for  debye_kdt_chignolin :  5.289553e-13 
+RMSE for  prop_radial_chignolin :  0.003641621 
+RMSE for  prop_kdt_chignolin :  0.003641621 
+raw analysis saved at:         out/2026-01-15/chignolin_raw.csv 
+normalized analysis saved at:  out/2026-01-15/chignolin_normalized.csv 
+ Finished analysis of chignolin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    csgc
+ Number of atoms (n):         772
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    4.33300018     s
+ 
+ Running debyeEst_kdt...
+ timing:    3.76500010     s
+ 
+ Running propEst_radial...
+ timing:   0.246999994     s
+ 
+ Running propEst_kdt...
+ timing:   0.601999998     s
+ 
+RMSE for  debye_kdt_csgc :  0.06008568 
+RMSE for  prop_radial_csgc :  0.001065065 
+RMSE for  prop_kdt_csgc :  0.06033574 
+raw analysis saved at:         out/2026-01-15/csgc_raw.csv 
+normalized analysis saved at:  out/2026-01-15/csgc_normalized.csv 
+ Finished analysis of csgc
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    gpx
+ Number of atoms (n):        3111
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    70.4059982     s
+ 
+ Running debyeEst_kdt...
+ timing:    33.4350014     s
+ 
+ Running propEst_radial...
+ timing:    4.09700012     s
+ 
+ Running propEst_kdt...
+ timing:    6.53000021     s
+ 
+RMSE for  debye_kdt_gpx :  0.1587815 
+RMSE for  prop_radial_gpx :  0.0002501953 
+RMSE for  prop_kdt_gpx :  0.1589206 
+raw analysis saved at:         out/2026-01-15/gpx_raw.csv 
+normalized analysis saved at:  out/2026-01-15/gpx_normalized.csv 
+ Finished analysis of gpx
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    kdelr1
+ Number of atoms (n):        1243
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    10.8570004     s
+ 
+ Running debyeEst_kdt...
+ timing:    7.32600021     s
+ 
+ Running propEst_radial...
+ timing:   0.643999994     s
+ 
+ Running propEst_kdt...
+ timing:    1.36099994     s
+ 
+RMSE for  debye_kdt_kdelr1 :  0.1026757 
+RMSE for  prop_radial_kdelr1 :  6.009863e-05 
+RMSE for  prop_kdt_kdelr1 :  0.1027461 
+raw analysis saved at:         out/2026-01-15/kdelr1_raw.csv 
+normalized analysis saved at:  out/2026-01-15/kdelr1_normalized.csv 
+ Finished analysis of kdelr1
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    myosinII_10s
+ Number of atoms (n):       22081
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    3496.03198     s
+ 
+ Running debyeEst_kdt...
+ timing:    253.779007     s
+ 
+ Running propEst_radial...
+ timing:    204.994995     s
+ 
+ Running propEst_kdt...
+ timing:    62.4249992     s
+ 
+RMSE for  debye_kdt_myosinII_10s :  0.2988978 
+RMSE for  prop_radial_myosinII_10s :  3.611442e-05 
+RMSE for  prop_kdt_myosinII_10s :  0.2989119 
+raw analysis saved at:         out/2026-01-15/myosinII_10s_raw.csv 
+normalized analysis saved at:  out/2026-01-15/myosinII_10s_normalized.csv 
+ Finished analysis of myosinII_10s
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    perlecan
+ Number of atoms (n):       32872
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    7770.33203     s
+ 
+ Running debyeEst_kdt...
+ timing:    311.239014     s
+ 
+ Running propEst_radial...
+ timing:    437.208008     s
+ 
+ Running propEst_kdt...
+ timing:    79.3249969     s
+ 
+RMSE for  debye_kdt_perlecan :  0.3190687 
+RMSE for  prop_radial_perlecan :  2.08051e-05 
+RMSE for  prop_kdt_perlecan :  0.3191139 
+raw analysis saved at:         out/2026-01-15/perlecan_raw.csv 
+normalized analysis saved at:  out/2026-01-15/perlecan_normalized.csv 
+ Finished analysis of perlecan
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    112.865997     s
+ 
+ Running debyeEst_kdt...
+ timing:    37.1689987     s
+ 
+ Running propEst_radial...
+ timing:    6.56799984     s
+ 
+ Running propEst_kdt...
+ timing:    7.52699995     s
+ 
+RMSE for  debye_kdt_phgdh :  0.2023949 
+RMSE for  prop_radial_phgdh :  0.0001001968 
+RMSE for  prop_kdt_phgdh :  0.2024686 
+raw analysis saved at:         out/2026-01-15/phgdh_raw.csv 
+normalized analysis saved at:  out/2026-01-15/phgdh_normalized.csv 
+ Finished analysis of phgdh
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    plastocyanin
+ Number of atoms (n):         827
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    5.06899977     s
+ 
+ Running debyeEst_kdt...
+ timing:    4.91099977     s
+ 
+ Running propEst_radial...
+ timing:   0.294000000     s
+ 
+ Running propEst_kdt...
+ timing:   0.754999995     s
+ 
+RMSE for  debye_kdt_plastocyanin :  0.03286996 
+RMSE for  prop_radial_plastocyanin :  0.001532847 
+RMSE for  prop_kdt_plastocyanin :  0.03369974 
+raw analysis saved at:         out/2026-01-15/plastocyanin_raw.csv 
+normalized analysis saved at:  out/2026-01-15/plastocyanin_normalized.csv 
+ Finished analysis of plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    rubisco
+ Number of atoms (n):       87055
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    56125.8750     s
+ 
+ Running debyeEst_kdt...
+ timing:    2063.59912     s
+ 
+ Running propEst_radial...
+ timing:    3397.40088     s
+ 
+ Running propEst_kdt...
+ timing:    528.992981     s
+ 
+RMSE for  debye_kdt_rubisco :  0.3173935 
+RMSE for  prop_radial_rubisco :  0.9709971 
+RMSE for  prop_kdt_rubisco :  0.8373199 
+raw analysis saved at:         out/2026-01-15/rubisco_raw.csv 
+normalized analysis saved at:  out/2026-01-15/rubisco_normalized.csv 
+ Finished analysis of rubisco
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    strip1_iso2
+ Number of atoms (n):        6000
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    257.673004     s
+ 
+ Running debyeEst_kdt...
+ timing:    64.0279999     s
+ 
+ Running propEst_radial...
+ timing:    15.0410004     s
+ 
+ Running propEst_kdt...
+ timing:    13.7849998     s
+ 
+RMSE for  debye_kdt_strip1_iso2 :  0.2272283 
+RMSE for  prop_radial_strip1_iso2 :  0.0001591934 
+RMSE for  prop_kdt_strip1_iso2 :  0.2272615 
+raw analysis saved at:         out/2026-01-15/strip1_iso2_raw.csv 
+normalized analysis saved at:  out/2026-01-15/strip1_iso2_normalized.csv 
+ Finished analysis of strip1_iso2
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    titin_homologue
+ Number of atoms (n):       21399
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    3428.54297     s
+ 
+ Running debyeEst_kdt...
+ timing:    341.558990     s
+ 
+ Running propEst_radial...
+ timing:    199.772995     s
+ 
+ Running propEst_kdt...
+ timing:    76.0479965     s
+ 
+RMSE for  debye_kdt_titin_homologue :  0.2887697 
+RMSE for  prop_radial_titin_homologue :  0.001472853 
+RMSE for  prop_kdt_titin_homologue :  0.2884903 
+raw analysis saved at:         out/2026-01-15/titin_homologue_raw.csv 
+normalized analysis saved at:  out/2026-01-15/titin_homologue_normalized.csv 
+ Finished analysis of titin_homologue
+STOP 0
+ ====================
+ 
+ All molecules processed.
