@@ -4,16 +4,18 @@
 #include <caml/memory.h>
 #include <caml/alloc.h>
 #include <caml/callback.h>
+#include <complex.h>
 
 // maximum size of number (way more than needed, but just 2 b safe)
 #define MAX_DOUBLE_STR 32
 
 /** C-interoperable estimate type */
 typedef struct {
-    double *q_vals;    /**< Pointer to Q-values array */
-    double *i_vals;    /**< Pointer to intensity array */
-    int timing;        /**< Timing in milliseconds */
-    int size;          /**< Number of data points */
+    double *q_vals;             /**< Pointer to Q-values array */
+    double *i_vals;             /**< Pointer to intensity array */
+    int timing;                 /**< Timing in milliseconds */
+    int size;                   /**< Number of data points */
+    double _Complex *w_vals;    /**< Pointer to array of weights */
 } estimate;
 
 /**
@@ -63,8 +65,22 @@ void fortran_to_ocaml(estimate *est, char *pth) {
         cns_opi = caml_alloc(2, 0);
         Store_field(cns_opi, 0, caml_copy_string(buffer));
         Store_field(cns_opi, 1, row_lst);
-        row_lst = cns_opi;
+        row_lst = cns_opi; 
         
+        // add weights
+        double _Complex z = est->w_vals[i];
+        double re = creal(z);
+        double im = cimag(z);
+        if (im >= 0) {
+            snprintf(buffer,MAX_DOUBLE_STR,"%f+%fi",re,im);
+        } else {
+            snprintf(buffer,MAX_DOUBLE_STR,"%f%fi",re,im);
+        }
+        cns_opi = caml_alloc(2, 0);
+        Store_field(cns_opi, 0, caml_copy_string(buffer));
+        Store_field(cns_opi, 1, row_lst);
+        row_lst = cns_opi;
+
         // add row to ocm_lst
         cns_opo = caml_alloc(2, 0);
         Store_field(cns_opo, 0, row_lst);
@@ -84,6 +100,11 @@ void fortran_to_ocaml(estimate *est, char *pth) {
     Store_field(cns_opi, 1, row_lst);
     row_lst = cns_opi;
     
+    cns_opi = caml_alloc(2, 0);
+    Store_field(cns_opi, 0, caml_copy_string("weights"));
+    Store_field(cns_opi, 1, row_lst);
+    row_lst = cns_opi;
+
     cns_opo = caml_alloc(2, 0);
     Store_field(cns_opo, 0, row_lst);
     Store_field(cns_opo, 1, ocm_lst);

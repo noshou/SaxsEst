@@ -1,0 +1,13 @@
+/bin/bash: line 11: rinf: command not found
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/saxs_est
+==================================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be ≥ n): 

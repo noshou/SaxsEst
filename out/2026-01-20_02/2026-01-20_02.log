@@ -1,0 +1,6 @@
+/bin/bash: line 11: rinf: command not found
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+inc/propEst/propEst_radial.inc:99:79:
+
+Error: Rank mismatch in argument ‘w’ at (1) (rank-1 and scalar)
+make[1]: *** [BuildExe.mk:266: _build/release/obj/estimate.o] Error 1

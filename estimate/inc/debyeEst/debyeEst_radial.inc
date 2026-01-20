@@ -24,54 +24,53 @@ function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
     ! input parameters
     type(atom), dimension(:), intent(in) :: atoms
     real(c_double), dimension(:), intent(in) :: q_vals
-
     ! local variables
     real(c_double), dimension(:), allocatable :: intensity
     integer :: i, j, q_ij, n_atoms, n_q
     real(c_double) :: q_val
-
     ! timing variables
     integer :: start, finish
     real    :: rate
-
     ! output data
     type(estimate) :: intensity_estimate
-
     ! variables for loop
-    type(atom) :: atom_i
-    type(atom) :: atom_j
+    type(atom)        :: atom_i
+    type(atom)        :: atom_j
     complex(c_double) :: atom_i_ff
     complex(c_double) :: atom_j_ff
-    real(c_double) :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
-    real(c_double) :: atomic_contrib ! ff_i * conj(ff_j)
-    real(c_double) :: dst
-    real(c_double) :: est            ! estimate of intensity at I(Q)
-
+    real(c_double)    :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double)    :: atomic_contrib ! ff_i * conj(ff_j)
+    real(c_double)    :: dst
+    real(c_double)    :: est            ! estimate of intensity at I(Q)
+    complex(c_double), allocatable :: weights(:)        ! to compare against w_est
+    complex(c_double) :: w
+    
     ! initialize variables
     n_q = size(q_vals)
+    allocate(weights(n_q))
     n_atoms = size(atoms)
-
+    
     ! allocate intensity array
     allocate(intensity(n_q))
-
+    
     ! start timer, do pairwise calculations
     call system_clock(start, rate)
-
-
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
-        est = 0
-
+        est = 0.0_c_double
+        w = 0.0_c_double  ! Reset w for each Q value
+        
         do i = 1, n_atoms
             atom_i = atoms(i)
             atom_i_ff = atom_i%form_factor(q_val)
-
+            
             do j = 1, n_atoms
                 ! edge case: sin(x)/x is assumed to = 1,
                 ! therefore, when i == j (ie: we are at the same atom)
                 ! we add atom_i_ff * conjg(atom_i_ff)
                 if (i == j) then
                     est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double)
+                    w = w + atom_i_ff
                 else
                     atom_j = atoms(j)
                     atom_j_ff = atom_j%form_factor(q_val)
@@ -82,19 +81,21 @@ function debyeEst_radial(atoms, q_vals) result(intensity_estimate)
                     atomic_contrib = real(atom_i_ff * conjg(atom_j_ff), kind=c_double)
                     radial_contrib = sinc(dst)
                     est = est + atomic_contrib * radial_contrib
+                    w = w + atom_j_ff
                 end if
             end do
         end do
-
+        
         intensity(q_ij) = est
+        weights(q_ij) = w  ! Store weight for this Q value
     end do
-
     ! stop timer
     call system_clock(finish)
-
+    
     ! output results
-    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity)
-
+    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity, weights)
+    
     ! clean up
     deallocate(intensity)
+    deallocate(weights)
 end function debyeEst_radial

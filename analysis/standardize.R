@@ -43,7 +43,9 @@ main <- function() {
         rmse <- sqrt(sum((df[[name]]-df[[2]])^2) / nrow(df))
         cat("RMSE for ", name, ": ", rmse, "\n")
 
-        # output 1 +/- epsilon for two prop estimates
+        # Parse and store weights
+        weights_col <- paste0(name, "_weights")
+        df_og[weights_col] <- as.complex(temp_df$weights)
     }
 
     # write dataframes to csv
@@ -62,7 +64,6 @@ main <- function() {
     for (i in 2:length(args)) {
         unlink(args[i])
     }
-
 }
 
 main()

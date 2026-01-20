@@ -1,0 +1,65 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      72%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.17.12-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Sun Dec 14 02:20:03 UTC 2025 aarch64 GNU/Linux
+===================
+=== Parameters ===
+ε = 0.1
+r = 25Å
+ROUNDING MODE: DOWN
+===================
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/saxs_est
+==================================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be ≥ n): 
+ Input epsilon parameter ε (0 < ε < 1): 
+ Input search radius: 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    113.706001     s
+ 
+ Running debyeEst_kdt...
+ timing:    37.6269989     s
+ 
+ Running propEst_radial...
+ timing:    6.55800009     s
+ 
+ Running propEst_kdt...
+ timing:    7.72499990     s
+ 
+RMSE for  debye_kdt_phgdh :  0.2023949 
+RMSE for  prop_radial_phgdh :  0.0001001968 
+RMSE for  prop_kdt_phgdh :  0.2024686 
+raw analysis saved at:         out/2026-01-19/phgdh_raw.csv 
+normalized analysis saved at:  out/2026-01-19/phgdh_normalized.csv 
+ Finished analysis of phgdh
+STOP 0
+ ====================
+ 
+ All molecules processed.

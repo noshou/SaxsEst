@@ -6,7 +6,6 @@
 !! 1. Estimates proportional weights using the propEst function
 !! 2. Computes pairwise contributions: f_i * w_est * sinc(Q * r_ij) for all atom pairs
 !! 3. Adds self-contribution: f_i * conj(f_i) for each atom
-!! 4. Normalizes the total intensity by N^2 where N is the number of atoms
 !!
 !! The intensity calculation follows the form:
 !! \f$ I(Q) = \frac{1}{N^2} \sum_{i=1}^{N} \sum_{j=1}^{N} f_i(Q) w_{est}(Q) \frac{\sin(Q r_{ij})}{Q r_{ij}} \f$
@@ -34,7 +33,8 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     real(c_double), dimension(:), allocatable :: intensity
     integer :: i, j, q_ij
     real(c_double) :: q_val 
-    
+    complex(c_double), allocatable :: w_ests(:) ! list of all estimates calculated
+
     ! timing variables
     integer :: start, finish
     real    :: rate
@@ -46,26 +46,29 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     type(atom) :: atom_i
     complex(c_double) :: atom_i_ff
     complex(c_double) :: w_est       ! proportional estimate of atomic form factors
-    real(c_double) :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double)  :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
     real(c_double) :: atomic_contrib ! ff_i * w_est
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q) 
-    
+
     ! start timer, initialize
     call system_clock(start, rate)
     
+
     ! initialize variables
     n_q = size(q_vals)
+    allocate(w_ests(n_q))
     n_atoms = k%size()
     allocate(atoms(n_atoms))
     allocate(intensity(n_q))
     atoms = k%atoms()
-
+    
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         
         ! get estimate of weight
         w_est = propEst(k, q_val, a, e, c)
+        w_ests(q_ij) = w_est
         est = 0
         
         do i = 1, n_atoms
@@ -81,7 +84,7 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
                 else
                     ! since self is not picked up in radial search, 
                     ! we add the case of atom_i_ff * conj(atom_i_ff)
-                    est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double)  ! ✅ ADDED real()
+                    est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double)  
                 end if
             end do 
         end do 
@@ -93,7 +96,7 @@ function propEst_radial(k, q_vals, a, e, c) result(intensity_estimate)
     call system_clock(finish)
     
     ! output estimate
-    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity)
+    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity, w_ests)
     
     ! cleanup
     deallocate(atoms, intensity)

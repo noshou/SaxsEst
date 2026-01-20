@@ -13,6 +13,7 @@ module estimate_mod
         type(c_ptr)             :: i_vals     
         real(c_int), public     :: timing
         integer(c_int), public  :: size  
+        type(c_ptr)             :: w_vals ! only needed for prop_est; else will be null ptr
     end type estimate
 
     contains 

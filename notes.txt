@@ -37,3 +37,18 @@ limited amount of metals; f0 is not limited by this though!
 2026-01-15
 -> removed normalization: need to figure this out in the future
 -> may need to rethink scaling...
+
+2026-01-16
+-> test with normalization constants, where p = #atoms in search radius, 
+   N_u = # unique form factors in prop_est
+    - N^2 for debye_rad
+    - p * N^2 * (sqrt(a)/epsilon) for prop_rad
+    - p * N for debye_kdt
+    - p * N * (sqrt(a)/epsilon) for prop_kdt
+
+2026-01-19
+-> forgot to normalize debye rad so deleted 2026-01-16 run
+
+2026-01-20
+-> adding in method to track w_est per I(Q) and compare w/ debye weight 
+-> removed normalization constants for now

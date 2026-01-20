@@ -24,7 +24,7 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     integer :: n_atoms
     real(c_double), dimension(:), intent(in) :: q_vals
     real(c_double), dimension(:), allocatable :: intensity
-    integer :: i, j, q_ij, n_q
+    integer :: i, j, q_ij, n_q, atoms_tracked
     real(c_double) :: q_val 
     
     ! timing variables
@@ -32,6 +32,7 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     real    :: rate
     
     ! output data
+    complex(c_double), allocatable :: w_ests(:) ! list of all estimates calculated
     type(estimate) :: intensity_estimate
     
     ! variables for loop
@@ -39,7 +40,7 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     type(atom) :: atom_i
     complex(c_double) :: atom_i_ff
     complex(c_double) :: w_est       ! proportional estimate of atomic form factors
-    real(c_double) :: radial_contrib ! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double) :: radial_contrib ! sinc(|Q*dst|)
     real(c_double) :: atomic_contrib ! ff_i * w_est
     real(c_double) :: dst
     real(c_double) :: est            ! estimate of intensity at I(Q) 
@@ -49,14 +50,17 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
     
     ! initialize local variables
     n_q = size(q_vals)
+    allocate(w_ests(n_q))
     n_atoms = k%size()
     allocate(atoms(n_atoms))
     allocate(intensity(n_q))                                   
     atoms = k%atoms()
-    
+
+    atoms_tracked = 0
     do q_ij = 1, n_q
         q_val = q_vals(q_ij)
         w_est = propEst(k, q_val, a, e, c)
+        w_ests(q_ij) = w_est
         est = 0
         
         do i = 1, n_atoms
@@ -66,7 +70,7 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
             
             ! do search, get list of atoms
             atoms_found = k%radial_search(atom_i, r)
-            
+            atoms_tracked = atoms_tracked + size(atoms_found)
             do j = 1, size(atoms_found)
                 dst = q_val * abs(atom_i%dist_cart(atoms_found(j)))
                 radial_contrib = sinc(dst)
@@ -77,15 +81,16 @@ function propEst_kdt(k, r, q_vals, a, e, c) result(intensity_estimate)
             ! we add the case of atom_i_ff * conj(atom_i_ff)
             est = est + real(atom_i_ff * conjg(atom_i_ff), kind=c_double) 
         end do 
+
         
-        intensity(q_ij) = est
+        intensity(q_ij) = est 
     end do
     
     ! stop timer
     call system_clock(finish)
     
     ! output estimate
-    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity)
+    intensity_estimate = new_intensity(start, finish, rate, q_vals, intensity, w_ests)
     
     ! cleanup
     deallocate(atoms)
