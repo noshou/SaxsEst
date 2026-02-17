@@ -327,7 +327,7 @@ subroutine pdb_atom_to_xyz ( pdb_file_unit, xyz_file_unit, pdb_file_line_num, &
     character ( len = 2 ), allocatable :: element(:)
     real ( kind = 8 ) :: tmp_x, tmp_y, tmp_z
     character ( len = 2 ) :: tmp_element
-    character ( len = 4 ) :: atom_name
+    character ( len = 4 ) :: atomName
     integer ( kind = 4 ) :: max_atoms, i, j
 
     max_atoms = 100000
@@ -362,14 +362,14 @@ subroutine pdb_atom_to_xyz ( pdb_file_unit, xyz_file_unit, pdb_file_line_num, &
             tmp_element = adjustl(string(77:78))
 
             if ( tmp_element == '  ' .or. tmp_element == '' ) then
-                atom_name = string(13:16)
+                atomName = string(13:16)
                 tmp_element = '  '
                 do j = 1, 4
-                    if ( atom_name(j:j) >= 'A' .and. atom_name(j:j) <= 'Z' ) then
-                        tmp_element(1:1) = atom_name(j:j)
+                    if ( atomName(j:j) >= 'A' .and. atomName(j:j) <= 'Z' ) then
+                        tmp_element(1:1) = atomName(j:j)
                         if ( j < 4 ) then
-                            if ( atom_name(j+1:j+1) >= 'a' .and. atom_name(j+1:j+1) <= 'z' ) then
-                                tmp_element(2:2) = atom_name(j+1:j+1)
+                            if ( atomName(j+1:j+1) >= 'a' .and. atomName(j+1:j+1) <= 'z' ) then
+                                tmp_element(2:2) = atomName(j+1:j+1)
                             end if
                         end if
                         exit

@@ -1,0 +1,192 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.17.12-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Sun Dec 14 02:20:03 UTC 2025 aarch64 GNU/Linux
+===================
+=== Parameters ===
+ε = 0.41
+ROUNDING MODE: DOWN
+===================
+compiling: atom_xyz/xyz_tmp/xyz_chignolin.f90
+compiling: atom_xyz/xyz_tmp/xyz_csgc.f90
+compiling: atom_xyz/xyz_tmp/xyz_gpx.f90
+compiling: atom_xyz/xyz_tmp/xyz_kdelr1.f90
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+compiling: atom_xyz/xyz_tmp/xyz_plastocyanin.f90
+compiling: atom_xyz/xyz_tmp/xyz_strip1_iso2.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/saxs_est
+==================================
+ 
+ ====================
+ Analyzing:    chignolin
+ Number of atoms (n):         135
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:   0.136000007     s
+ 
+ Running propEst_radial...
+ timing:    8.00000038E-03 s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_chignolin.csv 
+ Finished analysis of chignolin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    csgc
+ Number of atoms (n):         772
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    4.36499977     s
+ 
+ Running propEst_radial...
+ timing:   0.250000000     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_csgc.csv 
+ Finished analysis of csgc
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    gpx
+ Number of atoms (n):        3111
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    70.6159973     s
+ 
+ Running propEst_radial...
+ timing:    4.12799978     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_gpx.csv 
+ Finished analysis of gpx
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    kdelr1
+ Number of atoms (n):        1243
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    10.8660002     s
+ 
+ Running propEst_radial...
+ timing:   0.637000024     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_kdelr1.csv 
+ Finished analysis of kdelr1
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    113.797997     s
+ 
+ Running propEst_radial...
+ timing:    6.61999989     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_phgdh.csv 
+ Finished analysis of phgdh
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    plastocyanin
+ Number of atoms (n):         827
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    5.11199999     s
+ 
+ Running propEst_radial...
+ timing:   0.296999991     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_plastocyanin.csv 
+ Finished analysis of plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    strip1_iso2
+ Number of atoms (n):        6000
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    259.003998     s
+ 
+ Running propEst_radial...
+ timing:    15.0979996     s
+ 
+ 
+raw analysis saved at: out/2026-02-18_08/analysis_strip1_iso2.csv 
+ Finished analysis of strip1_iso2
+STOP 0
+ ====================
+ 
+ All molecules processed.

@@ -1,0 +1,57 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.17.12-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Sun Dec 14 02:20:03 UTC 2025 aarch64 GNU/Linux
+===================
+=== Parameters ===
+ε = 0.1
+ROUNDING MODE: DOWN
+===================
+compiling: atom_xyz/xyz_tmp/xyz_phgdh.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/saxs_est
+==================================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  
+ Running debyeEst_radial...
+ timing:    114.470001     s
+ 
+ Running propEst_radial...
+ timing:    6.64900017     s
+ 
+ 
+Error in bind_cols(tibble(q_invers_angstroms = q_col), as_tibble(intensities),  : 
+  could not find function "bind_cols"
+Calls: main
+Execution halted
+ Finished analysis of phgdh
+STOP 0
+ ====================
+ 
+ All molecules processed.

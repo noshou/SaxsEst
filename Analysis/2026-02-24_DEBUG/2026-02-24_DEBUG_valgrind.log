@@ -1,0 +1,78 @@
+==99703== Memcheck, a memory error detector
+==99703== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==99703== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==99703== Command: ./_build/debug/exe/SaxsEst_DEBUG ./_build/debug/xyz_modules.txt Analysis/2026-02-24_DEBUG
+==99703== Parent PID: 99546
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x406B50: __main_MOD_cli (mod_switches.inc:3)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x406BA8: __main_MOD_cli (mod_switches.inc:3)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x406C00: __main_MOD_cli (mod_switches.inc:3)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x406C58: __main_MOD_cli (mod_switches.inc:3)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x4A35718: _gfortran_execute_command_line_i4 (execute_command_line.c:203)
+==99703==    by 0x4097D7: __main_MOD_cli (SaxsEst.f90:175)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== Conditional jump or move depends on uninitialised value(s)
+==99703==    at 0x4097F4: __main_MOD_cli (SaxsEst.f90:178)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703==  Uninitialised value was created by a stack allocation
+==99703==    at 0x406424: __main_MOD_cli (SaxsEst.f90:46)
+==99703== 
+==99703== 
+==99703== Process terminating with default action of signal 13 (SIGPIPE)
+==99703==    at 0x4C2B860: __internal_syscall_cancel (cancellation.c:64)
+==99703==    by 0x4C2B88F: __syscall_cancel (cancellation.c:75)
+==99703==    by 0x4A1DF33: raw_write (unix.c:368)
+==99703==    by 0x4A264CF: swrite (unix.h:59)
+==99703==    by 0x4A264CF: _gfortrani_fbuf_flush (fbuf.c:150)
+==99703==    by 0x4A193E7: _gfortrani_next_record (transfer.c:4391)
+==99703==    by 0x4A1BEC7: finalize_transfer (transfer.c:4532)
+==99703==    by 0x4A1C2DB: _gfortrani_st_write_done_worker (transfer.c:4722)
+==99703==    by 0x40984B: __main_MOD_cli (SaxsEst.f90:179)
+==99703==    by 0x40A91B: MAIN__ (SaxsEst.f90:354)
+==99703==    by 0x40B273: main (SaxsEst.f90:287)
+==99703== 
+==99703== HEAP SUMMARY:
+==99703==     in use at exit: 265,847 bytes in 36 blocks
+==99703==   total heap usage: 16,481 allocs, 16,445 frees, 8,291,294 bytes allocated
+==99703== 
+==99703== LEAK SUMMARY:
+==99703==    definitely lost: 0 bytes in 0 blocks
+==99703==    indirectly lost: 0 bytes in 0 blocks
+==99703==      possibly lost: 0 bytes in 0 blocks
+==99703==    still reachable: 265,847 bytes in 36 blocks
+==99703==         suppressed: 0 bytes in 0 blocks
+==99703== Reachable blocks (those to which a pointer was found) are not shown.
+==99703== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==99703== 
+==99703== For lists of detected and suppressed errors, rerun with: -s
+==99703== ERROR SUMMARY: 17 errors from 6 contexts (suppressed: 0 from 0)

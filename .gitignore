@@ -1,7 +1,7 @@
 # log files
 *.log
 # track log files in output directory
-!out/**/*.log
+!Analysis/**/*.log
 
 # SDKMan!
 .sdkmanrc

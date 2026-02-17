@@ -4,9 +4,9 @@
 
 BLD_DIR      ?= _build
 OBJ_DIR      ?= $(BLD_DIR)/obj
-FF_SRC_DIR   ?= form_fact
-FF_F0_SRC    ?= $(FF_SRC_DIR)/f0.f90
-FF_F12_SRC   ?= $(FF_SRC_DIR)/f1_f2.f90
+FF_SRC_DIR   ?= FormFact
+FF_F0_SRC    ?= $(FF_SRC_DIR)/F0Factor.f90
+FF_F12_SRC   ?= $(FF_SRC_DIR)/F1F2Factors.f90
 
 .PHONY: clean clean-objects clean-build clean-formfacts clean-all
 
