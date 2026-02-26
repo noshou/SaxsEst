@@ -191,3 +191,30 @@
   - added automate-run-debug for debug runs
   - fixed bugs with debug
   - added valgrind output for debug - no memory leaks/errors
+
+# 2026-02-26
+- normalization constants
+  - proportional estimator sample size is Θ((sqrt(24\*N)/epsilon) + 1), where N is the number of atoms
+  - Debye equation (derived from QM) has a normalization constant of 1/N²
+  - by trial and error, normalization constant of N\*((sqrt(24\*N)/epsilon) + 1) works fairly well for the proportional estimator
+  - total number of atoms sampled is still N² since distance calculations are not truncated; would love to dig into this further given more time
+- rough plan for tackling estimation errors based on three general SAXS profile regions:
+  - **Guinier region**: small q values, highest intensity with sharp drop; highest discrepancy between estimator and actual value (expected — form factors are largest here so errors are amplified significantly)
+  - **Fourier/Debye region**: intermediate q values, after first inflection point with sharp decline toward Porod region; medium to moderate deviations
+  - **Porod region**: large q values, rapid exponential decay toward zero; small to very small deviations
+  - deviations are relative and dependent on molecule size (more atoms → higher amplification of errors)
+- proposed algorithm for each q value:
+  1. calculate rate of change between q_i and q\_(i-1), determine which region we are in (informs adaptive parameters)
+  2. do importance sampling on frequency distribution; use it to calculate "real" Debye formula such that sample S = C1 ± epsilon estimation
+  3. run sample through the estimator to get estimate E
+  4. calculate difference, find C2 such that E = S ± epsilon ± C2; let err = epsilon ± C2
+  5. run actual proportional estimate with epsilon value of err
+- usually the proportional estimate underestimates until the Porod region, then slightly overestimates (weights are very small there)
+  - some molecules overestimate early in the Guinier region, causing all subsequent intensity estimations to be overestimated
+  - originally thought it was due to shape (globular vs cylindrical vs Gaussian chain proteins), but running xyz files in PyMOL doesn't fully support this
+  - second guess: metal centers contribute large weights and are overrepresented for atoms positioned far away; doesn't fully explain it either
+  - likely a combination of factors or something else entirely; out of scope for this project
+- if time permits: implement DBSCAN or k-means clustering to tackle pairwise summations for distance calculations
+  - other validated algorithmic methods use some version of this
+  - DBSCAN issue: finding optimal search radius
+  - k-means issue: finding optimal cluster size without blowing up time complexity
