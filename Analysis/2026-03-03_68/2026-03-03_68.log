@@ -1,0 +1,222 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.18.10-402.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Sat Feb 14 20:56:50 UTC 2026 aarch64 GNU/Linux
+===================
+=== Parameters ===
+#atoms      = 135 772 3111 1243 3972 827 6000
+sample size = 50% 45% 40% 35% 30% 25% 20% 15% 10% 5%
+ε           = 0.39 0.395 0.4 0.405 0.41 0.4105 0.42 0.4205 0.43 0.4305 0.44 0.4405 0.45
+ROUNDING MODE: UP
+===================
+compiling: AtomXYZ/xyz_tmp/xyz_chignolin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_csgc.f90
+compiling: AtomXYZ/xyz_tmp/xyz_gpx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_kdelr1.f90
+compiling: AtomXYZ/xyz_tmp/xyz_phgdh.f90
+compiling: AtomXYZ/xyz_tmp/xyz_plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_strip1_iso2.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/SaxsEst
+==================================
+ 
+ ====================
+ Analyzing:    chignolin
+ Number of atoms (n):         135
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:   0.138999999     s
+ 
+ Running stratEst...
+ timing:    1.00000005E-03 s
+ 
+ Running propoEst...
+ timing:    7.00000022E-03 s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_chignolin.csv 
+ Finished analysis of chignolin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    csgc
+ Number of atoms (n):         772
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    4.36600018     s
+ 
+ Running stratEst...
+ timing:    4.99999989E-03 s
+ 
+ Running propoEst...
+ timing:   0.246999994     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_csgc.csv 
+ Finished analysis of csgc
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    gpx
+ Number of atoms (n):        3111
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    70.7770004     s
+ 
+ Running stratEst...
+ timing:    7.59999976E-02 s
+ 
+ Running propoEst...
+ timing:    4.10099983     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_gpx.csv 
+ Finished analysis of gpx
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    kdelr1
+ Number of atoms (n):        1243
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    10.8839998     s
+ 
+ Running stratEst...
+ timing:    1.09999999E-02 s
+ 
+ Running propoEst...
+ timing:   0.633000016     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_kdelr1.csv 
+ Finished analysis of kdelr1
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    phgdh
+ Number of atoms (n):        3972
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    113.692001     s
+ 
+ Running stratEst...
+ timing:   0.116999999     s
+ 
+ Running propoEst...
+ timing:    6.55999994     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_phgdh.csv 
+ Finished analysis of phgdh
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    plastocyanin
+ Number of atoms (n):         827
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    5.11199999     s
+ 
+ Running stratEst...
+ timing:    6.00000005E-03 s
+ 
+ Running propoEst...
+ timing:   0.293000013     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_plastocyanin.csv 
+ Finished analysis of plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    strip1_iso2
+ Number of atoms (n):        6000
+ 
+ Input advice parameter ñ (must be >= n): 
+ Input epsilon parameter Ɛ (0 < Ɛ < 1): 
+ Rounding mode:
+   DOWN: round down
+   UP:   round up
+ Enter choice:  Sample size (percent of original sample size):
+ Enter:  
+ Running debyeEst...
+ timing:    259.052002     s
+ 
+ Running stratEst...
+ timing:   0.266999990     s
+ 
+ Running propoEst...
+ timing:    14.9700003     s
+ 
+ 
+raw analysis saved at: Analysis/2026-03-03_68/analysis_strip1_iso2.csv 
+ Finished analysis of strip1_iso2
+STOP 0
+ ====================
+ 
+ All molecules processed.

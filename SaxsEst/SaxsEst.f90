@@ -1,4 +1,9 @@
-! cli module
+!> @brief CLI and subprocess entry points for SAXS intensity estimation.
+!> @details Provides two execution modes:
+!>   1. Interactive CLI: iterates over a list of molecules, prompts for parameters,
+!>      and spawns subprocesses to isolate failures.
+!>   2. Subprocess (--run-single): runs Debye, stratified, and proportional
+!>      estimations for a single molecule, then combines results via R script.
 module Main
     use, intrinsic :: iso_c_binding
     use AtomXYZ; use Est
@@ -34,6 +39,19 @@ contains
         end if
     end subroutine deleteFileIfExists
 
+    !> @brief Interactive CLI for batch SAXS analysis.
+    !> @details Reads a list of XYZ module files and prompts the user for:
+    !>   - Advice parameter ñ (scaling factor for weight estimation, must be >= n)
+    !>   - Epsilon (sampling precision, 0 < ε < 1)
+    !>   - Rounding mode (UP = ceiling, DOWN = floor)
+    !>   - Sample size (percentage of total atoms to sample for stratified estimator)
+    !>
+    !> Each molecule is analyzed in a subprocess via --run-single to isolate
+    !> ERROR STOP failures. If a subprocess fails, partial output files are
+    !> cleaned up and analysis continues with the next molecule.
+    !>
+    !> @param[in] xyzModListPath  Path to file listing XYZ modules to process
+    !> @param[in] outDir          Output directory for CSV results
     !! Command line interface for running SAXS analysis.
     !!
     !! Reads a list of XYZ module files, prompts the user for analysis parameters
@@ -48,7 +66,7 @@ contains
         ! file paths
         character(len=*), intent(in) :: xyzModListPath
         character(len=*), intent(in) :: outDir
-        character(len=:), allocatable :: path, path1, path3, cmd
+        character(len=:), allocatable :: path, path1, path2, path3, cmd
 
         ! input data
         type(frequencies) :: freq
@@ -57,22 +75,23 @@ contains
         character(len=256) :: name
 
         ! variables for file I/O
-        integer :: xyzUnit, iostatVal, s, endPos, m, atms
+        integer :: xyzUnit, iostatVal, startPos, endPos, m, atms
         character(len=256) :: buff, mode
         character(len=*), parameter :: xyzStartMatch = "xyz_"
         character(len=*), parameter :: xyzEndMatch = "_mod.mod"
 
         ! user cli inputs
-        real :: a_, e_
-        real(c_double) :: a, e
-        logical :: c
+        real :: a1_, a2_, e_
+        real(c_double) :: a1, a2, e
+        logical :: c, isDigitChar, isPercentChar, isValid
+        integer :: i
 
         ! analysis results
         type(estimate) :: debye, prop
 
         ! subprocess handling for error recovery
         integer :: exitStatus
-        character(len=32) :: aStr, eStr, cStr
+        character(len=32) :: a1Str, a2Str, eStr, cStr
         character(len=512) :: exePath
         character(len=2048) :: subprocCmd
 
@@ -94,10 +113,10 @@ contains
             if (iostatVal .ne. 0) exit  ! exit on EOF or error
 
             ! match name of molecule from module filename
-            s = len(xyzStartMatch)
+            startPos = len(xyzStartMatch)
             endPos = len(xyzEndMatch)
-            m = len(trim(buff)) - s - endPos
-            name = trim(buff(s+1:len_trim(buff) - endPos))
+            m = len(trim(buff)) - startPos - endPos
+            name = trim(buff(startPos+1:len_trim(buff) - endPos))
 
             ! load atoms from the appropriate generated module
             include "mod_switches.inc"
@@ -115,10 +134,10 @@ contains
             ! prompt user for advice parameter
             do while (.true.)
                 print*, "Input advice parameter ñ (must be >= n): "
-                read(*,*) a_
-                if (a_ .ge. atms) then
-                    a = real(a_, kind=c_double)
-                    write(aStr, '(ES23.16)') a
+                read(*,*) a1_
+                if (a1_ .ge. atms) then
+                    a1 = real(a1_, kind=c_double)
+                    write(a1Str, '(ES23.16)') a1
                     exit
                 else
                     print*, "ñ must be >= n, please retry"
@@ -158,19 +177,50 @@ contains
                 end if
             end do
 
+            ! prompt user for sample size
+            do while (.true.)
+                print*, "Sample size (percent of original sample size):"
+                write(*, '(A)', advance='no') " Enter: "
+                read(*,*) buff
+                isValid = .false.
+                do i = 1, len_trim(buff)
+                    isPercentChar = (buff(i:i) == '%')
+                    isDigitChar   = (buff(i:i) >= '0' .and. buff(i:i) <= '9')
+                    if (isPercentChar .and. i == 1) then
+                        print*,"Invalid input! Example: for 20%, enter 20%"
+                        exit
+                    else if (.not. isDigitChar .and. .not. isPercentChar) then
+                        print*,"Invalid input! Example: for 20%, enter 20%"
+                        exit
+                    else if (isPercentChar) then
+                        read(buff(1:i-1), *) a2
+                        a2 = a2 / 100.0_c_double
+                        write(a2Str, '(ES23.16)') a2
+                        isValid = .true.
+                        exit
+                    end if
+                end do
+                if (.not. isValid .and. i > len_trim(buff)) then
+                    print*,"Invalid input! Must include %. Example: for 20%, enter 20%"
+                end if
+                if (isValid) exit
+            end do 
+
             ! define output file paths for potential cleanup
             path1 = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-            path3 = trim(outDir)//"/"//"prop_"//trim(name)//".csv"
+            path2 = trim(outDir)//"/"//"strat_"//trim(name)//".csv"
+            path3 = trim(outDir)//"/"//"propo_"//trim(name)//".csv"
 
             ! self-invoke as subprocess with --run-single flag.
             ! this isolates ERROR STOP failures to the subprocess, allowing
             ! the parent to catch the non-zero exit status and continue.
-            subprocCmd = trim(exePath)//" --run-single "// &
-                trim(name)//" "// &
-                trim(outDir)//" "// &
-                trim(adjustl(aStr))//" "// &
-                trim(adjustl(eStr))//" "// &
-                trim(adjustl(cStr))
+            subprocCmd =    trim(exePath)//" --run-single "// &               
+                            trim(name)//" "//                 &
+                            trim(outDir)//" "//               &
+                            trim(adjustl(a1Str))//" "//       &
+                            trim(adjustl(a2Str))//" "//       &
+                            trim(adjustl(eStr))//" "//        &
+                            trim(adjustl(cStr))
 
             call execute_command_line(trim(subprocCmd), wait=.true., exitstat=exitStatus)
 
@@ -183,6 +233,7 @@ contains
 
                 ! delete any partial output files created before the error
                 call deleteFileIfExists(path1)
+                call deleteFileIfExists(path2)
                 call deleteFileIfExists(path3)
 
                 print*, "===================="
@@ -197,7 +248,22 @@ contains
         close(xyzUnit)
     end subroutine cli
 
-    !> Entry point for subprocess mode (--run-single).
+    !> @brief Subprocess entry point for single-molecule SAXS analysis.
+    !> @details Runs three estimations and combines results:
+    !>   1. Debye radial (exact pairwise, O(mn²)) → debye_<name>.csv
+    !>   2. Stratified (importance-sampled, uses a2 as sample fraction) → strat_<name>.csv
+    !>   3. Proportional (frequency-weighted, uses a1 as advice param) → propo_<name>.csv
+    !>
+    !> Any ERROR STOP terminates only this subprocess; the parent catches
+    !> the non-zero exit status and continues with the next molecule.
+    !>
+    !> @param[in] name   Molecule name (used to load atoms and name output files)
+    !> @param[in] outDir Output directory for CSV results
+    !> @param[in] a1     Advice parameter for proportional weight estimation (must be >= nAtoms)
+    !> @param[in] a2     Sample size as percentage of total atoms for stratified estimator
+    !> @param[in] e      Epsilon accuracy parameter (must satisfy 0 < e < 1)
+    !> @param[in] c_int  Rounding mode: 0 = floor, 1 = ceiling
+    !! Entry point for subprocess mode (--run-single).
     !! Runs analysis for a single molecule. Any ERROR STOP will terminate
     !! only this subprocess, not the parent process.
     !!
@@ -207,15 +273,16 @@ contains
     !!
     !! After both analyses complete, invokes an R script to combine into CSVs
     !!
-    !! @param[in] name    Molecule name (used to load atoms and name output files)
+    !! @param[in] name   Molecule name (used to load atoms and name output files)
     !! @param[in] outDir Output directory for CSV results
-    !! @param[in] a       Advice parameter for weight estimation (must be >= nAtoms)
-    !! @param[in] e       Epsilon accuracy parameter (must satisfy 0 < e < 1)
-    !! @param[in] c_int   Rounding mode: 0 = floor, 1 = ceiling
-    subroutine runSingle(name, outDir, a, e, c_int)
+    !! @param[in] a1     Advice parameter for weight estimation (must be >= nAtoms)
+    !! @param[in] a2     Advice parameter for percent of atom count to sample (>= 0)
+    !! @param[in] e      Epsilon accuracy parameter (must satisfy 0 < e < 1)
+    !! @param[in] c_int  Rounding mode: 0 = floor, 1 = ceiling
+    subroutine runSingle(name, outDir, a1, a2, e, c_int)
         character(len=*), intent(in) :: name
         character(len=*), intent(in) :: outDir
-        real(c_double), intent(in) :: a, e
+        real(c_double), intent(in) :: a1, a2, e
         integer, intent(in) :: c_int
 
         ! locals
@@ -223,8 +290,8 @@ contains
         type(atom), dimension(:), allocatable :: atoms
         real(c_double), allocatable :: qVals(:)
         logical :: c
-        character(len=:), allocatable :: path, path1, path3, cmd
-        type(estimate) :: debye, prop
+        character(len=:), allocatable :: path, path1, path2, path3, cmd
+        type(estimate) :: debye, prop, strat
 
         ! convert integer flag to logical
         c = (c_int == 1)
@@ -240,7 +307,8 @@ contains
 
         ! define output paths
         path1 = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-        path3 = trim(outDir)//"/"//"prop_"//trim(name)//".csv"
+        path2 = trim(outDir)//"/"//"strat_"//trim(name)//".csv"
+        path3 = trim(outDir)//"/"//"propo_"//trim(name)//".csv"
 
         ! run Debye radial analysis (exact pairwise)
         ! any ERROR STOP here will exit this subprocess with non-zero status,
@@ -253,17 +321,30 @@ contains
         print*, "timing: ", debye%timing, "s"
         print*, ""
 
-        ! run propagator radial analysis (approximate, frequency-weighted)
-        print*, "Running propEst..."
-        prop = propEst(freq, atoms, qVals, a, e, c)
+        ! run stratified estimate radial analysis
+        ! run stratified estimate radial analysis
+        print*, "Running stratEst..."
+        strat = stratEst(freq, qVals, e, c, a2)
+        path = path2
+        call estWrap(strat, path)
+        print*, "timing: ", strat%timing, "s"
+        print*, ""
+
+        ! run proportional radial analysis (approximate, frequency-weighted)
+        print*, "Running propoEst..."
+        prop = propoEst(freq, atoms, qVals, a1, e, c)
         path = path3
         call estWrap(prop, path)
         print*, "timing: ", prop%timing, "s"
         print*, ""
 
         ! run R script to combine to output CSVs
-        cmd = "Rscript SaxsEst/CsvCombine.R "//trim(outDir)//" "// &
-            trim(name)//" "//trim(path1)//" "//trim(path3)
+        cmd =   "Rscript SaxsEst/CsvCombine.R "//   &    
+                trim(outDir)//" "//                 &
+                trim(name)//" "//                   &
+                trim(path1)//" "//                  &
+                trim(path2)//" "//                  &                
+                trim(path3)                         
         print*, ""
         call execute_command_line(trim(cmd))
 
@@ -273,16 +354,14 @@ contains
 
 end module Main
 
-program SaxsEst
-    !! Main program for SAXS intensity estimation.
-    !!
-    !! Supports two modes:
-    !!   1. Interactive CLI mode: reads a list of molecules and prompts for parameters
-    !!      Usage: SaxsEst <xyz_module_list> <output_directory>
-    !!
-    !!   2. Subprocess mode: runs a single molecule analysis (invoked internally)
-    !!      Usage: SaxsEst --run-single <name> <outDir> <a> <e> <c>
 
+!> @brief Main program for SAXS intensity estimation.
+!> @details Parses command-line arguments and dispatches to one of two modes:
+!>   1. Interactive CLI (2 args): prompts user for parameters per molecule
+!>      Usage: SaxsEst <xyz_module_list> <output_directory>
+!>   2. Subprocess (7 args): runs single-molecule analysis
+!>      Usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e> <c>
+program SaxsEst
     use, intrinsic :: iso_c_binding
     use Main
     use, intrinsic :: iso_fortran_env
@@ -293,8 +372,8 @@ program SaxsEst
     character(len=256) :: arg1, xyzModListPath, outDir
 
     ! subprocess mode variables
-    character(len=256) :: nameArg, outDirArg, aArg, eArg, cArg
-    real(c_double) :: aVal, eVal
+    character(len=256) :: nameArg, outDirArg, a1Arg, a2Arg, eArg, cArg
+    real(c_double) :: a1Val, a2Val, eVal
     integer :: cVal
 
     ! get number of arguments
@@ -309,6 +388,9 @@ program SaxsEst
         end if
     end if
 
+    ! initialize random number generator
+    call random_seed()
+
     ! check for subprocess mode (--run-single)
     ! this mode is invoked internally by the main CLI to isolate ERROR STOP failures.
     ! when a molecule's analysis hits an ERROR STOP, only the subprocess terminates,
@@ -317,25 +399,27 @@ program SaxsEst
     if (argNum >= 1) then
         call get_command_argument(1, arg1)
         if (trim(arg1) == '--run-single') then
-            if (argNum /= 6) then
-                write(error_unit, '(A)') "ERROR: --run-single requires 5 arguments"
-                write(error_unit, '(A)') "Internal usage: SaxsEst --run-single <name> <outDir> <a> <e> <c>"
+            if (argNum /= 7) then
+                write(error_unit, '(A)') "ERROR: --run-single requires 6 arguments"
+                write(error_unit, '(A)') "Internal usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e> <c>"
                 stop 1
             end if
 
             ! parse subprocess arguments
             call get_command_argument(2, nameArg)
             call get_command_argument(3, outDirArg)
-            call get_command_argument(4, aArg)
-            call get_command_argument(5, eArg)
-            call get_command_argument(6, cArg)
+            call get_command_argument(4, a1Arg)
+            call get_command_argument(5, a2Arg)
+            call get_command_argument(6, eArg)
+            call get_command_argument(7, cArg)
 
-            read(aArg, *) aVal
-            read(eArg, *) eVal
-            read(cArg, *) cVal
+            read(a1Arg, *) a1Val
+            read(a2Arg, *) a2Val
+            read(eArg, *)  eVal
+            read(cArg, *)  cVal
 
             ! run single molecule analysis and exit
-            call runSingle(trim(nameArg), trim(outDirArg), aVal, eVal, cVal)
+            call runSingle(trim(nameArg), trim(outDirArg), a1Val, a2Val, eVal, cVal)
             stop 0
         end if
     end if
@@ -361,7 +445,7 @@ program SaxsEst
             write(output_unit, '(A)') ""
             write(output_unit, '(A)') "DESCRIPTION:"
             write(output_unit, '(A)') "  Calculates SAXS intensity profiles for protein structures"
-            write(output_unit, '(A)') "  using the Debye equation and propagator methods."
+            write(output_unit, '(A)') "  using the Debye equation and proportional methods."
             write(output_unit, '(A)') ""
             call printUsage()
             write(output_unit, '(A)') ""

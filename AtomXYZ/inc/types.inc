@@ -5,6 +5,7 @@ type :: coord
     real(c_double) :: x  !< X-coordinate
     real(c_double) :: y  !< Y-coordinate
     real(c_double) :: z  !< Z-coordinate
+    contains; procedure :: distCart => calcDistanceCoord
 end type coord
 
 !> @brief Atomic structure with position and element information
@@ -19,8 +20,8 @@ type :: atom
     type(coord), public :: xyz              !< Atomic position in Cartesian coordinates
     character(len=10), public :: element    !< Element symbol (e.g., 'Fe', 'Cu')
 contains
-    procedure :: toString   => atom2String      !< Convert atom to string
-    procedure :: distCart   => calcDistance     !< Calculate distance to another atom
-    procedure :: formFactor => formFactorMethod !< Get form factor at Q
-    procedure :: cmpAxis    => cmpByAxis        !< Compare by axis
+    procedure :: toString   => atom2String          !< Convert atom to string
+    procedure :: distCart   => calcDistanceAtom     !< Calculate distance to another atom
+    procedure :: formFactor => formFactorMethod     !< Get form factor at Q
+    procedure :: cmpAxis    => cmpByAxis            !< Compare by axis
 end type atom

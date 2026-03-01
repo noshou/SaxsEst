@@ -15,7 +15,6 @@ typedef struct {
     double *iVals;             /**< Pointer to intensity array */
     int timing;                 /**< Timing in milliseconds */
     int size;                   /**< Number of data points */
-    double _Complex *wVals;    /**< Pointer to array of weights */
 } estimate;
 
 /**
@@ -67,20 +66,6 @@ void fortran2ocaml(estimate *est, char *pth) {
         Store_field(cns_opi, 1, row_lst);
         row_lst = cns_opi; 
         
-        // add weights
-        double _Complex z = est->wVals[i];
-        double re = creal(z);
-        double im = cimag(z);
-        if (im >= 0) {
-            snprintf(buffer,MAX_DOUBLE_STR,"%f+%fi",re,im);
-        } else {
-            snprintf(buffer,MAX_DOUBLE_STR,"%f%fi",re,im);
-        }
-        cns_opi = caml_alloc(2, 0);
-        Store_field(cns_opi, 0, caml_copy_string(buffer));
-        Store_field(cns_opi, 1, row_lst);
-        row_lst = cns_opi;
-
         // add row to ocm_lst
         cns_opo = caml_alloc(2, 0);
         Store_field(cns_opo, 0, row_lst);
@@ -97,11 +82,6 @@ void fortran2ocaml(estimate *est, char *pth) {
     
     cns_opi = caml_alloc(2, 0);
     Store_field(cns_opi, 0, caml_copy_string("q_inv_angstrom"));
-    Store_field(cns_opi, 1, row_lst);
-    row_lst = cns_opi;
-    
-    cns_opi = caml_alloc(2, 0);
-    Store_field(cns_opi, 0, caml_copy_string("weights"));
     Store_field(cns_opi, 1, row_lst);
     row_lst = cns_opi;
 

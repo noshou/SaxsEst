@@ -22,34 +22,38 @@
 !! @return          The time it took to run (nanoseconds) and
 !!                  array of q vs I_real (intensityEstimate type)
 function debyeEst(atoms, qVals) result(intensityEstimate)
+    
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input parameters
-    type(atom), dimension(:), intent(in) :: atoms
-    real(c_double), dimension(:), intent(in) :: qVals
+    type(atom), intent(in)      :: atoms(:)
+    real(c_double), intent(in)  :: qVals(:)
+    
     ! local variables
-    real(c_double), dimension(:), allocatable :: intensity
-    integer :: i, j, qIJ, nAtoms, nQVals
-    real(c_double) :: qVal
+    real(c_double), allocatable :: intensity(:)
+    integer                     :: i, j, qIJ, nAtoms, nQVals
+    real(c_double)              :: qVal
+    
     ! timing variables
-    integer :: start, finish
-    real    :: rate
+    integer                     :: start, finish
+    real                        :: rate
+    
     ! output data
-    type(estimate) :: intensityEstimate
+    type(estimate)              :: intensityEstimate
+    
     ! variables for loop
-    type(atom)        :: atomI
-    type(atom)        :: atomJ
-    complex(c_double) :: atomIFormFact
-    complex(c_double) :: atomJFormFact
-    real(c_double)    :: radialContrib ! sinc(|Q-dst|)/(|Q-dst)
-    real(c_double)    :: atomicContrib ! ff_i * conj(ff_j)
-    real(c_double)    :: dst
-    real(c_double)    :: est            ! estimate of intensity at I(Q)
-    real(c_double)    :: norm
-    complex(c_double), allocatable :: weights(:)        ! to compare against wEst
-    complex(c_double) :: w
+    type(atom)                  :: atomI
+    type(atom)                  :: atomJ
+    complex(c_double)           :: atomIFormFact
+    complex(c_double)           :: atomJFormFact
+    real(c_double)              :: radialContrib  ! sinc(|Q-dst|)/(|Q-dst)
+    real(c_double)              :: atomicContrib  ! ff_i * conj(ff_j)
+    real(c_double)              :: dst
+    real(c_double)              :: est            ! estimate of intensity at I(Q)
+    real(c_double)              :: norm
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     ! initialize variables
     nQVals = size(qVals)
-    allocate(weights(nQVals))
     nAtoms = size(atoms)
     norm = nAtoms * nAtoms
 
@@ -61,7 +65,6 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
     do qIJ = 1, nQVals
         qVal = qVals(qIJ)
         est = 0.0_c_double
-        w = 0.0_c_double  ! Reset w for each Q value
         
         do i = 1, nAtoms
             atomI = atoms(i)
@@ -73,7 +76,6 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
                 ! we add atomIFormFact * conjg(atomIFormFact)
                 if (i == j) then
                     est = est + real(atomIFormFact * conjg(atomIFormFact), kind=c_double)
-                    w = w + atomIFormFact
                 else
                     atomJ = atoms(j)
                     atomJFormFact = atomJ%formFactor(qVal)
@@ -84,21 +86,18 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
                     atomicContrib = real(atomIFormFact * conjg(atomJFormFact), kind=c_double)
                     radialContrib = sinc(dst)
                     est = est + atomicContrib * radialContrib
-                    w = w + atomJFormFact
                 end if
             end do
         end do
         
         intensity(qIJ) = est / norm
-        weights(qIJ) = w  ! Store weight for this Q value
     end do
     ! stop timer
     call system_clock(finish)
     
     ! output results
-    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity, weights)
+    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity)
     
     ! clean up
     deallocate(intensity)
-    deallocate(weights)
 end function debyeEst
