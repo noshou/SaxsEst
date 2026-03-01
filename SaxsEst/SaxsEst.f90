@@ -48,7 +48,7 @@ contains
         ! file paths
         character(len=*), intent(in) :: xyzModListPath
         character(len=*), intent(in) :: outDir
-        character(len=:), allocatable :: path, path1, path3, cmd
+        character(len=:), allocatable :: path, path1, path2, path3, cmd
 
         ! input data
         type(frequencies) :: freq
@@ -57,15 +57,16 @@ contains
         character(len=256) :: name
 
         ! variables for file I/O
-        integer :: xyzUnit, iostatVal, s, endPos, m, atms
+        integer :: xyzUnit, iostatVal, startPos, endPos, m, atms
         character(len=256) :: buff, mode
         character(len=*), parameter :: xyzStartMatch = "xyz_"
         character(len=*), parameter :: xyzEndMatch = "_mod.mod"
 
         ! user cli inputs
         real :: a_, e_
-        real(c_double) :: a, e
-        logical :: c
+        real(c_double) :: a, e, s
+        logical :: c, isDigitChar, isPercentChar, isValid
+        integer :: i
 
         ! analysis results
         type(estimate) :: debye, prop
@@ -94,10 +95,10 @@ contains
             if (iostatVal .ne. 0) exit  ! exit on EOF or error
 
             ! match name of molecule from module filename
-            s = len(xyzStartMatch)
+            startPos = len(xyzStartMatch)
             endPos = len(xyzEndMatch)
-            m = len(trim(buff)) - s - endPos
-            name = trim(buff(s+1:len_trim(buff) - endPos))
+            m = len(trim(buff)) - startPos - endPos
+            name = trim(buff(startPos+1:len_trim(buff) - endPos))
 
             ! load atoms from the appropriate generated module
             include "mod_switches.inc"
@@ -158,9 +159,37 @@ contains
                 end if
             end do
 
+            ! prompt user for sample size
+            do while (.true.)
+                print*, "Sample size (percent of original sample size):"
+                write(*, '(A)', advance='no') " Enter: "
+                read(*,*) buff
+                isValid = .false.
+                do i = 1, len_trim(buff)
+                    isPercentChar = (buff(i:i) == '%')
+                    isDigitChar   = (buff(i:i) >= '0' .and. buff(i:i) <= '9')
+                    if (isPercentChar .and. i == 1) then
+                        print*,"Invalid input! Example: for 20%, enter 20%"
+                        exit
+                    else if (.not. isDigitChar .and. .not. isPercentChar) then
+                        print*,"Invalid input! Example: for 20%, enter 20%"
+                        exit
+                    else if (isPercentChar) then
+                        read(buff(1:i-1), *) s
+                        isValid = .true.
+                        exit
+                    end if
+                end do
+                if (.not. isValid .and. i > len_trim(buff)) then
+                    print*,"Invalid input! Must include %. Example: for 20%, enter 20%"
+                end if
+                if (isValid) exit
+            end do 
+
             ! define output file paths for potential cleanup
             path1 = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-            path3 = trim(outDir)//"/"//"prop_"//trim(name)//".csv"
+            path2 = trim(outDir)//"/"//"strat_"//trim(name)//".csv"
+            path3 = trim(outDir)//"/"//"propo_"//trim(name)//".csv"
 
             ! self-invoke as subprocess with --run-single flag.
             ! this isolates ERROR STOP failures to the subprocess, allowing
@@ -223,7 +252,7 @@ contains
         type(atom), dimension(:), allocatable :: atoms
         real(c_double), allocatable :: qVals(:)
         logical :: c
-        character(len=:), allocatable :: path, path1, path3, cmd
+        character(len=:), allocatable :: path, path1, path2, path3, cmd
         type(estimate) :: debye, prop
 
         ! convert integer flag to logical
@@ -240,7 +269,8 @@ contains
 
         ! define output paths
         path1 = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-        path3 = trim(outDir)//"/"//"prop_"//trim(name)//".csv"
+        path2 = trim(outDir)//"/"//"strat_"//trim(name)//".csv"
+        path3 = trim(outDir)//"/"//"propo_"//trim(name)//".csv"
 
         ! run Debye radial analysis (exact pairwise)
         ! any ERROR STOP here will exit this subprocess with non-zero status,
@@ -253,9 +283,13 @@ contains
         print*, "timing: ", debye%timing, "s"
         print*, ""
 
-        ! run propagator radial analysis (approximate, frequency-weighted)
-        print*, "Running propEst..."
-        prop = propEst(freq, atoms, qVals, a, e, c)
+        ! run stratified estimate radial analysis
+        
+
+
+        ! run proportional radial analysis (approximate, frequency-weighted)
+        print*, "Running propoEst..."
+        prop = propoEst(freq, atoms, qVals, a, e, c)
         path = path3
         call estWrap(prop, path)
         print*, "timing: ", prop%timing, "s"
@@ -309,6 +343,9 @@ program SaxsEst
         end if
     end if
 
+    ! initialize random number generator
+    call random_seed()
+
     ! check for subprocess mode (--run-single)
     ! this mode is invoked internally by the main CLI to isolate ERROR STOP failures.
     ! when a molecule's analysis hits an ERROR STOP, only the subprocess terminates,
@@ -361,7 +398,7 @@ program SaxsEst
             write(output_unit, '(A)') ""
             write(output_unit, '(A)') "DESCRIPTION:"
             write(output_unit, '(A)') "  Calculates SAXS intensity profiles for protein structures"
-            write(output_unit, '(A)') "  using the Debye equation and propagator methods."
+            write(output_unit, '(A)') "  using the Debye equation and proportional methods."
             write(output_unit, '(A)') ""
             call printUsage()
             write(output_unit, '(A)') ""

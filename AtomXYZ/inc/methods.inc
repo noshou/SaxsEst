@@ -129,25 +129,27 @@ end function cmpByAxis
 
 ! Distance calculations
 
-!> @brief Calculate Euclidean distance between two atoms
-!!
-!! @details
-!! Computes the Cartesian distance between two atoms:
-!! distance = sqrt((x2-x1)² + (y2-y1)² + (z2-z1)²)
-!!
+!> @brief Calculate cartesian distance between two coordinates
+!! @param[in] this First coordinate
+!! @param[in] that Second coordinate
+!! @return distance in Å
+pure function calcDistanceCoord(this, that) result(res)
+    class(coord)   :: this
+    type(coord)    :: that
+    real(c_double) :: res
+    res = sqrt((this%x - that%x)**2 + (this%y - that%y)**2 + (this%z - that%z)**2)
+end function calcDistanceCoord
+
+!> @brief Calculate cartesian distance between two atoms
 !! @param[in] this First atom
-!! @param[in] that Second atom
-!!
-!! @return distance Euclidean distance in Å
-function calcDistance(this, that) result(distance)
+!! @param[in] that Second atom 
+!! @return distance in Å
+pure function calcDistanceAtom(this, that) result(distance)
     class(atom), intent(in) :: this
     type(atom), intent(in)  :: that 
-    real(c_double) :: distance
-
-    distance = sqrt((that%xyz%x - this%xyz%x)**2 + &
-                    (that%xyz%y - this%xyz%y)**2 + &
-                    (that%xyz%z - this%xyz%z)**2)
-end function calcDistance
+    real(c_double)          :: res
+    res = this%xyz%distCart(that%xyz)
+end function calcDistanceAtom
 
 !> @brief Convert a single character to lowercase
 !!
@@ -161,3 +163,4 @@ subroutine toLowerChar(c)
         c = char(ic + ichar('a') - ichar('A'))
     end if
 end subroutine toLowerChar
+

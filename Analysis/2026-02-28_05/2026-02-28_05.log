@@ -1,0 +1,42 @@
+/bin/bash: line 11: rinf: command not found
+compiling: AtomXYZ/xyz_tmp/xyz_chignolin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_csgc.f90
+compiling: AtomXYZ/xyz_tmp/xyz_gpx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_kdelr1.f90
+compiling: AtomXYZ/xyz_tmp/xyz_phgdh.f90
+compiling: AtomXYZ/xyz_tmp/xyz_plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_strip1_iso2.f90
+inc/getters.inc:72:13:
+
+Error: Unclassifiable statement at (1)
+inc/getters.inc:76:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:77:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:96:31:
+
+Error: ‘getmean’ at (1) is not a member of the ‘frequencies’ structure
+inc/getters.inc:107:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:108:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:161:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:66:24:
+
+Error: Symbol ‘weight’ at (1) has no IMPLICIT type; did you mean ‘weights’?
+inc/getters.inc:106:46:
+
+Error: Rank mismatch in argument ‘w’ at (1) (rank-1 and scalar)
+inc/getters.inc:106:54:
+
+Error: Rank mismatch in argument ‘f’ at (1) (rank-1 and scalar)
+inc/getters.inc:66:24:
+
+Error: Symbol ‘weight’ at (1) has no IMPLICIT type; did you mean ‘weights’?
+make[1]: *** [BuildExe.mk:291: _build/release/obj/Freq.o] Error 1

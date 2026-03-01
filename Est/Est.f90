@@ -5,7 +5,7 @@ module Est
     
     implicit none 
     private 
-    public :: estimate, debyeEst, propEst
+    public :: estimate, debyeEst, propoEst, stratEst
     
     ! intensity estimate type
     type, bind(C) :: estimate
@@ -13,11 +13,18 @@ module Est
         type(c_ptr)             :: iVals     
         real(c_int), public     :: timing
         integer(c_int), public  :: size  
-        type(c_ptr)             :: wVals 
     end type estimate
+
+    ! container for stratified sample
+    type :: stratEstContainer
+        complex(c_double), allocatable :: sampledWeights(:)
+        type(coord),       allocatable :: sampledCoords(:)
+        real(c_double)                 :: formFactorEstimate
+    end type stratEstContainer
 
     contains 
         include "inc/utils.inc"
-        include "inc/propEst.inc"
         include "inc/debyeEst.inc"
+        include "inc/stratEst.inc"
+        include "inc/propoEst.inc"
 end module Est

@@ -1,0 +1,189 @@
+/bin/bash: line 11: rinf: command not found
+compiling: AtomXYZ/xyz_tmp/xyz_chignolin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_csgc.f90
+compiling: AtomXYZ/xyz_tmp/xyz_gpx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_kdelr1.f90
+compiling: AtomXYZ/xyz_tmp/xyz_phgdh.f90
+compiling: AtomXYZ/xyz_tmp/xyz_plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_strip1_iso2.f90
+inc/getters.inc:58:39:
+
+Error: Symbol ‘this’ at (1) already has basic type of CLASS
+inc/getters.inc:60:32:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:56:41:
+
+Error: Function result ‘invcmf’ at (1) has no IMPLICIT type
+inc/getters.inc:77:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:78:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:79:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:91:32:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:98:31:
+
+Error: ‘getmean’ at (1) is not a member of the ‘frequencies’ structure
+inc/getters.inc:88:41:
+
+Error: Function result ‘invcmf’ at (1) has no IMPLICIT type
+inc/getters.inc:108:25:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:109:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:110:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:114:33:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:115:19:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:116:53:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:117:42:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:118:60:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:119:54:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:120:64:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:121:29:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:122:45:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:123:18:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:124:61:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:127:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:128:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:129:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:130:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:131:27:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:132:32:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:133:66:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:134:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:135:32:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:136:65:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:137:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:141:27:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:142:31:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:143:70:
+
+Error: Unexpected block IF statement in CONTAINS section at (1)
+inc/getters.inc:144:33:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:145:41:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:146:35:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:147:31:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:148:37:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:149:33:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:150:15:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:151:11:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:152:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:157:27:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:158:27:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:159:48:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:160:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:161:45:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:163:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:164:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:165:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:166:6:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:168:3:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:67:24:
+
+Error: Symbol ‘weight’ at (1) has no IMPLICIT type; did you mean ‘weights’?
+inc/getters.inc:56:0:
+
+Error: Symbol ‘getlight’ at (1) has no IMPLICIT type; did you mean ‘getweights’?
+inc/getters.inc:88:0:
+
+Error: Symbol ‘getheavy’ at (1) has no IMPLICIT type; did you mean ‘getmean’?
+inc/getters.inc:67:24:
+
+Error: Symbol ‘weight’ at (1) has no IMPLICIT type; did you mean ‘weights’?
+make[1]: *** [BuildExe.mk:291: _build/release/obj/Freq.o] Error 1

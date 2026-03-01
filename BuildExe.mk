@@ -10,7 +10,7 @@
 #   FormFact  (scattering factor tables, parsed from CSV/JSON via OCaml)
 #   AtomXYZ   (molecular coordinates, parsed from .xyz files via OCaml)
 #   Freq      (atom-type frequency tables)
-#   Estimate  (SAXS intensity estimation)
+#   Est  (SAXS intensity estimation)
 #   CsvInterface (Fortran ↔ OCaml CSV bridge, requires OCaml runtime)
 #
 # OCaml toolchain is required for code-generation parsers and the CSV
@@ -144,7 +144,7 @@ MAIN_MOD     = $(MOD_DIR)/MaSaxsEstin.mod
 .PHONY: all all1 all2 FormFact AtomXYZ clean clean-build \
         parse-f0 parse-f1_f2 parse-xyz check-ocaml check-deps-csv \
         check-deps-yojson check-deps-str help clean-formfacts \
-        clean-objects parse-xyz tabulate-xyz Estimate \
+        clean-objects parse-xyz tabulate-xyz Est \
         postamble Freq compile-pdb-2-xyz make-outdir \
         generate-xyz-includes CsvInterface help
 
@@ -153,7 +153,7 @@ MAIN_MOD     = $(MOD_DIR)/MaSaxsEstin.mod
 # Libraries (all1) are built before the executable and CSV layer (all2).
 # ============================================================================
 all: all1 all2
-all1: build-dirs FormFact AtomXYZ Freq Estimate 
+all1: build-dirs FormFact AtomXYZ Freq Est 
 all2: $(PDB_TARGET) CsvInterface main clean-objects postamble
 
 # ============================================================================
@@ -171,8 +171,8 @@ help:
 	@echo "  FormFact         - Build FormFact library only"
 	@echo "  AtomXYZ          - Build AtomXYZ library only"
 	@echo "  Freq             - Build Freq library only"
-	@echo "  Estimate         - Build Estimate library only"
-	@echo "  CsvInterface    - Build CsvInterface library only"
+	@echo "  Est         	  - Build Est library only"
+	@echo "  CsvInterface     - Build CsvInterface library only"
 ifdef PDB_TARGET
 	@echo "  compile-pdb-2-xyz- Build pdb_to_xyz converter"
 	@echo "  pdb-2-xyz        - Run pdb_to_xyz converter (prompts for filename)"
@@ -296,7 +296,7 @@ $(FREQ_LIB): $(FREQ_OBJ)
 # ============================================================================
 # ESTIMATE LIBRARY BUILD
 # ============================================================================
-Estimate: $(EST_LIB)
+Est: $(EST_LIB)
 
 $(EST_OBJ): $(EST_SRC)
 	@$(FC) $(CFLAGS) -I$(MOD_DIR) -J$(MOD_DIR) -c $< -o $@

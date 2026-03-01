@@ -1,0 +1,33 @@
+/bin/bash: line 11: rinf: command not found
+compiling: AtomXYZ/xyz_tmp/xyz_chignolin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_csgc.f90
+compiling: AtomXYZ/xyz_tmp/xyz_gpx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_kdelr1.f90
+compiling: AtomXYZ/xyz_tmp/xyz_phgdh.f90
+compiling: AtomXYZ/xyz_tmp/xyz_plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_strip1_iso2.f90
+inc/stratEst.inc:75:9:
+
+Error: Symbol ‘ratio’ at (1) has no IMPLICIT type
+inc/stratEst.inc:89:18-40:
+
+Error: Type of entity at (1) is type incompatible with source-expr at (2)
+inc/stratEst.inc:93:20:
+
+Error: COMPLEX quantities cannot be compared at (1)
+inc/stratEst.inc:101:18-40:
+
+Error: Type of entity at (1) is type incompatible with source-expr at (2)
+inc/stratEst.inc:105:20:
+
+Error: COMPLEX quantities cannot be compared at (1)
+inc/stratEst.inc:116:25:
+
+Error: Function ‘weights’ at (1) has no IMPLICIT type
+inc/stratEst.inc:129:40:
+
+Error: Cannot convert COMPLEX(8) to TYPE(atom) at (1)
+inc/stratEst.inc:191:58:
+
+Error: Rank mismatch in argument ‘q’ at (1) (rank-1 and scalar)
+make[1]: *** [BuildExe.mk:302: _build/release/obj/Est.o] Error 1

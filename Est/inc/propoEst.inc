@@ -24,21 +24,15 @@
 !! @return wEst    Complex conjugate of the estimated propagator weight
 function propEstCalc(k, q, a, e, c) result(wEst)
     
-    ! Input parameters
-    type(frequencies), intent(in) :: k
-    real(c_double), intent(in) :: q
-    real(c_double), intent(in) :: a
-    real(c_double), intent(in) :: e !< Epsilon (0 < e < 1)
-    logical, intent(in) :: c        !< Ceiling flag
-    
-    ! Return value
-    complex(c_double) :: wEst
-    
-    ! Local variables
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    type(frequencies),  intent(in) :: k
+    real(c_double),     intent(in) :: a, q,  e  
+    logical, intent(in)            :: c        
+    complex(c_double)              :: wEst, tot    
     complex(c_double), allocatable :: w(:)
-    integer, allocatable :: f(:)
-    integer :: s, sChoose2, cChoose2, i
-    complex(c_double) :: tot
+    integer, allocatable           :: f(:)
+    integer                        :: s, sChoose2, cChoose2, i 
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     ! Allocate space for list of weights and frequencies
     allocate(w, source=k%weights(q)); allocate(f, source=k%freqs())
@@ -78,7 +72,7 @@ end function propEstCalc
 !! using atomic form factors and pairwise distance contributions via the sinc function.
 !!
 !! The algorithm performs the following steps for each Q value:
-!! 1. Estimates proportional weights using the propEst function
+!! 1. Estimates proportional weights using the propoEst function
 !! 2. Computes pairwise contributions: f_i * wEst * sinc(Q * r_ij) for all atom pairs
 !! 3. Adds self-contribution: f_i * conj(f_i) for each atom
 !!
@@ -96,45 +90,31 @@ end function propEstCalc
 !!                      - Execution time in nanoseconds
 !!                      - Q values array
 !!                      - Calculated intensity values I(Q)
-function propEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
-    type(frequencies), intent(in) :: k
-    real(c_double), intent(in) :: a  !< Advice parameter (>= # nodes)
-    real(c_double), intent(in) :: e  !< Epsilon (0 < e < 1)
-    logical, intent(in) :: c         !< Ceiling flag
-    type(atom), dimension(:), intent(in)  :: atoms
-    real(c_double), dimension(:), intent(in) :: qVals
-
-    ! Local variables
-    integer :: nAtoms, nQVals
-    real(c_double), dimension(:), allocatable :: intensity
-    integer :: i, j, qIJ
-    real(c_double) :: qVal 
-    complex(c_double), allocatable :: wEsts(:) ! list of all estimates calculated
-
-    ! timing variables
-    integer :: start, finish
-    real    :: rate
+function propoEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
     
-    ! output data
-    type(estimate) :: intensityEstimate
-    
-    ! variables for loop
-    type(atom) :: atomI
-    complex(c_double) :: atomIFormFact
-    complex(c_double) :: wEst          ! proportional estimate of atomic form factors
-    real(c_double)  :: radialContrib   ! sinc(|Q-dst|)/(|Q-dst)
-    real(c_double) :: atomicContrib    ! ff_i * wEst
-    real(c_double) :: dst
-    real(c_double) :: est               ! estimate of intensity at I(Q) 
-    real(c_double) :: norm
+    ! input variables
+    type(frequencies),  intent(in)  :: k
+    real(c_double),     intent(in)  :: a 
+    real(c_double),     intent(in)  :: e  
+    logical,            intent(in)  :: c         
+    type(atom),         intent(in)  :: atoms(:)
+    real(c_double),     intent(in)  :: qVals(:)
 
-    ! start timer, initialize
+    ! local variables
+    real(c_double), allocatable     :: intensity(:)
+    integer                         :: nAtoms, nQVals, i, j, qIJ, start, finish
+    real                            :: rate
+    type(estimate)                  :: intensityEstimate
+    type(atom)                      :: atomI
+    complex(c_double)               :: wEst, atomIFormFact
+    real(c_double)                  :: qVal, radialContrib, atomicContrib, dst, est, norm
+
+    ! start timer
     call system_clock(start, rate)
 
     ! initialize variables
     nAtoms = size(atoms)
     nQVals = size(qVals)
-    allocate(wEsts(nQVals))
     allocate(intensity(nQVals))
     
     do qIJ = 1, nQVals
@@ -142,8 +122,7 @@ function propEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
         
         ! get estimate of weight
         wEst = propEstCalc(k, qVal, a, e, c)
-        wEsts(qIJ) = wEst
-        est = 0
+        est = 0.0_c_double
         if (c) then
             norm = nAtoms * (ceiling(sqrt(24.0_c_double*a)/e) + 1)
         else
@@ -175,9 +154,9 @@ function propEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
     call system_clock(finish)
     
     ! output estimate
-    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity, wEsts)
+    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity)
     
     ! cleanup
     deallocate(intensity)
     
-end function propEst
+end function propoEst

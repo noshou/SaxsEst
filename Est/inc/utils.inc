@@ -9,22 +9,19 @@
 !! @param[in] r     Ticks/second of clock 
 !! @param[in] q     Array of Q values
 !! @param[in] i     Array of intensity estimates
-!! @param[in] w     Array of weights
 !! @return e        C-interoperable intensity_est structure with pointers to allocated data
-function newIntensity(s, f, r, q, i, w) result(e)
+function newIntensity(s, f, r, q, i) result(e)
     
     ! input variables
     integer, intent(in) :: s, f
     real ,   intent(in) :: r
     real(c_double), dimension(:), intent(in) :: q, i
-    complex(c_double), dimension(:), intent(in), optional :: w
 
     ! execution time
     real(c_double) :: t
 
     ! targets for c arrays (need to be saved to persist!)
     real(c_double), dimension(:), allocatable, save, target :: qCpy, iCpy
-    complex(c_double), dimension(:), allocatable, save, target :: wCpy
 
     ! output variable
     type(estimate) :: e
@@ -32,15 +29,12 @@ function newIntensity(s, f, r, q, i, w) result(e)
     ! check if targets allocated - free if they are
     if (allocated(qCpy)) then; deallocate(qCpy); end if
     if (allocated(iCpy)) then; deallocate(iCpy); end if
-    if (allocated(wCpy)) then; deallocate(wCpy); end if
 
     ! copy over data to c pointers
     allocate(qCpy(size(q)))
     allocate(iCpy(size(i)))
-    allocate(wCpy(size(w)))
     qCpy = q  
     iCpy = i  
-    wCpy = w
     
     ! calculate execution time
     t = real(f - s, kind=c_double) / real(r, kind=c_double)
@@ -50,7 +44,6 @@ function newIntensity(s, f, r, q, i, w) result(e)
     e%iVals = c_loc(iCpy)
     e%timing = t
     e%size   = real(size(q), kind=c_double)
-    e%wVals = c_loc(wCpy)
 
 end function newIntensity
 

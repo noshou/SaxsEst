@@ -1,0 +1,274 @@
+/bin/bash: line 11: rinf: command not found
+compiling: AtomXYZ/xyz_tmp/xyz_chignolin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_csgc.f90
+compiling: AtomXYZ/xyz_tmp/xyz_gpx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_kdelr1.f90
+compiling: AtomXYZ/xyz_tmp/xyz_phgdh.f90
+compiling: AtomXYZ/xyz_tmp/xyz_plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_strip1_iso2.f90
+inc/getters.inc:56:36:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:57:42:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:58:35:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:59:32:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:60:32:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:61:22:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:62:38:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:63:19:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:64:61:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:66:25:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:67:9:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:68:20:
+
+Error: Symbol ‘this’ at (1) has no IMPLICIT type
+inc/getters.inc:69:28:
+
+Error: Symbol ‘this’ at (1) has no IMPLICIT type
+inc/getters.inc:70:48:
+
+Error: Unexpected block IF statement in CONTAINS section at (1)
+inc/getters.inc:71:21:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:74:11:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:75:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:76:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:77:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:79:3:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:86:36:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:87:42:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:88:35:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:89:32:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:90:32:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:91:22:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:92:38:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:93:19:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:94:61:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:96:24:
+
+Error: Symbol ‘this’ at (1) has no IMPLICIT type
+inc/getters.inc:97:9:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:98:20:
+
+Error: Symbol ‘this’ at (1) has no IMPLICIT type
+inc/getters.inc:99:28:
+
+Error: Symbol ‘this’ at (1) has no IMPLICIT type
+inc/getters.inc:100:47:
+
+Error: Unexpected block IF statement in CONTAINS section at (1)
+inc/getters.inc:101:21:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:104:11:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:105:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:106:25:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:107:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:108:23:
+
+Error: Allocate-object at (1) is not a nonprocedure pointer nor an allocatable variable
+inc/getters.inc:110:3:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:112:33:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:113:19:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:114:53:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:115:42:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:116:60:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:117:54:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:118:64:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:119:29:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:120:45:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:121:18:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:122:61:
+
+Error: Unexpected data declaration statement in CONTAINS section at (1)
+inc/getters.inc:125:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:126:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:127:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:128:14:
+
+Error: Allocate-object at (1) is neither a data pointer nor an allocatable variable
+inc/getters.inc:129:27:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:130:32:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:131:66:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:132:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:133:32:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:134:65:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:135:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:139:27:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:140:31:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:141:70:
+
+Error: Unexpected block IF statement in CONTAINS section at (1)
+inc/getters.inc:142:33:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:143:41:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:144:35:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:145:31:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:146:37:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:147:33:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:148:15:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:149:11:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:150:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:155:27:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:156:27:
+
+Error: Unexpected DO statement in CONTAINS section at (1)
+inc/getters.inc:157:48:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:158:7:
+
+Error: Expecting END MODULE statement at (1)
+inc/getters.inc:159:45:
+
+Error: Unexpected assignment statement in CONTAINS section at (1)
+inc/getters.inc:161:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:162:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:163:14:
+
+Error: Syntax error in ALLOCATE statement at (1)
+inc/getters.inc:164:6:
+
+Error: Invalid character in name at (1)
+inc/getters.inc:166:3:
+
+Error: Expecting END MODULE statement at (1)
+Freq/Freq.f90:23:21:
+
+   23 |             procedure :: heavy    => getHeavy
+      |                     1
+Error: ‘getheavy’ must be a module procedure or an external procedure with an explicit interface at (1)
+Freq/Freq.f90:24:21:
+
+   24 |             procedure :: light    => getLight
+      |                     1
+Error: ‘getlight’ must be a module procedure or an external procedure with an explicit interface at (1)
+make[1]: *** [BuildExe.mk:291: _build/release/obj/Freq.o] Error 1

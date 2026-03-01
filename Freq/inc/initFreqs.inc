@@ -1,3 +1,21 @@
+!> @brief Doubles the capacity of a coordPtrList, preserving existing pointer associations.
+!> @param[inout] cl  The coordPtrList to grow
+subroutine growPtrList(cl)
+    type(coordPtrList), intent(inout) :: cl
+    type(coordPtr), allocatable :: tmp(:)
+    integer :: oldSize
+    oldSize = size(cl%ptrs)
+    allocate(tmp(oldSize * 2))
+    tmp(1:oldSize) = cl%ptrs
+    call move_alloc(tmp, cl%ptrs)
+end subroutine growPtrList
+
+!> @brief Creates a frequency table of unique atom types from an atom array.
+!> @details Uses a perfect hash map with O(n) construction. Builds parallel
+!>          arrays for counts, representative atoms, and coordinate pointer lists,
+!>          then compacts into a frequencies object with no empty slots.
+!> @param[in] atoms  Array of atoms to tabulate
+!> @return Allocated frequencies object with unique atom types, counts, and coordinates
 !! Creates a frequency table of unique atom types from an array of atoms in O(n) time.
 !!
 !! Algorithm:
@@ -37,7 +55,8 @@ function initFreqs(atoms) result(freqs)
     type(frequency), allocatable :: freqList(:)
     type(atom), allocatable :: atomList(:)
     type(frequencies), allocatable :: freqs
-
+    type(coordPtrList) :: coords(nSlots)
+    
     ! allocate counts with initial values of 0
     allocate(counts(nSlots), source=0)
     allocate(atomList(nSlots))
@@ -83,8 +102,18 @@ function initFreqs(atoms) result(freqs)
         ! increment frequency count and insert atom name
         counts(hashIdx) = counts(hashIdx) + 1
         atomList(hashIdx) = atoms(i)
+
+        ! append list of coordinates
+        if (.not. allocated(coords(hashIdx)%ptrs)) then
+            allocate(coords(hashIdx)%ptrs(20))
+        else if (coords(hashIdx)%n == size(coords(hashIdx)%ptrs)) then
+            call growPtrList(coords(hashIdx))
+        end if
+        coords(hashIdx)%n = coords(hashIdx)%n + 1
+        coords(hashIdx)%ptrs(coords(hashIdx)%n)%coord_ => atoms(i)%coords
+
     end do
-    
+
     ! find actual number of frequencies and allocate list of frequencies
     numUnique = 0
     numTotal  = 0
@@ -96,7 +125,7 @@ function initFreqs(atoms) result(freqs)
     end do 
     allocate(freqList(numUnique))
 
-    ! go through frequencies and build freqList
+    ! build freqList and coordsList
     j = 0
     do i = 1, nSlots
         if (counts(i) .ne. 0) then 
@@ -104,6 +133,7 @@ function initFreqs(atoms) result(freqs)
             freqList(j)%name  = atomList(i)%element
             freqList(j)%atm   = atomList(i)
             freqList(j)%freq_ = counts(i)
+            allocate(freqList(j)%coords, source=coords(i))
         end if 
     end do
 

@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
 main <- function() {
   args <- commandArgs(trailingOnly = TRUE)
   if (length(args) != 4) {
-    stop("Usage: CsvCombine.R output_dir molecule_name <debye_est>.csv <prop_est>.csv")
+    stop("Usage: CsvCombine.R output_dir molecule_name <debye_est>.csv <propo_est>.csv")
   }
 
   # extract name of molecule, output dir
