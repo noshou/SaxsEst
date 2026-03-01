@@ -234,4 +234,6 @@
 # 2026-02-28
  - working on fixing/debugging stratEst
  - coordinates are lost when building frequency table,
-   implementing dynamic pointer array to fix it
+   implementing dynamic pointer array to track it
+ - stratified sampling *should* randomly sample atom coordinates from a randomly sampled weight class 
+ - need to compile/fix bugs  
