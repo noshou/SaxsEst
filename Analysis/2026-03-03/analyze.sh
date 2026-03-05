@@ -1,4 +1,4 @@
-# created this script bc I did the analysis *before* writing CleanAndPlot.R
+# created this script bc I did the analysis *before* writing Plot.R
 # to run this script, place it in the project root. script is 100% POSIX compliant,
 # so you can run on any script, so no need for shebang :)
 
@@ -49,5 +49,5 @@ for dir in \
   'epsilon=0.45-sample_size=50%'; do
   eps=$(echo "$dir" | sed 's/epsilon=\([^-]*\)-.*/\1/')
   ss=$(echo "$dir" | sed 's/.*sample_size=\(.*\)/\1/')
-  Rscript SaxsEst/CleanAndPlot.R "Analysis/2026-03-03/$dir" "$eps" "$ss"
+  Rscript SaxsEst/Plot.R "Analysis/2026-03-03/$dir" "$eps" "$ss"
 done

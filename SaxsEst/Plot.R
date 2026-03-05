@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 
-#' CleanAndPlot.R
+#' Plot.R
 #'
 #' Reads analysis_*.csv files from SaxsEst, accumulates intensity
 #' estimates and pairwise absolute differences, then produces
 #' PDF plots sized for IEEE two-column figures.
 #'
 #' Usage:
-#'   Rscript CleanAndPlot.R <input_dir> <epsilon> <sample_size>
+#'   Rscript Plot.R <input_dir> <epsilon> <sample_size>
 
 suppressPackageStartupMessages({
   library(readr)
@@ -21,7 +21,7 @@ suppressPackageStartupMessages({
 main <- function() {
   args <- commandArgs(trailingOnly = TRUE)
   if (length(args) != 3) {
-    stop("Usage: CleanAndPlot.R input_dir epsilon sample_size")
+    stop("Usage: Plot.R input_dir epsilon sample_size")
   }
 
   setwd(args[1])

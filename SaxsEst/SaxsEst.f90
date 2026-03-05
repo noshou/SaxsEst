@@ -92,6 +92,7 @@ contains
         ! subprocess handling for error recovery
         integer :: exitStatus
         character(len=32) :: a1Str, a2Str, eStr, cStr
+        character(len=32) :: a2RawStr  ! raw "50%" style string for R script
         character(len=512) :: exePath
         character(len=2048) :: subprocCmd
 
@@ -193,6 +194,7 @@ contains
                         print*,"Invalid input! Example: for 20%, enter 20%"
                         exit
                     else if (isPercentChar) then
+                        a2RawStr = trim(buff)
                         read(buff(1:i-1), *) a2
                         a2 = a2 / 100.0_c_double
                         write(a2Str, '(ES23.16)') a2
@@ -242,6 +244,13 @@ contains
 
             print*, "===================="
         end do
+
+        ! generate combined plots from analysis CSVs
+        cmd = "Rscript SaxsEst/Plot.R "//  &
+              trim(outDir)//" "//                   &
+              trim(adjustl(eStr))//" "//            &
+              trim(adjustl(a2RawStr))
+        call execute_command_line(trim(cmd))
 
         print*, ""
         print*, "All molecules processed."
