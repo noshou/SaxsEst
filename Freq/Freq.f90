@@ -1,6 +1,6 @@
 !> @brief Frequency distribution module for SAXS intensity estimation.
 !> @details Provides types and procedures for building frequency tables of
-!>          unique atom types, constructing cumulative mass functions (CMFs),
+!>          unique atom types, constructing cumulative distribution functions (CDFs),
 !>          and stratifying atoms into heavy/light strata for sampling.
 module Freq 
     use iso_c_binding, only: c_double
@@ -37,7 +37,7 @@ module Freq
 
     !> Collection of unique atom types with their frequency counts.
     !> Provides methods for computing form factor weights, stratifying
-    !> into heavy/light strata, and constructing CMFs for sampling.
+    !> into heavy/light strata, and constructing CDFs for sampling.
     type :: frequencies
         type(frequency), private, allocatable  :: items(:) !> list of weights
         integer       :: nUnique = 0                       !> total number of unique weights
@@ -50,18 +50,18 @@ module Freq
             procedure :: mean     => getMean
     end type frequencies
     
-    !> Cumulative mass function with parallel coordinate storage.
+    !> Cumulative distribution function with parallel coordinate storage.
     !> Each index maps a form factor weight to its cumulative probability
     !> and the coordinates of all atoms of that type.
     !> Note that atoms contain "dummy atoms" and should NOT be used
     !> for sampling; only for form factor calculation.
-    type :: cmf 
+    type :: cdf 
         complex(c_double),  allocatable :: weights(:)
         real(c_double),     allocatable :: culmProbs(:)
         type(coordPtrList), allocatable :: coords(:)
         type(atom),         allocatable :: atoms(:)  
         integer                         :: population
-    end type cmf
+    end type cdf
     
     contains
         include "inc/initFreqs.inc"        

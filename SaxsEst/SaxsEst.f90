@@ -43,7 +43,6 @@ contains
     !> @details Reads a list of XYZ module files and prompts the user for:
     !>   - Advice parameter ñ (scaling factor for weight estimation, must be >= n)
     !>   - Epsilon (sampling precision, 0 < ε < 1)
-    !>   - Rounding mode (UP = ceiling, DOWN = floor)
     !>   - Sample size (percentage of total atoms to sample for stratified estimator)
     !>
     !> Each molecule is analyzed in a subprocess via --run-single to isolate
@@ -55,7 +54,7 @@ contains
     !! Command line interface for running SAXS analysis.
     !!
     !! Reads a list of XYZ module files, prompts the user for analysis parameters
-    !! (advice parameter, epsilon, rounding mode), then spawns a subprocess for
+    !! (advice parameter, epsilon), then spawns a subprocess for
     !! each molecule to isolate ERROR STOP failures. If a subprocess fails, partial
     !! output files are cleaned up and analysis continues with the next molecule.
     !!
@@ -76,14 +75,14 @@ contains
 
         ! variables for file I/O
         integer :: xyzUnit, iostatVal, startPos, endPos, m, atms
-        character(len=256) :: buff, mode
+        character(len=256) :: buff
         character(len=*), parameter :: xyzStartMatch = "xyz_"
         character(len=*), parameter :: xyzEndMatch = "_mod.mod"
 
         ! user cli inputs
         real :: a1_, a2_, e_
         real(c_double) :: a1, a2, e
-        logical :: c, isDigitChar, isPercentChar, isValid
+        logical :: isDigitChar, isPercentChar, isValid
         integer :: i
 
         ! analysis results
@@ -91,7 +90,7 @@ contains
 
         ! subprocess handling for error recovery
         integer :: exitStatus
-        character(len=32) :: a1Str, a2Str, eStr, cStr
+        character(len=32) :: a1Str, a2Str, eStr
         character(len=32) :: a2RawStr  ! raw "50%" style string for R script
         character(len=512) :: exePath
         character(len=2048) :: subprocCmd
@@ -158,26 +157,6 @@ contains
                 end if
             end do
 
-            ! prompt user for rounding mode
-            do while (.true.)
-                print*, "Rounding mode:"
-                print*, "  DOWN: round down"
-                print*, "  UP:   round up"
-                write(*, '(A)', advance='no') " Enter choice: "
-                read(*,*) mode
-                if (mode .eq. "DOWN" ) then
-                    c = .false.
-                    cStr = "0"
-                    exit
-                else if (mode .eq. "UP") then
-                    c = .true.
-                    cStr = "1"
-                    exit
-                else
-                    print*, "Invalid input! Please enter DOWN or UP"
-                end if
-            end do
-
             ! prompt user for sample size
             do while (.true.)
                 print*, "Sample size (percent of original sample size):"
@@ -221,8 +200,7 @@ contains
                             trim(outDir)//" "//               &
                             trim(adjustl(a1Str))//" "//       &
                             trim(adjustl(a2Str))//" "//       &
-                            trim(adjustl(eStr))//" "//        &
-                            trim(adjustl(cStr))
+                            trim(adjustl(eStr))//" "//
 
             call execute_command_line(trim(subprocCmd), wait=.true., exitstat=exitStatus)
 
@@ -246,10 +224,10 @@ contains
         end do
 
         ! generate combined plots from analysis CSVs
-        cmd = "Rscript SaxsEst/Plot.R "//  &
-              trim(outDir)//" "//                   &
-              trim(adjustl(eStr))//" "//            &
-              trim(adjustl(a2RawStr))
+        cmd = "Rscript SaxsEst/Plot.R "//   &
+                trim(outDir)//" "//         &
+                trim(adjustl(eStr))//" "//  &
+                trim(adjustl(a2RawStr))
         call execute_command_line(trim(cmd))
 
         print*, ""
@@ -271,7 +249,6 @@ contains
     !> @param[in] a1     Advice parameter for proportional weight estimation (must be >= nAtoms)
     !> @param[in] a2     Sample size as percentage of total atoms for stratified estimator
     !> @param[in] e      Epsilon accuracy parameter (must satisfy 0 < e < 1)
-    !> @param[in] c_int  Rounding mode: 0 = floor, 1 = ceiling
     !! Entry point for subprocess mode (--run-single).
     !! Runs analysis for a single molecule. Any ERROR STOP will terminate
     !! only this subprocess, not the parent process.
@@ -287,8 +264,7 @@ contains
     !! @param[in] a1     Advice parameter for weight estimation (must be >= nAtoms)
     !! @param[in] a2     Advice parameter for percent of atom count to sample (>= 0)
     !! @param[in] e      Epsilon accuracy parameter (must satisfy 0 < e < 1)
-    !! @param[in] c_int  Rounding mode: 0 = floor, 1 = ceiling
-    subroutine runSingle(name, outDir, a1, a2, e, c_int)
+    subroutine runSingle(name, outDir, a1, a2, e)
         character(len=*), intent(in) :: name
         character(len=*), intent(in) :: outDir
         real(c_double), intent(in) :: a1, a2, e
@@ -298,12 +274,8 @@ contains
         type(frequencies) :: freq
         type(atom), dimension(:), allocatable :: atoms
         real(c_double), allocatable :: qVals(:)
-        logical :: c
         character(len=:), allocatable :: path, path1, path2, path3, cmd
         type(estimate) :: debye, prop, strat
-
-        ! convert integer flag to logical
-        c = (c_int == 1)
 
         ! load atoms for this molecule
         include "mod_switches.inc"
@@ -333,7 +305,7 @@ contains
         ! run stratified estimate radial analysis
         ! run stratified estimate radial analysis
         print*, "Running stratEst..."
-        strat = stratEst(freq, qVals, e, c, a2)
+        strat = stratEst(freq, qVals, e, a2)
         path = path2
         call estWrap(strat, path)
         print*, "timing: ", strat%timing, "s"
@@ -341,7 +313,7 @@ contains
 
         ! run proportional radial analysis (approximate, frequency-weighted)
         print*, "Running propoEst..."
-        prop = propoEst(freq, atoms, qVals, a1, e, c)
+        prop = propoEst(freq, atoms, qVals, a1, e)
         path = path3
         call estWrap(prop, path)
         print*, "timing: ", prop%timing, "s"
@@ -369,7 +341,7 @@ end module Main
 !>   1. Interactive CLI (2 args): prompts user for parameters per molecule
 !>      Usage: SaxsEst <xyz_module_list> <output_directory>
 !>   2. Subprocess (7 args): runs single-molecule analysis
-!>      Usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e> <c>
+!>      Usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e>
 program SaxsEst
     use, intrinsic :: iso_c_binding
     use Main
@@ -381,7 +353,7 @@ program SaxsEst
     character(len=256) :: arg1, xyzModListPath, outDir
 
     ! subprocess mode variables
-    character(len=256) :: nameArg, outDirArg, a1Arg, a2Arg, eArg, cArg
+    character(len=256) :: nameArg, outDirArg, a1Arg, a2Arg, eArg
     real(c_double) :: a1Val, a2Val, eVal
     integer :: cVal
 
@@ -404,13 +376,13 @@ program SaxsEst
     ! this mode is invoked internally by the main CLI to isolate ERROR STOP failures.
     ! when a molecule's analysis hits an ERROR STOP, only the subprocess terminates,
     ! allowing the parent process to catch the failure and continue with the next molecule.
-    ! usage: SaxsEst --run-single <name> <outDir> <a> <e> <c>
+    ! usage: SaxsEst --run-single <name> <outDir> <a> <e>
     if (argNum >= 1) then
         call get_command_argument(1, arg1)
         if (trim(arg1) == '--run-single') then
             if (argNum /= 7) then
                 write(error_unit, '(A)') "ERROR: --run-single requires 6 arguments"
-                write(error_unit, '(A)') "Internal usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e> <c>"
+                write(error_unit, '(A)') "Internal usage: SaxsEst --run-single <name> <outDir> <a1> <a2> <e>"
                 stop 1
             end if
 
@@ -420,15 +392,13 @@ program SaxsEst
             call get_command_argument(4, a1Arg)
             call get_command_argument(5, a2Arg)
             call get_command_argument(6, eArg)
-            call get_command_argument(7, cArg)
 
             read(a1Arg, *) a1Val
             read(a2Arg, *) a2Val
             read(eArg, *)  eVal
-            read(cArg, *)  cVal
 
             ! run single molecule analysis and exit
-            call runSingle(trim(nameArg), trim(outDirArg), a1Val, a2Val, eVal, cVal)
+            call runSingle(trim(nameArg), trim(outDirArg), a1Val, a2Val, eVal)
             stop 0
         end if
     end if

@@ -70,14 +70,14 @@ function getMean(this, q) result(mean)
     mean = mean / real(this%nItems, kind=c_double)
 end function getMean
 
-!> @brief Returns a CMF for atom types with form factor magnitude <= the mean.
+!> @brief Returns a CDF for atom types with form factor magnitude <= the mean.
 !> @details Filters the frequency table into a "light" stratum containing atom
 !>          types whose form factor magnitude is at or below the mean. Used for
 !>          stratified sampling where the light stratum is sampled less aggressively.
 !> @param[in] this   The frequencies instance
 !> @param[in] q      The q value
-!> @return Allocated CMF for light stratum, with weights, cumulative probs, and coords
-function getLight(this, q) result(cmf____)
+!> @return Allocated CDF for light stratum, with weights, cumulative probs, and coords
+function getLight(this, q) result(cdf____)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance 
@@ -87,7 +87,7 @@ function getLight(this, q) result(cmf____)
     real(c_double),     intent(in)  :: q
     
     ! local variables
-    type(cmf),          allocatable :: cmf____
+    type(cdf),          allocatable :: cdf____
     type(coordPtrList), allocatable :: coords_(:), cTmp(:)
     complex(c_double),  allocatable :: weights(:), wTmp(:)
     integer,            allocatable :: freqs__(:), fTmp(:)
@@ -117,18 +117,18 @@ function getLight(this, q) result(cmf____)
     allocate(freqs__,    source = fTmp(1:j))
     allocate(coords_,    source = cTmp(1:j))
     allocate(atoms__,    source = aTmp(1:j))
-    allocate(cmf____,    source = buildCmf(weights, freqs__, coords_, atoms__))
+    allocate(cdf____,    source = buildCdf(weights, freqs__, coords_, atoms__))
 end function getLight
 
-!> @brief Returns a CMF for atom types with form factor magnitude > the mean.
+!> @brief Returns a CDF for atom types with form factor magnitude > the mean.
 !> @details Filters the frequency table into a "heavy" stratum containing atom
 !>          types whose form factor magnitude exceeds the mean. For proteins,
 !>          this stratum is typically very small (e.g., metals, heavier atoms).
 !>          Returns unallocated if no atom types exceed the mean.
 !> @param[in] this   The frequencies instance
 !> @param[in] q      The q value
-!> @return Allocated CMF for heavy stratum if heavy atoms exist, unallocated otherwise
-function getHeavy(this, q) result(cmf____)
+!> @return Allocated CDF for heavy stratum if heavy atoms exist, unallocated otherwise
+function getHeavy(this, q) result(cdf____)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance 
@@ -138,7 +138,7 @@ function getHeavy(this, q) result(cmf____)
     real(c_double),     intent(in)  :: q
     
     ! local variables
-    type(cmf),          allocatable :: cmf____
+    type(cdf),          allocatable :: cdf____
     type(coordPtrList), allocatable :: coords_(:), cTmp(:)
     complex(c_double),  allocatable :: weights(:), wTmp(:)
     integer,            allocatable :: freqs__(:), fTmp(:)
@@ -169,11 +169,11 @@ function getHeavy(this, q) result(cmf____)
         allocate(freqs__,   source = fTmp(1:j))
         allocate(coords_,   source = cTmp(1:j))
         allocate(atoms__,   source = aTmp(1:j))
-        allocate(cmf____,   source = buildCmf(weights, freqs__, coords_, atoms__))
+        allocate(cdf____,   source = buildCdf(weights, freqs__, coords_, atoms__))
     end if
 end function getHeavy
 
-!> @brief Constructs an ordered CMF from parallel arrays of weights, frequencies, and coordinates.
+!> @brief Constructs an ordered CDF from parallel arrays of weights, frequencies, and coordinates.
 !> @details Computes discrete probabilities from frequency counts, sorts all parallel
 !>          arrays by ascending weight magnitude, then builds cumulative probabilities.
 !>          Uses a bubble sort since the number of unique atom types is typically very small.
@@ -181,8 +181,8 @@ end function getHeavy
 !> @param[in] f Integer frequency counts per atom type
 !> @param[in] c Coordinate pointer lists per atom type
 !> @param[in] a Array of input atoms  
-!> @return CMF with sorted weights, cumulative probabilities, coordinates, and total population
-function buildCmf(w, f, c, a) result(cmf_)
+!> @return CDF with sorted weights, cumulative probabilities, coordinates, and total population
+function buildCdf(w, f, c, a) result(cdf_)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
@@ -197,7 +197,7 @@ function buildCmf(w, f, c, a) result(cmf_)
     integer,            allocatable :: frequencies_(:)
     real(c_double),     allocatable :: probs(:), culmProbs(:)
     real(c_double),     parameter   :: tolerance = 1.0e-10_c_double
-    type(cmf)                       :: cmf_
+    type(cdf)                       :: cdf_
     complex(c_double)               :: wTmp
     real(c_double)                  :: pTmp, sizeReal, currPmf
     type(coordPtrList)              :: cTmp
@@ -223,7 +223,7 @@ function buildCmf(w, f, c, a) result(cmf_)
     end do
 
     ! probabilities and weights are parallel but unordered
-    ! cmf needs to be ordered from smallest -> largest magnitude
+    ! cdf needs to be ordered from smallest -> largest magnitude
     do i = 1, size(weights)
         do j = 2, size(weights)
             if (abs(weights(j-1)) - abs(weights(j)) > tolerance) then 
@@ -243,7 +243,7 @@ function buildCmf(w, f, c, a) result(cmf_)
         end do
     end do
 
-    ! cmf is probability that a randomly selected value is leq
+    ! cdf is probability that a randomly selected value is leq
     ! than a given value. pmf gives us the probability that it is 
     ! equal to a given value
     culmProbs(1) = probs(1)
@@ -252,10 +252,10 @@ function buildCmf(w, f, c, a) result(cmf_)
     end do 
     culmProbs(size(culmProbs)) = 1.0_c_double
 
-    allocate(cmf_%weights,   source = weights)
-    allocate(cmf_%atoms,     source = atoms)
-    allocate(cmf_%culmProbs, source = culmProbs)
-    allocate(cmf_%coords,    source = coordsList)
-    cmf_%population = sum(frequencies_)
+    allocate(cdf_%weights,   source = weights)
+    allocate(cdf_%atoms,     source = atoms)
+    allocate(cdf_%culmProbs, source = culmProbs)
+    allocate(cdf_%coords,    source = coordsList)
+    cdf_%population = sum(frequencies_)
     
-end function buildCmf
+end function buildCdf

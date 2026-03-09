@@ -176,7 +176,7 @@
     -   renaming of directories to name of module
     -   various other code quality improvements
 -   readding harmonic estimator
--   added functions for pmf/cmf/survival functions
+-   added functions for pmf/cdf/survival functions
 
 ## 2026-02-24
 
@@ -236,4 +236,57 @@
  - coordinates are lost when building frequency table,
    implementing dynamic pointer array to track it
  - stratified sampling *should* randomly sample atom coordinates from a randomly sampled weight class 
- - need to compile/fix bugs  
+ - need to compile/fix bugs
+ 
+# 2026-03-05
+- stratEst works extremley well, looking into optimal epsilon values
+- moving forwards, will only be using celing for prop est, floor for strat est
+    - propEst tends to underestimate and strat est overestimates. won't do much but 
+    will at least make it slighlty more accurate.
+
+# 2026-03-08
+    - refactoring protein runs and adding fibrous proteins
+        - making sure we have proper documentaion!
+        - pdb_2_xyz does NOT work - need to remove!
+    - arginase_1.xyz
+        - Crystal structure of human arginase I at 1.29 A resolution and exploration of inhibition in immune response
+    - lg3_domain_endorepellin.xyz
+        - Laminin G like domain 3 from human perlecan
+    - selenow.xyz
+        - Crystal structure of Selenoprotein W-related protein from Vibrio cholerae. Northeast Structural Genomics target VcR75
+    - rubisco.xyz
+        - Crystal Structure of Activated Ribulose-1,5-bisphosphate Carboxylase/oxygenase (Rubisco) from Green alga, Chlamydomonas reinhardtii Complexed with 2-Carboxyarabinitol-1,5-bisphosphate (2-CABP)
+    - plastocyanin.xyz
+        - The 1.00 Angstrom crystal structure of oxidized (CuII) poplar plastocyanin A at pH 8.0
+    - 3_phosphogylcerate_dehydrogenase.xyz
+        - Crystal structure of human 3-phosphoglycerate dehydrogenase: 2g76
+    - myosin_2_10s.xyz
+        - 10S myosin II (smooth muscle)
+    - glutathione_peroxidase.xyz
+        - THE REFINED STRUCTURE OF THE SELENOENZYME GLUTATHIONE PEROXIDASE AT 0.2-NM RESOLUTION
+    - elf2_nucleosome_complex.xyz
+        - structure of two human ELF2 transcription factors in complex with a nucleosome
+    - antiterminator_hairpin.xyz
+        - Solution structure of a shortened antiterminator hairpin from a Mg2+ riboswitch
+    - parallel_stranded_guanine_tetraplex.xyz
+        - THE CRYSTAL STRUCTURE OF A PARALLEL-STRANDED PARALLEL-STRANDED GUANINE TETRAPLEX AT 0.95 ANGSTROM RESOLUTION
+    - fibrogen.xyz
+        - THE CRYSTAL STRUCTURE OF MODIFIED BOVINE FIBRINOGEN (AT ~4 ANGSTROM RESOLUTION) 
+    - bacteriorhodopsin.xyz
+        - Crystal structure of the mutant bacteriorhodopsin pressurized with argon
+    - sialic_acid_synthase.xyz
+        - Crystal structure of sialic acid synthase (NeuB) in complex with Mn2+ and Malate from Neisseria meningitidis 
+    - ryr1.xyz
+        - Cryo-EM structure of rabbit RyR1 in the presence of Mg2+ and AMP-PCP in nanodisc
+    - eacdcl_pore.xyz
+        - Cryo-EM structure of the EaCDCL pore 
+    - collagen_like_peptide.xyz
+        - CRYSTAL AND MOLECULAR STRUCTURE OF A COLLAGEN-LIKE PEPTIDE AT 1.9 ANGSTROM RESOLUTION
+    - gb1_v29sem.xyz
+        - Selenomethionine variant (V29SeM) of protein GB1
+    - alpha_gdp_alf4.xyz
+        - GTPASE MECHANISM OF GPROTEINS FROM THE 1.7-ANGSTROM CRYSTAL STRUCTURE OF TRANSDUCIN ALPHA-GDP-ALF4- 
+    - f_m197_h.xyz
+        - Room temperature structure of the Rhodobacter Sphaeroides Photosynthetic Reaction Center F(M197)H mutant at 120 MPa helium gas pressure in a sapphire capillary 
+    - stripak_complex.xyz
+        - Cryo-EM structure of STRIPAK complex

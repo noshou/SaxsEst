@@ -48,11 +48,8 @@ function newIntensity(s, f, r, q, i) result(e)
 end function newIntensity
 
 !> Cardinal sine function: sinc(x) = sin(x)/x
-!! 
 !! Returns 1 for x ≈ 0 to avoid division by zero
-!!
 !! @param[in] x  Input value
-!!
 !! @return sinc(x), with limit value 1 as x→0
 pure function sinc(x) result(res)
     real(c_double), intent(in) :: x

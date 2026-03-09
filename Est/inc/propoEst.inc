@@ -1,10 +1,7 @@
 !! Calculates an estimated weight for the propagator based on a k-d tree structure
 !! containing weights and their frequencies. The estimation uses a sample size
 !! determined by the accuracy parameter epsilon and scaling factor a.
-!!
-!! The sample size is calculated as:
-!! - If ceiling mode: s = ⌈√(24*a)/e⌉ + 1
-!! - If floor mode:   s = ⌊√(24*a)/e⌋ + 1
+!! The sample size is calculated as: s = ⌈√(24*a)/e⌉ + 1
 !!
 !! The weight estimate is computed using the formula:
 !! \f$ \hat{w} = \overline{\frac{C(s,2)}{\sum_{i=1}^{n} \frac{C(f_i,2)}{w_i}}} \f$
@@ -19,15 +16,13 @@
 !! @param[in] q      Q value for form factor calculation
 !! @param[in] a      Advice for scaling factor for sample size calculation
 !! @param[in] e      Epsilon, accuracy parameter (must satisfy 0 < e < 1)
-!! @param[in] c      Ceiling flag: if .true. use ceiling, if .false. use floor
 !!
 !! @return wEst    Complex conjugate of the estimated propagator weight
-function propEstCalc(k, q, a, e, c) result(wEst)
+function propEstCalc(k, q, a, e) result(wEst)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     type(frequencies),  intent(in) :: k
     real(c_double),     intent(in) :: a, q,  e  
-    logical, intent(in)            :: c        
     complex(c_double)              :: wEst, tot    
     complex(c_double), allocatable :: w(:)
     integer, allocatable           :: f(:)
@@ -37,12 +32,8 @@ function propEstCalc(k, q, a, e, c) result(wEst)
     ! Allocate space for list of weights and frequencies
     allocate(w, source=k%weights(q)); allocate(f, source=k%freqs())
 
-    ! Calculate sample size based on rounding mode
-    if (c) then
-        s = ceiling(sqrt(24.0_c_double*a)/e) + 1
-    else
-        s = floor(sqrt(24.0_c_double*a)/e) + 1
-    end if 
+    ! Calculate sample size
+    s = ceiling(sqrt(24.0_c_double*a)/e) + 1
     
     ! Calculate binomial coefficient: C(s,2) = s * (s-1) / 2
     sChoose2 = s * (s - 1) / 2
@@ -84,19 +75,17 @@ end function propEstCalc
 !! @param[in] qVals    Array of Q values at which to calculate intensity
 !! @param[in] a         Advice parameter for weight estimation (should be >= number of nodes)
 !! @param[in] e         Epsilon parameter for accuracy control (must satisfy 0 < e < 1)
-!! @param[in] c         Rounding mode flag: .true. for ceiling, .false. for floor
 !!
 !! @return              intensityEstimate type containing:
 !!                      - Execution time in nanoseconds
 !!                      - Q values array
 !!                      - Calculated intensity values I(Q)
-function propoEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
+function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
     
     ! input variables
     type(frequencies),  intent(in)  :: k
     real(c_double),     intent(in)  :: a 
     real(c_double),     intent(in)  :: e  
-    logical,            intent(in)  :: c         
     type(atom),         intent(in)  :: atoms(:)
     real(c_double),     intent(in)  :: qVals(:)
 
@@ -115,19 +104,15 @@ function propoEst(k, atoms, qVals, a, e, c) result(intensityEstimate)
     ! initialize variables
     nAtoms = size(atoms)
     nQVals = size(qVals)
+    norm   = nAtoms * (ceiling(sqrt(24.0_c_double*a)/e) + 1)
     allocate(intensity(nQVals))
     
     do qIJ = 1, nQVals
         qVal = qVals(qIJ)
         
         ! get estimate of weight
-        wEst = propEstCalc(k, qVal, a, e, c)
+        wEst = propEstCalc(k, qVal, a, e)
         est = 0.0_c_double
-        if (c) then
-            norm = nAtoms * (ceiling(sqrt(24.0_c_double*a)/e) + 1)
-        else
-            norm = nAtoms * (floor(sqrt(24.0_c_double*a)/e) + 1)
-        end if 
 
         do i = 1, nAtoms
             atomI = atoms(i)

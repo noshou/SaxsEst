@@ -3,15 +3,9 @@ This project is being **activley developed**! It is not fully validated yet, and
 The automated analysis will change over time and will eventually be removed or completley refactored. 
 
 The software is currently beign validated on:
-1. Chignolin (135 atoms)
-2. CSGC (772 atoms)
-3. GPX (3,111 atoms)
-4. KdelR1 (1,243 atoms)
-5. PHGDH (3,972 atoms)
-6. Plastocyanin (827 atoms)
-7. Strip1-iso2 (6,000 atoms)
-   
-# SaxsEst
+**WIP**
+
+# SaxsEst    Plastocyanin
 
 A high-performance Fortran-based tool for estimating Small Angle X-ray Scattering (SAXS) intensities from molecular structures, 
 implementing and adapting algorithms from [Better Sum Estimation via Weighted Sampling](https://arxiv.org/abs/2110.14948v1) 
@@ -91,8 +85,7 @@ Run single-molecule analysis through the CLI:
 
 The CLI will prompt for:
 - **Advice parameter (a)**: Controls estimation parameters
-- **Epsilon (ε)**: Precision/approximation parameter (0.01 - 0.9)
-- **Rounding Mode**: DOWN or other rounding strategies
+- **Epsilon (ε)**: Precision/approximation parameter
 
 ### Output
 

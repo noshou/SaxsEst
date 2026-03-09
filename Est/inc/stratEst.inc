@@ -94,20 +94,18 @@ end function calcStratumMean
 !>          their corresponding coordinate pointers.
 !> @param k  Frequency distribution of atom types in the molecule
 !> @param e  Epsilon; sampling precision parameter, must be 0 < e < 1
-!> @param c  Ceiling flag; if .true. use ceiling for sample sizes, else floor
 !> @param a  Sampling proportion factor (scales with k%nItems)
 !> @param q  Single scattering vector magnitude (Å⁻¹) used for stratification
 !> @return   stratEstContainer with sampled atoms and coordinate pointers
-function stratEstCalc(k, e, c, a, q) result(es)
+function stratEstCalc(k, e, a, q) result(es)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies), intent(in)  :: k
     real(c_double),    intent(in)  :: e, a, q
-    logical,           intent(in)  :: c
     
     ! local variables
-    type(cmf),         allocatable :: heavyCmf, lightCmf
+    type(cdf),         allocatable :: heavyCdf, lightCdf
     complex(c_double), allocatable :: heavy(:), light(:)
     type(atom),        allocatable :: sampleAtoms(:)
     type(coordPtr),    allocatable :: sampleCoords(:) 
@@ -118,36 +116,30 @@ function stratEstCalc(k, e, c, a, q) result(es)
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! allocate space for sampled size
-    if (c) then 
-        totalSamples = ceiling(a * k%nItems)
-    else 
-        totalSamples = floor(a * k%nItems)
-    end if
+    totalSamples = floor(a * k%nItems)
+    
+    ! allocate arrays
     allocate(sampleAtoms(totalSamples))
     allocate(sampleCoords(totalSamples))
 
     ! sample total of a atoms
-    heavyCmf = k%heavy(q)
-    if (allocated(heavyCmf)) then
-        allocate(heavy, source=heavyCmf%weights)
+    heavyCdf = k%heavy(q)
+    if (allocated(heavyCdf)) then
+        allocate(heavy, source=heavyCdf%weights)
         meanHeavy = calcStratumMean(heavy)
 
         ! light strata is <= mean
-        lightCmf = k%light(q)
-        allocate(light, source=lightCmf%weights)
+        lightCdf = k%light(q)
+        allocate(light, source=lightCdf%weights)
         meanLight = calcStratumMean(light) 
 
         ! calculate ratio of heavy vs light mean (biased towards heavy)
         ratio =  (meanHeavy) / (meanHeavy + meanLight)
-!                 * (e * real(lightCmf%population))      &
-!                 / (e * real(lightCmf%population + heavyCmf%population))
+!                 * (e * real(lightCdf%population))      &
+!                 / (e * real(lightCdf%population + heavyCdf%population))
         
         ! get number of light and heavy samples
-        if (c) then 
-            heavySamples = ceiling(ratio * totalSamples)
-        else 
-            heavySamples = floor(ratio * a)
-        end if
+        heavySamples = floor(ratio * a)
         lightSamples = totalSamples - heavySamples
 
         ! sample 
@@ -155,37 +147,37 @@ function stratEstCalc(k, e, c, a, q) result(es)
         call sampleStratum(           &
                 tolerance,            &
                 heavySamples,         & 
-                heavyCmf%atoms,       &
+                heavyCdf%atoms,       &
                 sampleAtoms,          & 
-                heavyCmf%coords,      & 
+                heavyCdf%coords,      & 
                 sampleCoords,         &
-                heavyCmf%culmProbs,   & 
+                heavyCdf%culmProbs,   & 
                 j                     &
             )
         call sampleStratum(           &
                 tolerance,            &
                 lightSamples,         &
-                lightCmf%atoms,       &
+                lightCdf%atoms,       &
                 sampleAtoms,          &
-                lightCmf%coords,      &
+                lightCdf%coords,      &
                 sampleCoords,         &
-                lightCmf%culmProbs,   &
+                lightCdf%culmProbs,   &
                 j                     &
             )
 
     ! special case; molecule is monatomic => weights are uniform
     ! however we still have to sample our coordinates!
     else 
-        lightCmf = k%light(q)
+        lightCdf = k%light(q)
         j = 0
         call sampleStratum(           &
                 tolerance,            &
                 totalSamples,         &
-                lightCmf%atoms,       &
+                lightCdf%atoms,       &
                 sampleAtoms,          &
-                lightCmf%coords,      &
+                lightCdf%coords,      &
                 sampleCoords,         &
-                lightCmf%culmProbs,   &
+                lightCdf%culmProbs,   &
                 j                     &
             )
     end if 
@@ -201,17 +193,15 @@ end function stratEstCalc
 !> @param k  Frequency distribution of atom types in the molecule
 !> @param q  Array of scattering vector magnitudes (Å⁻¹)
 !> @param e  Epsilon; sampling precision parameter, must be 0 < e < 1
-!> @param c  Ceiling flag; if .true. use ceiling for sample sizes, else floor
 !> @param a  Sampling proportion factor
 !> @return   estimate type containing I(Q) values and timing info
-function stratEst(k, q, e, c, a) result(intensityEstimate)
+function stratEst(k, q, e, a) result(intensityEstimate)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies), intent(in)   :: k
     real(c_double),    intent(in)   :: q(:)
     real(c_double),    intent(in)   :: e 
-    logical,           intent(in)   :: c
     real(c_double),    intent(in)   :: a
 
     ! local variables
@@ -231,7 +221,7 @@ function stratEst(k, q, e, c, a) result(intensityEstimate)
     call system_clock(start, rate)
     
     ! sample once using q(1) for stratification
-    es = stratEstCalc(k, e, c, a, q(1))
+    es = stratEstCalc(k, e, a, q(1))
     allocate(sampledCoords, source=es%sampledCoords)
     allocate(sampledAtoms,  source=es%sampledAtoms)
     sampleSize = size(sampledAtoms)
