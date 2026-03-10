@@ -26,42 +26,51 @@ suppressPackageStartupMessages({
   library(tibble)
   library(stringr)
   library(ggplot2)
+  library(tools)
 })
 
 main <- function() {
   args <- commandArgs(trailingOnly = TRUE)
-  if (length(args) != 5) {
-    stop("Usage: CsvCombine.R output_dir molecule_name <debye>.csv <strat>.csv <prop>.csv")
+  if (length(args) < 5) {
+    stop("Usage: CsvCombine.R output_dir molecule_name <debye>.csv <other files>.csv")
   }
 
   # extract name of molecule, output dir
   mol <- args[2]
   dir <- args[1]
 
-  # load csv data into data frames
+
+  # load csv files
   dfDeby <- read_csv(args[3], show_col_types = FALSE)
-  dfStrt <- read_csv(args[4], show_col_types = FALSE)
-  dfProp <- read_csv(args[5], show_col_types = FALSE)
+  listDf <- list()
+  listName <- list()
+  for (i in 4:length(args)) {
+    listDf   <- append(listDf,   list(read_csv(args[i], show_col_types = FALSE)))
+    listName <- append(listName, tools::file_path_sans_ext(args[i]))
+  }
 
   # combine into single df
-  df <- tibble(
+  dfData <- tibble(
     q_inverse_angstroms = dfDeby$q_inv_angstrom,
-    intensity_debye     = dfDeby$intensity,
-    intensity_strat     = dfStrt$intensity,
-    intensity_prop      = dfProp$intensity,
-    diff_strat_debye    = dfDeby$intensity - dfStrt$intensity,
-    diff_prop_debye     = dfDeby$intensity - dfProp$intensity,
-    diff_prop_strat     = dfProp$intensity - dfStrt$intensity
+    debye               = dfDeby$intensity,
   )
+  for (i in seq_along(listDf)) {
+    dfData %>% add_column( 
+      !!listName[[i]] := listDf[[i]][[2]], 
+      !!paste0(listName[[i]], "_diffDebye") := dfData$debye - listDf[[i]][[2]],
+      .after = "debye"
+    )
+  }
+
 
   path <- file.path(dir, paste0("analysis_", mol, ".csv"))
-  write_csv(df, path)
+  write_csv(dfData, path)
   cat("raw analysis saved at:", path, "\n")
 
   # cleanup individual CSVs
-  unlink(args[3])
-  unlink(args[4])
-  unlink(args[5])
+  for (i in 3:length(args)) {
+    unlink(args[i])
+  }
 }
 
 main()

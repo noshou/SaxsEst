@@ -121,17 +121,6 @@ CSV_API_OBJ  = $(OBJ_DIR)/CsvInterface.o
 CSV_LIB      = $(LIB_DIR)/CsvInterface.a
 
 # ============================================================================
-# PDB_TO_XYZ EXECUTABLE CONFIGURATION
-# Standalone converter: reads a PDB file and writes .xyz for use by AtomXYZ.
-# ============================================================================
-PDB_DIR      = pdb_to_xyz
-PDB_SRC_DIR  = $(PDB_DIR)
-
-PDB_SRC      = $(PDB_SRC_DIR)/pdb_to_xyz.f90
-PDB_OBJ      = $(OBJ_DIR)/pdb_to_xyz.o
-PDB_EXE      = $(EXE_DIR)/pdb_to_xyz
-
-# ============================================================================
 # MAIN EXECUTABLE CONFIGURATION
 # ============================================================================
 MAIN_DIR 	 = SaxsEst
@@ -145,7 +134,7 @@ MAIN_MOD     = $(MOD_DIR)/MaSaxsEstin.mod
         parse-f0 parse-f1_f2 parse-xyz check-ocaml check-deps-csv \
         check-deps-yojson check-deps-str help clean-formfacts \
         clean-objects parse-xyz tabulate-xyz Est \
-        postamble Freq compile-pdb-2-xyz make-outdir \
+        postamble Freq make-outdir \
         generate-xyz-includes CsvInterface help
 
 # ============================================================================
@@ -154,7 +143,7 @@ MAIN_MOD     = $(MOD_DIR)/MaSaxsEstin.mod
 # ============================================================================
 all: all1 all2
 all1: build-dirs FormFact AtomXYZ Freq Est 
-all2: $(PDB_TARGET) CsvInterface main clean-objects postamble
+all2: CsvInterface main clean-objects postamble
 
 # ============================================================================
 # HELP TARGET
@@ -175,7 +164,6 @@ help:
 	@echo "  CsvInterface     - Build CsvInterface library only"
 ifdef PDB_TARGET
 	@echo "  compile-pdb-2-xyz- Build pdb_to_xyz converter"
-	@echo "  pdb-2-xyz        - Run pdb_to_xyz converter (prompts for filename)"
 endif
 	@echo ""
 	@echo "Parsing targets:"
@@ -377,26 +365,6 @@ define check_and_install
 		fi ; \
 	fi
 endef
-
-# ============================================================================
-# PDB TO XYZ FILE CONVERTER
-# Optional utility; only built when PDB_TARGET is set by the caller.
-# ============================================================================
-compile-pdb-2-xyz: $(PDB_EXE)
-
-$(PDB_OBJ): $(PDB_SRC)
-	@$(FC) $(CFLAGS) -J$(MOD_DIR) -c $< -o $@
-
-$(PDB_EXE): $(PDB_OBJ)
-	@$(FC) $(PDB_OBJ) -o $(PDB_EXE)
-
-# interactive helper: prompts for a PDB file, converts it, and moves the
-# resulting .xyz into the AtomXYZ data directory for the next build
-pdb-2-xyz:
-	@read -p "Enter xyz filename: " file; \
-	./$(PDB_EXE) $$file; \
-	mv *.xyz $(AXY_DATA_DIR)
-
 
 # ============================================================================
 # POSTAMBLE

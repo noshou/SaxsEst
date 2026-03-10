@@ -248,45 +248,61 @@
     - refactoring protein runs and adding fibrous proteins
         - making sure we have proper documentaion!
         - pdb_2_xyz does NOT work - need to remove!
-    - arginase_1.xyz
+    - ArginaseI.xyz
         - Crystal structure of human arginase I at 1.29 A resolution and exploration of inhibition in immune response
-    - lg3_domain_endorepellin.xyz
+    - Lg3Endorepellin.xyz
         - Laminin G like domain 3 from human perlecan
-    - selenow.xyz
+    - Selenow.xyz
         - Crystal structure of Selenoprotein W-related protein from Vibrio cholerae. Northeast Structural Genomics target VcR75
-    - rubisco.xyz
+    - RuBisCo.xyz
         - Crystal Structure of Activated Ribulose-1,5-bisphosphate Carboxylase/oxygenase (Rubisco) from Green alga, Chlamydomonas reinhardtii Complexed with 2-Carboxyarabinitol-1,5-bisphosphate (2-CABP)
-    - plastocyanin.xyz
+        - assembly 1
+    - Plastocyanin.xyz
         - The 1.00 Angstrom crystal structure of oxidized (CuII) poplar plastocyanin A at pH 8.0
-    - 3_phosphogylcerate_dehydrogenase.xyz
-        - Crystal structure of human 3-phosphoglycerate dehydrogenase: 2g76
-    - myosin_2_10s.xyz
+    - PHGDH.xyz
+        - Crystal structure of human 3-phosphoglycerate dehydrogenase
+    - MyosinII10s.xyz
         - 10S myosin II (smooth muscle)
-    - glutathione_peroxidase.xyz
+    - GPx.xyz
         - THE REFINED STRUCTURE OF THE SELENOENZYME GLUTATHIONE PEROXIDASE AT 0.2-NM RESOLUTION
-    - elf2_nucleosome_complex.xyz
+    - Elf2Nucleosome.xyz
         - structure of two human ELF2 transcription factors in complex with a nucleosome
-    - antiterminator_hairpin.xyz
+    - AntiterminatorHairpin.xyz
         - Solution structure of a shortened antiterminator hairpin from a Mg2+ riboswitch
-    - parallel_stranded_guanine_tetraplex.xyz
+    - PsGQuadraplex.xyz
         - THE CRYSTAL STRUCTURE OF A PARALLEL-STRANDED PARALLEL-STRANDED GUANINE TETRAPLEX AT 0.95 ANGSTROM RESOLUTION
-    - fibrogen.xyz
+    - Fibrogen.xyz
         - THE CRYSTAL STRUCTURE OF MODIFIED BOVINE FIBRINOGEN (AT ~4 ANGSTROM RESOLUTION) 
-    - bacteriorhodopsin.xyz
+    - BacteriorhodopsinArEnv.xyz
         - Crystal structure of the mutant bacteriorhodopsin pressurized with argon
-    - sialic_acid_synthase.xyz
+    - NeuB.xyz
         - Crystal structure of sialic acid synthase (NeuB) in complex with Mn2+ and Malate from Neisseria meningitidis 
-    - ryr1.xyz
-        - Cryo-EM structure of rabbit RyR1 in the presence of Mg2+ and AMP-PCP in nanodisc
-    - eacdcl_pore.xyz
-        - Cryo-EM structure of the EaCDCL pore 
-    - collagen_like_peptide.xyz
+    - Aerolysin.xyz
+        - Cryo-EM structure of aerolysin pore in LMNG micelle  
+    - CollagenLikePeptide.xyz
         - CRYSTAL AND MOLECULAR STRUCTURE OF A COLLAGEN-LIKE PEPTIDE AT 1.9 ANGSTROM RESOLUTION
-    - gb1_v29sem.xyz
+    - Gb1v29Sem.xyz
         - Selenomethionine variant (V29SeM) of protein GB1
-    - alpha_gdp_alf4.xyz
-        - GTPASE MECHANISM OF GPROTEINS FROM THE 1.7-ANGSTROM CRYSTAL STRUCTURE OF TRANSDUCIN ALPHA-GDP-ALF4- 
-    - f_m197_h.xyz
+    - FM197H.xyz
         - Room temperature structure of the Rhodobacter Sphaeroides Photosynthetic Reaction Center F(M197)H mutant at 120 MPa helium gas pressure in a sapphire capillary 
-    - stripak_complex.xyz
+    - Stripak.xyz
         - Cryo-EM structure of STRIPAK complex
+    - XyloseIsomerase.xyz
+        - MECHANISM FOR ALDOSE-KETOSE INTERCONVERSION BY D-XYLOSE ISOMERASE INVOLVING RING OPENING FOLLOWED BY A 1,2-HYDRIDE SHIFT
+    - RhccCarborane.xyz
+        - RHCC in complex with o-carborane 
+    - MutSADPBeF3DNA.xyz
+        - Crystal Structure of the MutS-ADPBeF3-DNA complex
+    - CytosolAminopeptidase.xyz
+        - 1.8 Angstrom Resolution Crystal Structure of Cytosol Aminopeptidase from Coxiella burnetii 
+    - TetToxHcGT1b.xyz
+        - THE HC FRAGMENT OF TETANUS TOXIN COMPLEXED WITH AN ANALOGUE OF ITS GANGLIOSIDE RECEPTOR GT1B 
+    - VATaseLiRotor.xyz
+        - Crystal structure of Lithium bound rotor ring of the V-ATPase from Enterococcus hirae 
+# 2026-03-09
+    - removing interactive CLI, will remove automated run
+    - since pdb-2-xyz is borked, used https://sciencecodons.com/tools/pdb-to-xyz-converter/ (citation included)
+    - protein file naming conventions
+        - cannot start with number
+        - only alphanumeric characters
+    - accidentally selected multiple assembles (same structure, diff lattice positions); fixed that error
