@@ -104,22 +104,22 @@ module Main
 
                 ! define output file paths for potential cleanup
                 fp1  = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-                fp2  = trim(outDir)//"/"//"strat(s=0.50)_"//trim(name)//".csv"
-                fp3  = trim(outDir)//"/"//"strat(s=0.45)_"//trim(name)//".csv"
-                fp4  = trim(outDir)//"/"//"strat(s=0.40)_"//trim(name)//".csv"
-                fp5  = trim(outDir)//"/"//"strat(s=0.35)_"//trim(name)//".csv"
-                fp6  = trim(outDir)//"/"//"strat(s=0.30)_"//trim(name)//".csv"
-                fp7  = trim(outDir)//"/"//"strat(s=0.25)_"//trim(name)//".csv"
-                fp8  = trim(outDir)//"/"//"strat(s=0.20)_"//trim(name)//".csv"
-                fp9  = trim(outDir)//"/"//"strat(s=0.15)_"//trim(name)//".csv"
-                fp10 = trim(outDir)//"/"//"strat(s=0.10)_"//trim(name)//".csv"
-                fp11 = trim(outDir)//"/"//"strat(s=0.05)_"//trim(name)//".csv"
-                fp12 = trim(outDir)//"/"//"propo(e=0.450)_"//trim(name)//".csv"
-                fp13 = trim(outDir)//"/"//"propo(e=0.420)_"//trim(name)//".csv"
-                fp14 = trim(outDir)//"/"//"propo(e=0.415)_"//trim(name)//".csv"
-                fp15 = trim(outDir)//"/"//"propo(e=0.410)_"//trim(name)//".csv"
-                fp16 = trim(outDir)//"/"//"propo(e=0.405)_"//trim(name)//".csv"
-                fp17 = trim(outDir)//"/"//"propo(e=0.400)_"//trim(name)//".csv"
+                fp2  = trim(outDir)//"/"//"strat{s=0.50}_"//trim(name)//".csv"
+                fp3  = trim(outDir)//"/"//"strat{s=0.45}_"//trim(name)//".csv"
+                fp4  = trim(outDir)//"/"//"strat{s=0.40}_"//trim(name)//".csv"
+                fp5  = trim(outDir)//"/"//"strat{s=0.35}_"//trim(name)//".csv"
+                fp6  = trim(outDir)//"/"//"strat{s=0.30}_"//trim(name)//".csv"
+                fp7  = trim(outDir)//"/"//"strat{s=0.25}_"//trim(name)//".csv"
+                fp8  = trim(outDir)//"/"//"strat{s=0.20}_"//trim(name)//".csv"
+                fp9  = trim(outDir)//"/"//"strat{s=0.15}_"//trim(name)//".csv"
+                fp10 = trim(outDir)//"/"//"propo{e=0.450}_"//trim(name)//".csv"
+                fp11 = trim(outDir)//"/"//"propo{e=0.440}_"//trim(name)//".csv"
+                fp12 = trim(outDir)//"/"//"propo{e=0.430}_"//trim(name)//".csv"
+                fp13 = trim(outDir)//"/"//"propo{e=0.420}_"//trim(name)//".csv"
+                fp14 = trim(outDir)//"/"//"propo{e=0.410}_"//trim(name)//".csv"
+                fp15 = trim(outDir)//"/"//"propo{e=0.400}_"//trim(name)//".csv"
+                fp16 = trim(outDir)//"/"//"propo{e=0.390}_"//trim(name)//".csv"
+                fp17 = trim(outDir)//"/"//"propo{e=0.380}_"//trim(name)//".csv"
                 
                 ! build subprocess command (values hardcoded in runSingle)
                 subprocCmd =    trim(exePath)//" --run-single "// &
@@ -197,15 +197,14 @@ module Main
             type(estimate) :: debye, strat, prop
 
             ! parameter arrays
-            real(c_double) :: eVals(6), sVals(10)
+            real(c_double) :: eVals(8), sVals(8)
             integer :: i
             character(len=32) :: paramStr
 
-            eVals = [0.450_c_double, 0.420_c_double, 0.415_c_double, &
-                    0.410_c_double, 0.405_c_double, 0.400_c_double]
+            eVals = [0.450_c_double, 0.440_c_double, 0.430_c_double, 0.420_c_double,  &
+                    0.410_c_double, 0.400_c_double, 0.390_c_double, 0.380_c_double]
             sVals = [0.50_c_double, 0.45_c_double, 0.40_c_double, 0.35_c_double, &
-                    0.30_c_double, 0.25_c_double, 0.20_c_double, 0.15_c_double, &
-                    0.10_c_double, 0.05_c_double]
+                    0.30_c_double, 0.25_c_double, 0.20_c_double, 0.15_c_double]
 
             ! load atoms for this molecule
             include "mod_switches.inc"
@@ -228,7 +227,7 @@ module Main
             ! ── Stratified (one run per s value) ─────────────────────
             do i = 1, size(sVals)
                 write(paramStr, '(F4.2)') sVals(i)
-                pathEst = trim(outDir)//"/"//"strat(s="//trim(adjustl(paramStr))//")_"//trim(name)//".csv"
+                pathEst = trim(outDir)//"/"//"strat{s="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
 
                 print*, ""
                 print*, "Running stratEst  s=", trim(adjustl(paramStr)), "..."
@@ -240,11 +239,11 @@ module Main
             ! ── Proportional (one run per e value) ───────────────────
             do i = 1, size(eVals)
                 write(paramStr, '(F5.3)') eVals(i)
-                pathEst = trim(outDir)//"/"//"propo(e="//trim(adjustl(paramStr))//")_"//trim(name)//".csv"
+                pathEst = trim(outDir)//"/"//"propo{e="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
 
                 print*, ""
-                print*, "Running propoEst  e=", trim(adjustl(paramStr)), "..."
-                prop = propoEst(freq, atoms, qVals, eVals(i))
+                print*, "Running propoEst  ε=", trim(adjustl(paramStr)), "; ñ=", size(atoms), "..."
+                prop = propoEst(freq, atoms, qVals, real(size(atoms),kind=c_double), eVals(i))
                 call estWrap(prop, pathEst)
                 print*, "timing: ", prop%timing, "s"
             end do
@@ -256,11 +255,11 @@ module Main
 
             do i = 1, size(sVals)
                 write(paramStr, '(F4.2)') sVals(i)
-                cmd = cmd//" "//trim(outDir)//"/"//"strat(s="//trim(adjustl(paramStr))//")_"//trim(name)//".csv"
+                cmd = cmd//" "//trim(outDir)//"/"//"strat{s="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
             end do
             do i = 1, size(eVals)
                 write(paramStr, '(F5.3)') eVals(i)
-                cmd = cmd//" "//trim(outDir)//"/"//"propo(e="//trim(adjustl(paramStr))//")_"//trim(name)//".csv"
+                cmd = cmd//" "//trim(outDir)//"/"//"propo{e="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
             end do
 
             print*, ""

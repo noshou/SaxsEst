@@ -23,12 +23,13 @@ module F0Factor
     !---------------------------------------------------------------------------
 
     !> Number of elements in lookup table
-    integer, parameter :: nElements = 24
+    integer, parameter :: nElements = 25
     !> Number of Q values in lookup table
     integer, parameter :: nQValues = 26
 
     !> Element/ion symbols (lowercase)
-    character(len=4), parameter :: elements(24) = [ &
+    character(len=4), parameter :: elements(25) = [ &
+            'ni  ', &
             'mg2+', &
             'se  ', &
             'cu2+', &
@@ -87,7 +88,8 @@ module F0Factor
     !> Form factor data: f0(Q) for each element
     !! Rows: Q values, Columns: Elements
     !! f0 decreases with increasing Q due to destructive interference
-    real(c_double), parameter :: f0Data(26,24) = reshape([ &
+    real(c_double), parameter :: f0Data(26,25) = reshape([ &
+            28.000000_c_double, &
             10.000000_c_double, &
             34.000000_c_double, &
             27.000000_c_double, &
@@ -112,6 +114,7 @@ module F0Factor
             3.000000_c_double, &
             2.000000_c_double, &
             1.000000_c_double, &
+            27.892000_c_double, &
             9.986000_c_double, &
             33.881000_c_double, &
             26.956000_c_double, &
@@ -136,6 +139,7 @@ module F0Factor
             2.947000_c_double, &
             1.993000_c_double, &
             0.991000_c_double, &
+            27.579000_c_double, &
             9.945000_c_double, &
             33.532000_c_double, &
             26.824000_c_double, &
@@ -160,6 +164,7 @@ module F0Factor
             2.802000_c_double, &
             1.972000_c_double, &
             0.966000_c_double, &
+            27.096000_c_double, &
             9.876000_c_double, &
             32.982000_c_double, &
             26.608000_c_double, &
@@ -184,6 +189,7 @@ module F0Factor
             2.606000_c_double, &
             1.939000_c_double, &
             0.925000_c_double, &
+            26.490000_c_double, &
             9.782000_c_double, &
             32.273000_c_double, &
             26.311000_c_double, &
@@ -208,6 +214,7 @@ module F0Factor
             2.400000_c_double, &
             1.893000_c_double, &
             0.872000_c_double, &
+            25.807000_c_double, &
             9.662000_c_double, &
             31.449000_c_double, &
             25.939000_c_double, &
@@ -232,6 +239,7 @@ module F0Factor
             2.215000_c_double, &
             1.837000_c_double, &
             0.811000_c_double, &
+            25.083000_c_double, &
             9.519000_c_double, &
             30.557000_c_double, &
             25.500000_c_double, &
@@ -256,6 +264,7 @@ module F0Factor
             2.065000_c_double, &
             1.774000_c_double, &
             0.744000_c_double, &
+            24.344000_c_double, &
             9.335000_c_double, &
             29.637000_c_double, &
             25.001000_c_double, &
@@ -280,6 +289,7 @@ module F0Factor
             1.950000_c_double, &
             1.701000_c_double, &
             0.676000_c_double, &
+            23.604000_c_double, &
             9.171000_c_double, &
             28.718000_c_double, &
             24.451000_c_double, &
@@ -304,6 +314,7 @@ module F0Factor
             1.863000_c_double, &
             1.624000_c_double, &
             0.608000_c_double, &
+            22.872000_c_double, &
             8.969000_c_double, &
             27.822000_c_double, &
             23.857000_c_double, &
@@ -328,6 +339,7 @@ module F0Factor
             1.796000_c_double, &
             1.543000_c_double, &
             0.542000_c_double, &
+            22.150000_c_double, &
             8.751000_c_double, &
             26.962000_c_double, &
             23.229000_c_double, &
@@ -352,6 +364,7 @@ module F0Factor
             1.742000_c_double, &
             1.460000_c_double, &
             0.481000_c_double, &
+            21.438000_c_double, &
             8.521000_c_double, &
             26.145000_c_double, &
             22.574000_c_double, &
@@ -376,6 +389,7 @@ module F0Factor
             1.693000_c_double, &
             1.377000_c_double, &
             0.424000_c_double, &
+            20.737000_c_double, &
             8.280000_c_double, &
             25.372000_c_double, &
             21.900000_c_double, &
@@ -400,6 +414,7 @@ module F0Factor
             1.648000_c_double, &
             1.295000_c_double, &
             0.373000_c_double, &
+            20.046000_c_double, &
             8.030000_c_double, &
             24.641000_c_double, &
             21.214000_c_double, &
@@ -424,6 +439,7 @@ module F0Factor
             1.604000_c_double, &
             1.214000_c_double, &
             0.328000_c_double, &
+            19.365000_c_double, &
             7.774000_c_double, &
             23.947000_c_double, &
             20.523000_c_double, &
@@ -448,6 +464,7 @@ module F0Factor
             1.559000_c_double, &
             1.136000_c_double, &
             0.287000_c_double, &
+            18.696000_c_double, &
             7.513000_c_double, &
             23.288000_c_double, &
             19.832000_c_double, &
@@ -472,6 +489,7 @@ module F0Factor
             1.513000_c_double, &
             1.060000_c_double, &
             0.251000_c_double, &
+            18.040000_c_double, &
             7.251000_c_double, &
             22.656000_c_double, &
             19.146000_c_double, &
@@ -496,6 +514,7 @@ module F0Factor
             1.465000_c_double, &
             0.988000_c_double, &
             0.220000_c_double, &
+            17.398000_c_double, &
             6.987000_c_double, &
             22.048000_c_double, &
             18.469000_c_double, &
@@ -520,6 +539,7 @@ module F0Factor
             1.417000_c_double, &
             0.920000_c_double, &
             0.193000_c_double, &
+            16.773000_c_double, &
             6.725000_c_double, &
             21.459000_c_double, &
             17.805000_c_double, &
@@ -544,6 +564,7 @@ module F0Factor
             1.369000_c_double, &
             0.856000_c_double, &
             0.169000_c_double, &
+            16.165000_c_double, &
             6.465000_c_double, &
             20.887000_c_double, &
             17.157000_c_double, &
@@ -568,6 +589,7 @@ module F0Factor
             1.320000_c_double, &
             0.795000_c_double, &
             0.148000_c_double, &
+            15.576000_c_double, &
             6.210000_c_double, &
             20.328000_c_double, &
             16.528000_c_double, &
@@ -592,6 +614,7 @@ module F0Factor
             1.270000_c_double, &
             0.738000_c_double, &
             0.130000_c_double, &
+            15.008000_c_double, &
             5.959000_c_double, &
             19.780000_c_double, &
             15.919000_c_double, &
@@ -616,6 +639,7 @@ module F0Factor
             1.221000_c_double, &
             0.686000_c_double, &
             0.115000_c_double, &
+            14.461000_c_double, &
             5.715000_c_double, &
             19.242000_c_double, &
             15.332000_c_double, &
@@ -640,6 +664,7 @@ module F0Factor
             1.173000_c_double, &
             0.636000_c_double, &
             0.101000_c_double, &
+            13.937000_c_double, &
             5.477000_c_double, &
             18.713000_c_double, &
             14.767000_c_double, &
@@ -664,6 +689,7 @@ module F0Factor
             1.125000_c_double, &
             0.591000_c_double, &
             0.090000_c_double, &
+            13.435000_c_double, &
             5.247000_c_double, &
             18.193000_c_double, &
             14.227000_c_double, &
@@ -688,6 +714,7 @@ module F0Factor
             1.078000_c_double, &
             0.548000_c_double, &
             0.079000_c_double, &
+            12.956000_c_double, &
             5.025000_c_double, &
             17.682000_c_double, &
             13.711000_c_double, &
@@ -712,7 +739,7 @@ module F0Factor
             1.033000_c_double, &
             0.509000_c_double, &
             0.071000_c_double &
-    ], shape=[26,24], order=[2,1])
+    ], shape=[26,25], order=[2,1])
 
 contains
 

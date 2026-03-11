@@ -13,8 +13,8 @@
 typedef struct {
     double *qVals;             /**< Pointer to Q-values array */
     double *iVals;             /**< Pointer to intensity array */
-    int timing;                 /**< Timing in milliseconds */
-    int size;                   /**< Number of data points */
+    double timing;             /**< Timing in seconds */
+    int size;                  /**< Number of data points */
 } estimate;
 
 /**

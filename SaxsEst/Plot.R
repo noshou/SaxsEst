@@ -4,12 +4,12 @@
 #'
 #' Reads analysis_*.csv files produced by CsvCombine.R, then generates:
 #'   Per molecule:
-#'     - strat diffs:     |I_debye - I_strat| for each s value
-#'     - propo diffs:     |I_debye - I_propo| for each epsilon value
+#'     - strat diffs:     relative % difference for each s value
+#'     - propo diffs:     relative % difference for each epsilon value
 #'     - intensity overlay: debye (bold) vs all strat vs all propo
 #'   Cross molecule:
-#'     - one plot per epsilon: |I_debye - I_propo| across all molecules
-#'     - one plot per s:       |I_debye - I_strat| across all molecules
+#'     - one plot per epsilon: relative % diff across all molecules
+#'     - one plot per s:       relative % diff across all molecules
 #'
 #' Usage:
 #'   Rscript Plot.R <input_dir>
@@ -29,8 +29,8 @@ ieee_theme <- theme(
   text             = element_text(size = 4),
   legend.key.size  = unit(2, "mm"),
   legend.text      = element_text(size = 3),
-  legend.position  = c(.95, .95),
-  legend.title     = element_blank()
+  legend.title     = element_blank(),
+  axis.text.x      = element_text(angle = 45, hjust = 1)
 )
 
 main <- function() {
@@ -55,12 +55,12 @@ main <- function() {
     q       <- df$q_inverse_angstroms
 
     # Identify estimate and diff columns by prefix
-    stratCols     <-  grep("^strat\\(",     colnames(df), value = TRUE) %>%
-                      grep("_diffDebye$", ., value = TRUE, invert = TRUE)
-    propoCols     <-  grep("^propo\\(",     colnames(df), value = TRUE) %>%
-                      grep("_diffDebye$", ., value = TRUE, invert = TRUE)
-    stratDiffCols <-  grep("^strat\\(.*_diffDebye$", colnames(df), value = TRUE)
-    propoDiffCols <-  grep("^propo\\(.*_diffDebye$", colnames(df), value = TRUE)
+    stratCols     <-  grep("^strat\\{",     colnames(df), value = TRUE) %>%
+                      grep("Debye$", ., value = TRUE, invert = TRUE)
+    propoCols     <-  grep("^propo\\{",     colnames(df), value = TRUE) %>%
+                      grep("Debye$", ., value = TRUE, invert = TRUE)
+    stratDiffCols <-  grep("^strat\\{.*relDiffDebye$", colnames(df), value = TRUE)
+    propoDiffCols <-  grep("^propo\\{.*relDiffDebye$", colnames(df), value = TRUE)
 
     # ── Per-molecule: strat diffs ──────────────────────────────────
     dfStratDif <- tibble(q_inverse_angstroms = q)
@@ -74,14 +74,14 @@ main <- function() {
       pivot_longer(-q_inverse_angstroms,
                   names_to = "s", values_to = "diff") %>%
       ggplot(aes(x = q_inverse_angstroms, y = diff, color = s)) +
-      geom_line() +
+      geom_line(linewidth = 0.2) +
       geom_point(size = 0.5) +
       scale_y_continuous(n.breaks = 10) +
       scale_x_continuous(breaks = sort(unique(q))) +
       labs(
         title = molName,
         x     = "Q (1/\u00C5)",
-        y     = "|I_debye - I_strat|",
+        y     = "Percent Difference",
         color = "s"
       ) + ieee_theme
     ggsave(paste0(molName, "_difDebyeStrat.pdf"),
@@ -99,14 +99,14 @@ main <- function() {
       pivot_longer(-q_inverse_angstroms,
                   names_to = "epsilon", values_to = "diff") %>%
       ggplot(aes(x = q_inverse_angstroms, y = diff, color = epsilon)) +
-      geom_line() +
+      geom_line(linewidth = 0.2) +
       geom_point(size = 0.5) +
       scale_y_continuous(n.breaks = 10) +
       scale_x_continuous(breaks = sort(unique(q))) +
       labs(
         title = molName,
         x     = "Q (1/\u00C5)",
-        y     = "|I_debye - I_propo|",
+        y     = "Percent Difference",
         color = "epsilon"
       ) + ieee_theme
     ggsave(paste0(molName, "_difDebyePropo.pdf"),
@@ -128,7 +128,6 @@ main <- function() {
     dfLong  <- dfOverlay %>%
       pivot_longer(-q_inverse_angstroms,
                   names_to = "method", values_to = "intensity")
-    methods <- unique(dfLong$method)
     nStrat  <- length(stratCols)
     nPropo  <- length(propoCols)
 
@@ -143,18 +142,13 @@ main <- function() {
         paste0("strat(s=", str_extract(stratCols, "(?<=s=)[0-9.]+"), ")"),
         paste0("propo(e=", str_extract(propoCols, "(?<=e=)[0-9.]+"), ")"))
     )
-    sizeMap <- setNames(
-      c(1.0, rep(0.3, nStrat + nPropo)),
-      names(colorMap)
-    )
 
     plotOverlay <- dfLong %>%
       ggplot(aes(x = q_inverse_angstroms, y = intensity,
-                color = method, linewidth = method)) +
-      geom_line() +
+                color = method)) +
+      geom_line(linewidth = 0.2) +
       geom_point(size = 0.5) +
       scale_color_manual(values = colorMap) +
-      scale_linewidth_manual(values = sizeMap, guide = "none") +
       scale_y_continuous(n.breaks = 10) +
       scale_x_continuous(breaks = sort(unique(q))) +
       labs(
@@ -181,39 +175,39 @@ main <- function() {
     }
   }
 
-  # ── Cross-molecule: one plot per epsilon ───────────────────────
-  for (eVal in names(crossPropo)) {
-    p <- crossPropo[[eVal]] %>%
-      ggplot(aes(x = q_inverse_angstroms, y = diff, color = molecule)) +
-      geom_line() +
-      geom_point(size = 0.5) +
-      scale_y_continuous(n.breaks = 10) +
-      labs(
-        title = paste0("epsilon = ", eVal),
-        x     = "Q (1/\u00C5)",
-        y     = "|I_debye - I_propo|",
-        color = "Molecule"
-      ) + ieee_theme
-    ggsave(paste0("crossMol_propo_e", eVal, ".pdf"),
-          plot = p, width = 3.5, height = 2.5)
-  }
+#   # ── Cross-molecule: one plot per epsilon ───────────────────────
+#   for (eVal in names(crossPropo)) {
+#     p <- crossPropo[[eVal]] %>%
+#       ggplot(aes(x = q_inverse_angstroms, y = diff, color = molecule)) +
+#       geom_line(linewidth = 0.2) +
+#       geom_point(size = 0.5) +
+#       scale_y_continuous(n.breaks = 10) +
+#       labs(
+#         title = paste0("epsilon = ", eVal),
+#         x     = "Q (1/\u00C5)",
+#         y     = "Percent Difference",
+#         color = "Molecule"
+#       ) + ieee_theme
+#     ggsave(paste0("crossMol_propo_e", eVal, ".pdf"),
+#           plot = p, width = 3.5, height = 2.5)
+#   }
 
-  # ── Cross-molecule: one plot per s ─────────────────────────────
-  for (sVal in names(crossStrat)) {
-    p <- crossStrat[[sVal]] %>%
-      ggplot(aes(x = q_inverse_angstroms, y = diff, color = molecule)) +
-      geom_line() +
-      geom_point(size = 0.5) +
-      scale_y_continuous(n.breaks = 10) +
-      labs(
-        title = paste0("s = ", sVal),
-        x     = "Q (1/\u00C5)",
-        y     = "|I_debye - I_strat|",
-        color = "Molecule"
-      ) + ieee_theme
-    ggsave(paste0("crossMol_strat_s", sVal, ".pdf"),
-          plot = p, width = 3.5, height = 2.5)
-  }
+#   # ── Cross-molecule: one plot per s ─────────────────────────────
+#   for (sVal in names(crossStrat)) {
+#     p <- crossStrat[[sVal]] %>%
+#       ggplot(aes(x = q_inverse_angstroms, y = diff, color = molecule)) +
+#       geom_line(linewidth = 0.2) +
+#       geom_point(size = 0.5) +
+#       scale_y_continuous(n.breaks = 10) +
+#       labs(
+#         title = paste0("s = ", sVal),
+#         x     = "Q (1/\u00C5)",
+#         y     = "Percent Difference",
+#         color = "Molecule"
+#       ) + ieee_theme
+#     ggsave(paste0("crossMol_strat_s", sVal, ".pdf"),
+#           plot = p, width = 3.5, height = 2.5)
+#   }
+# }
 }
-
 main()

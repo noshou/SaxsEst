@@ -11,7 +11,7 @@ module Est
     type, bind(C) :: estimate
         type(c_ptr)             :: qVals    
         type(c_ptr)             :: iVals     
-        real(c_int), public     :: timing
+        real(c_double), public  :: timing
         integer(c_int), public  :: size  
     end type estimate
 

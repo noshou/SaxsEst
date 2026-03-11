@@ -126,10 +126,10 @@
 ## 2026-01-16
 
 -   test with normalization constants, where p = ##atoms in search radius, N_u = ## unique form factors in prop_est
-    -   N^2 for debye_rad
-    -   p * N^2 * (sqrt(a)/epsilon) for prop
-    -   p * N for debye_kdt
-    -   p * N * (sqrt(a)/epsilon) for prop_kdt
+ -   N^2 for debye_rad
+ -   p * N^2 * (sqrt(a)/epsilon) for prop
+ -   p * N for debye_kdt
+ -   p * N * (sqrt(a)/epsilon) for prop_kdt
 -   added tracking for output log files
 
 ## 2026-01-19
@@ -167,65 +167,65 @@
 ## 2026-02-22
 
 -   branch to work in progress (refactoring branch; will not compile)
-    -   will contain all work until refactor is done
-    -   refactor is TOP PRIORITY; cannot progress until it is finished
+ -   will contain all work until refactor is done
+ -   refactor is TOP PRIORITY; cannot progress until it is finished
 -   working on big refactor
-    -   module names consistent PascalCase
-    -   variable names consistent with camelCase
-    -   merging/consolidation of files for better readability/maintainability
-    -   renaming of directories to name of module
-    -   various other code quality improvements
+ -   module names consistent PascalCase
+ -   variable names consistent with camelCase
+ -   merging/consolidation of files for better readability/maintainability
+ -   renaming of directories to name of module
+ -   various other code quality improvements
 -   readding harmonic estimator
 -   added functions for pmf/cdf/survival functions
 
 ## 2026-02-24
 
 -   by trial and error, approximately epsilon=0.41 produces fewest errors
-    
+ 
 -   some molecules (likely due to geometry/orientation/distribution) are consistently being underestimated by propest, however for most we have 4 regions: high underestimation, medium underestimation, small underestimation, and small overestimation which *may* coincide with different SAXS profile regions
-    
+ 
 -   sampling size is Theta(N*((sqrt(24*n_tilde)/epsilon) + 1)), so may need to figure out how to derive a constant to properly account for it... may need to look into some quantum mech derivations of the debye equation
-    
+ 
 -   try random weighted sampling on frequencies to get "idea" of shape/distribution; possibly train neural network or something similar??
-    
+ 
 -   possibly reimplement kd-tree for above point; big maybe here because we don't know if the data structure is bugged or if its a waste of time
-    
+ 
 -   **finished refactor**
-    
-    -   enforced naming conventions
-    -   renamed / consolidated libraries
-    -   renamed "out" ot "Analysis"
-    -   added automate-run-debug for debug runs
-    -   fixed bugs with debug
-    -   added valgrind output for debug - no memory leaks/errors
+ 
+ -   enforced naming conventions
+ -   renamed / consolidated libraries
+ -   renamed "out" ot "Analysis"
+ -   added automate-run-debug for debug runs
+ -   fixed bugs with debug
+ -   added valgrind output for debug - no memory leaks/errors
 
 # 2026-02-26
 
 -   normalization constants
-    -   proportional estimator sample size is Θ((sqrt(24*N)/epsilon) + 1), where N is the number of atoms
-    -   Debye equation (derived from QM) has a normalization constant of 1/N²
-    -   by trial and error, normalization constant of N*((sqrt(24*N)/epsilon) + 1) works fairly well for the proportional estimator
-    -   total number of atoms sampled is still N² since distance calculations are not truncated; would love to dig into this further given more time
+ -   proportional estimator sample size is Θ((sqrt(24*N)/epsilon) + 1), where N is the number of atoms
+ -   Debye equation (derived from QM) has a normalization constant of 1/N²
+ -   by trial and error, normalization constant of N*((sqrt(24*N)/epsilon) + 1) works fairly well for the proportional estimator
+ -   total number of atoms sampled is still N² since distance calculations are not truncated; would love to dig into this further given more time
 -   rough plan for tackling estimation errors based on three general SAXS profile regions:
-    -   **Guinier region**: small q values, highest intensity with sharp drop; highest discrepancy between estimator and actual value (expected — form factors are largest here so errors are amplified significantly)
-    -   **Fourier/Debye region**: intermediate q values, after first inflection point with sharp decline toward Porod region; medium to moderate deviations
-    -   **Porod region**: large q values, rapid exponential decay toward zero; small to very small deviations
-    -   deviations are relative and dependent on molecule size (more atoms → higher amplification of errors)
+ -   **Guinier region**: small q values, highest intensity with sharp drop; highest discrepancy between estimator and actual value (expected — form factors are largest here so errors are amplified significantly)
+ -   **Fourier/Debye region**: intermediate q values, after first inflection point with sharp decline toward Porod region; medium to moderate deviations
+ -   **Porod region**: large q values, rapid exponential decay toward zero; small to very small deviations
+ -   deviations are relative and dependent on molecule size (more atoms → higher amplification of errors)
 -   proposed algorithm for each q value:
-    1.  calculate rate of change between q_i and q_(i-1), determine which region we are in (informs adaptive parameters)
-    2.  do importance sampling on frequency distribution; use it to calculate "real" Debye formula such that sample S = C1 ± epsilon estimation
-    3.  run sample through the estimator to get estimate E
-    4.  calculate difference, find C2 such that E = S ± epsilon ± C2; let err = epsilon ± C2
-    5.  run actual proportional estimate with epsilon value of err
+ 1.  calculate rate of change between q_i and q_(i-1), determine which region we are in (informs adaptive parameters)
+ 2.  do importance sampling on frequency distribution; use it to calculate "real" Debye formula such that sample S = C1 ± epsilon estimation
+ 3.  run sample through the estimator to get estimate E
+ 4.  calculate difference, find C2 such that E = S ± epsilon ± C2; let err = epsilon ± C2
+ 5.  run actual proportional estimate with epsilon value of err
 -   usually the proportional estimate underestimates until the Porod region, then slightly overestimates (weights are very small there)
-    -   some molecules overestimate early in the Guinier region, causing all subsequent intensity estimations to be overestimated
-    -   originally thought it was due to shape (globular vs cylindrical vs Gaussian chain proteins), but running xyz files in PyMOL doesn't fully support this
-    -   second guess: metal centers contribute large weights and are overrepresented for atoms positioned far away; doesn't fully explain it either
-    -   likely a combination of factors or something else entirely; out of scope for this project
+ -   some molecules overestimate early in the Guinier region, causing all subsequent intensity estimations to be overestimated
+ -   originally thought it was due to shape (globular vs cylindrical vs Gaussian chain proteins), but running xyz files in PyMOL doesn't fully support this
+ -   second guess: metal centers contribute large weights and are overrepresented for atoms positioned far away; doesn't fully explain it either
+ -   likely a combination of factors or something else entirely; out of scope for this project
 -   if time permits: implement DBSCAN or k-means clustering to tackle pairwise summations for distance calculations
-    -   other validated algorithmic methods use some version of this
-    -   DBSCAN issue: finding optimal search radius
-    -   k-means issue: finding optimal cluster size without blowing up time complexity
+ -   other validated algorithmic methods use some version of this
+ -   DBSCAN issue: finding optimal search radius
+ -   k-means issue: finding optimal cluster size without blowing up time complexity
 
 # 2026-02-26
  - harmonic estimator not worth the trouble; implementing stratified estimator instead
@@ -241,68 +241,90 @@
 # 2026-03-05
 - stratEst works extremley well, looking into optimal epsilon values
 - moving forwards, will only be using celing for prop est, floor for strat est
-    - propEst tends to underestimate and strat est overestimates. won't do much but 
-    will at least make it slighlty more accurate.
+ - propEst tends to underestimate and strat est overestimates. won't do much but 
+ will at least make it slighlty more accurate.
 
 # 2026-03-08
-    - refactoring protein runs and adding fibrous proteins
-        - making sure we have proper documentaion!
-        - pdb_2_xyz does NOT work - need to remove!
-    - ArginaseI.xyz
-        - Crystal structure of human arginase I at 1.29 A resolution and exploration of inhibition in immune response
-    - Lg3Endorepellin.xyz
-        - Laminin G like domain 3 from human perlecan
-    - Selenow.xyz
-        - Crystal structure of Selenoprotein W-related protein from Vibrio cholerae. Northeast Structural Genomics target VcR75
-    - RuBisCo.xyz
-        - Crystal Structure of Activated Ribulose-1,5-bisphosphate Carboxylase/oxygenase (Rubisco) from Green alga, Chlamydomonas reinhardtii Complexed with 2-Carboxyarabinitol-1,5-bisphosphate (2-CABP)
-        - assembly 1
-    - Plastocyanin.xyz
-        - The 1.00 Angstrom crystal structure of oxidized (CuII) poplar plastocyanin A at pH 8.0
-    - PHGDH.xyz
-        - Crystal structure of human 3-phosphoglycerate dehydrogenase
-    - MyosinII10s.xyz
-        - 10S myosin II (smooth muscle)
-    - GPx.xyz
-        - THE REFINED STRUCTURE OF THE SELENOENZYME GLUTATHIONE PEROXIDASE AT 0.2-NM RESOLUTION
-    - Elf2Nucleosome.xyz
-        - structure of two human ELF2 transcription factors in complex with a nucleosome
-    - AntiterminatorHairpin.xyz
-        - Solution structure of a shortened antiterminator hairpin from a Mg2+ riboswitch
-    - PsGQuadraplex.xyz
-        - THE CRYSTAL STRUCTURE OF A PARALLEL-STRANDED PARALLEL-STRANDED GUANINE TETRAPLEX AT 0.95 ANGSTROM RESOLUTION
-    - Fibrogen.xyz
-        - THE CRYSTAL STRUCTURE OF MODIFIED BOVINE FIBRINOGEN (AT ~4 ANGSTROM RESOLUTION) 
-    - BacteriorhodopsinArEnv.xyz
-        - Crystal structure of the mutant bacteriorhodopsin pressurized with argon
-    - NeuB.xyz
-        - Crystal structure of sialic acid synthase (NeuB) in complex with Mn2+ and Malate from Neisseria meningitidis 
-    - Aerolysin.xyz
-        - Cryo-EM structure of aerolysin pore in LMNG micelle  
-    - CollagenLikePeptide.xyz
-        - CRYSTAL AND MOLECULAR STRUCTURE OF A COLLAGEN-LIKE PEPTIDE AT 1.9 ANGSTROM RESOLUTION
-    - Gb1v29Sem.xyz
-        - Selenomethionine variant (V29SeM) of protein GB1
-    - FM197H.xyz
-        - Room temperature structure of the Rhodobacter Sphaeroides Photosynthetic Reaction Center F(M197)H mutant at 120 MPa helium gas pressure in a sapphire capillary 
-    - Stripak.xyz
-        - Cryo-EM structure of STRIPAK complex
-    - XyloseIsomerase.xyz
-        - MECHANISM FOR ALDOSE-KETOSE INTERCONVERSION BY D-XYLOSE ISOMERASE INVOLVING RING OPENING FOLLOWED BY A 1,2-HYDRIDE SHIFT
-    - RhccCarborane.xyz
-        - RHCC in complex with o-carborane 
-    - MutSADPBeF3DNA.xyz
-        - Crystal Structure of the MutS-ADPBeF3-DNA complex
-    - CytosolAminopeptidase.xyz
-        - 1.8 Angstrom Resolution Crystal Structure of Cytosol Aminopeptidase from Coxiella burnetii 
-    - TetToxHcGT1b.xyz
-        - THE HC FRAGMENT OF TETANUS TOXIN COMPLEXED WITH AN ANALOGUE OF ITS GANGLIOSIDE RECEPTOR GT1B 
-    - VATaseLiRotor.xyz
-        - Crystal structure of Lithium bound rotor ring of the V-ATPase from Enterococcus hirae 
+ - refactoring protein runs and adding fibrous proteins
+      - making sure we have proper documentaion!
+      - pdb_2_xyz does NOT work - need to remove!
+ - ArginaseI.xyz
+      - Crystal structure of human arginase I at 1.29 A resolution and exploration of inhibition in immune response
+ - Lg3Endorepellin.xyz
+      - Laminin G like domain 3 from human perlecan
+ - Selenow.xyz
+      - Crystal structure of Selenoprotein W-related protein from Vibrio cholerae. Northeast Structural Genomics target VcR75
+ - RuBisCo.xyz
+      - Crystal Structure of Activated Ribulose-1,5-bisphosphate Carboxylase/oxygenase (Rubisco) from Green alga, Chlamydomonas reinhardtii Complexed with 2-Carboxyarabinitol-1,5-bisphosphate (2-CABP)
+      - assembly 1
+ - Plastocyanin.xyz
+      - The 1.00 Angstrom crystal structure of oxidized (CuII) poplar plastocyanin A at pH 8.0
+ - PHGDH.xyz
+      - Crystal structure of human 3-phosphoglycerate dehydrogenase
+ - MyosinII10s.xyz
+      - 10S myosin II (smooth muscle)
+ - GPx.xyz
+    - THE REFINED STRUCTURE OF THE SELENOENZYME GLUTATHIONE PEROXIDASE AT 0.2-NM RESOLUTION
+ - Elf2Nucleosome.xyz
+    - structure of two human ELF2 transcription factors in complex with a nucleosome
+ - AntiterminatorHairpin.xyz
+    - Solution structure of a shortened antiterminator hairpin from a Mg2+ riboswitch
+ - PsGQuadraplex.xyz
+    - THE CRYSTAL STRUCTURE OF A PARALLEL-STRANDED PARALLEL-STRANDED GUANINE TETRAPLEX AT 0.95 ANGSTROM RESOLUTION
+ - Fibrogen.xyz
+    - THE CRYSTAL STRUCTURE OF MODIFIED BOVINE FIBRINOGEN (AT ~4 ANGSTROM RESOLUTION) 
+ - BacteriorhodopsinArEnv.xyz
+    - Crystal structure of the mutant bacteriorhodopsin pressurized with argon
+ - NeuB.xyz
+    - Crystal structure of sialic acid synthase (NeuB) in complex with Mn2+ and Malate from Neisseria meningitidis 
+ - Aerolysin.xyz
+    - Cryo-EM structure of aerolysin pore in LMNG micelle  
+ - CollagenLikePeptide.xyz
+    - CRYSTAL AND MOLECULAR STRUCTURE OF A COLLAGEN-LIKE PEPTIDE AT 1.9 ANGSTROM RESOLUTION
+ - Gb1v29Sem.xyz
+    - Selenomethionine variant (V29SeM) of protein GB1
+ - FM197H.xyz
+    - Room temperature structure of the Rhodobacter Sphaeroides Photosynthetic Reaction Center F(M197)H mutant at 120 MPa helium gas pressure in a sapphire capillary 
+ - Stripak.xyz
+    - Cryo-EM structure of STRIPAK complex
+ - XyloseIsomerase.xyz
+    - MECHANISM FOR ALDOSE-KETOSE INTERCONVERSION BY D-XYLOSE ISOMERASE INVOLVING RING OPENING FOLLOWED BY A 1,2-HYDRIDE SHIFT
+ - RhccCarborane.xyz
+    - RHCC in complex with o-carborane 
+ - MutSADPBeF3DNA.xyz
+    - Crystal Structure of the MutS-ADPBeF3-DNA complex
+ - CytosolAminopeptidase.xyz
+    - 1.8 Angstrom Resolution Crystal Structure of Cytosol Aminopeptidase from Coxiella burnetii 
+ - TetToxHcGT1b.xyz
+    - THE HC FRAGMENT OF TETANUS TOXIN COMPLEXED WITH AN ANALOGUE OF ITS GANGLIOSIDE RECEPTOR GT1B 
+ - VATaseLiRotor.xyz
+    - Crystal structure of Lithium bound rotor ring of the V-ATPase from Enterococcus hirae 
+ - VancomycinLacticAcid.xyz
+    - COMPLEX OF VANCOMYCIN WITH D-LACTIC ACID
+ - PhiTEBaseplate.xyz
+    - Bacteriophage PhiTE extended baseplate 
+ - TeicoplaninUbiquitin.xyz
+    - The structure of monodechloro-teicoplanin in complex with its ligand, using ubiquitin as a ligand carrier
+ - MtCorB.xyz
+    - Crystal structure of an archaeal CNNM, MtCorB, with C-terminal deletion in complex with Mg2+-ATP
+ - NeonMOF.xyz
+    - Capturing neon – the first experimental structure of neon trapped within a metal–organic environment
+ - C60BuckyBallHe.xyz
+    - X-ray observation of a helium atom and placing a nitrogen atom inside He@C60 and He@C70
 # 2026-03-09
-    - removing interactive CLI, will remove automated run
-    - since pdb-2-xyz is borked, used https://sciencecodons.com/tools/pdb-to-xyz-converter/ (citation included)
-    - protein file naming conventions
-        - cannot start with number
-        - only alphanumeric characters
-    - accidentally selected multiple assembles (same structure, diff lattice positions); fixed that error
+ - removing interactive CLI, will remove automated run
+ - since pdb-2-xyz is borked, used https://sciencecodons.com/tools/pdb-to-xyz-converter/ (citation included), Open Babel (two citations), and atomic simuilation envrionment + numpy for He@C70 + MOF
+ - protein file naming conventions
+    - cannot start with number
+    - only alphanumeric characters
+ - accidentally selected multiple assembles (same structure, diff lattice positions); fixed that error
+# 2026-03-11
+ - added support for nickel 
+ - TODO: benchmark atomic form factor
+ - focus on motivation for speed up for slides (general audience)
+    - visualize scattering profile
+ - proportional error: the absolute difference is large where intensity is large (low q) and small where intensity is small (high q). The estimator isn't worse at low q in any meaningful sense, it's just that the quantity being estimated is bigger there. This means absolute difference plots are misleading, so switched to percent difference instead.
+ - realized I was using *wall clock* time and not *cpu time* so time measurements are borked (who could've figured that????)
+     - switched to cpu time :) 
+
+ 

@@ -81,7 +81,8 @@ end function propEstCalc
 !!                      - Q values array
 !!                      - Calculated intensity values I(Q)
 function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
-    
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies),  intent(in)  :: k
     real(c_double),     intent(in)  :: a 
@@ -91,15 +92,17 @@ function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
 
     ! local variables
     real(c_double), allocatable     :: intensity(:)
-    integer                         :: nAtoms, nQVals, i, j, qIJ, start, finish
+    integer                         :: nAtoms, nQVals, i, j, qIJ
+    real(kind=real64)               :: start, finish
     real                            :: rate
     type(estimate)                  :: intensityEstimate
     type(atom)                      :: atomI
     complex(c_double)               :: wEst, atomIFormFact
     real(c_double)                  :: qVal, radialContrib, atomicContrib, dst, est, norm
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! start timer
-    call system_clock(start, rate)
+    call cpu_time(start)
 
     ! initialize variables
     nAtoms = size(atoms)
@@ -136,10 +139,10 @@ function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
     end do
     
     ! stop timer
-    call system_clock(finish)
+    call cpu_time(finish)
     
     ! output estimate
-    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity)
+    intensityEstimate = newIntensity(start, finish, qVals, intensity)
     
     ! cleanup
     deallocate(intensity)

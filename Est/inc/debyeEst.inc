@@ -34,8 +34,7 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
     real(c_double)              :: qVal
     
     ! timing variables
-    integer                     :: start, finish
-    real                        :: rate
+    real(kind=real64)           :: start, finish
     
     ! output data
     type(estimate)              :: intensityEstimate
@@ -61,7 +60,7 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
     allocate(intensity(nQVals))
     
     ! start timer, do pairwise calculations
-    call system_clock(start, rate)
+    call cpu_time(start)
     do qIJ = 1, nQVals
         qVal = qVals(qIJ)
         est = 0.0_c_double
@@ -80,6 +79,7 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
                     atomJ = atoms(j)
                     atomJFormFact = atomJ%formFactor(qVal)
                     dst = qVal * abs(atomI%distCart(atomJ))
+
                     ! turns out because of weird symmetry we can
                     ! ignore the complex part (since the summation over
                     ! all pairs is symmetric and therefore real)
@@ -89,15 +89,10 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
                 end if
             end do
         end do
-        
         intensity(qIJ) = est / norm
-    end do
-    ! stop timer
-    call system_clock(finish)
+    end do 
+    call cpu_time(finish)
     
     ! output results
-    intensityEstimate = newIntensity(start, finish, rate, qVals, intensity)
-    
-    ! clean up
-    deallocate(intensity)
+    intensityEstimate = newIntensity(start, finish, qVals, intensity)
 end function debyeEst

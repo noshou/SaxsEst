@@ -11,9 +11,9 @@ module CsvInterface
         !! @param est Intensity estimate structure
         !! @param pth C pointer to null-terminated output path
         subroutine fortran2ocaml(est, pth) bind(C, name="fortran2ocaml")
-            import :: estimate, c_ptr
+            import                     :: estimate, c_ptr
             type(estimate), intent(in) :: est
-            type(c_ptr), value :: pth 
+            type(c_ptr), value         :: pth 
         end subroutine fortran2ocaml
         
         !> @brief Initialize OCaml runtime (call once)
@@ -29,10 +29,13 @@ contains
     !! @return path of output
     subroutine estWrap(est, pth)
         
-        type(estimate), intent(in) :: est
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        type(estimate), intent(in)   :: est
         character(len=*), intent(in) :: pth
         character(len=:, kind=c_char), allocatable, target :: csvPath
         character(len=256), allocatable :: pathBuild
+        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
         ! Initialize OCaml runtime on first call
         if (.not. isInit) then
             call initOCaml()

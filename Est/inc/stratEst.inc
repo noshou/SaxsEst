@@ -93,16 +93,15 @@ end function calcStratumMean
 !>          toward the heavy stratum. Returns a container with sampled atoms and
 !>          their corresponding coordinate pointers.
 !> @param k  Frequency distribution of atom types in the molecule
-!> @param e  Epsilon; sampling precision parameter, must be 0 < e < 1
 !> @param a  Sampling proportion factor (scales with k%nItems)
 !> @param q  Single scattering vector magnitude (Å⁻¹) used for stratification
 !> @return   stratEstContainer with sampled atoms and coordinate pointers
-function stratEstCalc(k, e, a, q) result(es)
+function stratEstCalc(k, a, q) result(es)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies), intent(in)  :: k
-    real(c_double),    intent(in)  :: e, a, q
+    real(c_double),    intent(in)  :: a, q
     
     ! local variables
     type(cdf),         allocatable :: heavyCdf, lightCdf
@@ -135,8 +134,6 @@ function stratEstCalc(k, e, a, q) result(es)
 
         ! calculate ratio of heavy vs light mean (biased towards heavy)
         ratio =  (meanHeavy) / (meanHeavy + meanLight)
-!                 * (e * real(lightCdf%population))      &
-!                 / (e * real(lightCdf%population + heavyCdf%population))
         
         ! get number of light and heavy samples
         heavySamples = floor(ratio * a)
@@ -192,16 +189,14 @@ end function stratEstCalc
 !>          Normalizes by N² where N is the total atom count in the molecule.
 !> @param k  Frequency distribution of atom types in the molecule
 !> @param q  Array of scattering vector magnitudes (Å⁻¹)
-!> @param e  Epsilon; sampling precision parameter, must be 0 < e < 1
 !> @param a  Sampling proportion factor
 !> @return   estimate type containing I(Q) values and timing info
-function stratEst(k, q, e, a) result(intensityEstimate)
+function stratEst(k, q, a) result(intensityEstimate)
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies), intent(in)   :: k
     real(c_double),    intent(in)   :: q(:)
-    real(c_double),    intent(in)   :: e 
     real(c_double),    intent(in)   :: a
 
     ! local variables
@@ -211,17 +206,17 @@ function stratEst(k, q, e, a) result(intensityEstimate)
     type(coordPtr),    allocatable  :: sampledCoords(:)
     type(atom),        allocatable  :: sampledAtoms(:)
     type(estimate)                  :: intensityEstimate
-    integer                         :: i, j, qIJ, start, finish, sampleSize
-    real                            :: rate
+    integer                         :: i, j, qIJ, sampleSize
+    real(kind=real64)               :: start, finish
     real(c_double)                  :: dst, est, qVal
     type(coord)                     :: coordI, coordJ
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! start timer
-    call system_clock(start, rate)
+    call cpu_time(start)
     
     ! sample once using q(1) for stratification
-    es = stratEstCalc(k, e, a, q(1))
+    es = stratEstCalc(k, a, q(1))
     allocate(sampledCoords, source=es%sampledCoords)
     allocate(sampledAtoms,  source=es%sampledAtoms)
     sampleSize = size(sampledAtoms)
@@ -255,10 +250,10 @@ function stratEst(k, q, e, a) result(intensityEstimate)
     end do 
 
     ! stop timer
-    call system_clock(finish)
+    call cpu_time(finish)
 
     ! output estimate, cleanup
-    intensityEstimate = newIntensity(start, finish, rate, q, intensity)
+    intensityEstimate = newIntensity(start, finish, q, intensity)
     deallocate(intensity)
     deallocate(ff)
 

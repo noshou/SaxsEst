@@ -20,7 +20,6 @@
 #'   analysis_<molecule_name>.csv containing columns:
 #'     q_inverse_angstroms, intensity_debye, intensity_strat, intensity_prop,
 #'     diff_strat_debye, diff_prop_debye, diff_prop_strat
-
 suppressPackageStartupMessages({
   library(readr)
   library(tibble)
@@ -46,7 +45,7 @@ main <- function() {
   listName <- list()
   for (i in 4:length(args)) {
     listDf   <- append(listDf,   list(read_csv(args[i], show_col_types = FALSE)))
-    listName <- append(listName, tools::file_path_sans_ext(args[i]))
+    listName <- append(listName, basename(tools::file_path_sans_ext(args[i])))
   }
 
   # combine into single df
@@ -55,12 +54,12 @@ main <- function() {
     debye               = dfDeby$intensity,
   )
   for (i in seq_along(listDf)) {
-    dfData %>% add_column( 
+    dfData <- dfData %>% add_column( 
       !!listName[[i]] := listDf[[i]][[2]], 
-      !!paste0(listName[[i]], "_diffDebye") := dfData$debye - listDf[[i]][[2]],
+      !!paste0(listName[[i]], "_relDiffDebye") := ((abs(dfData$debye - listDf[[i]][[2]])) / dfData$debye) * 100,
       .after = "debye"
     )
-  }
+}
 
 
   path <- file.path(dir, paste0("analysis_", mol, ".csv"))
