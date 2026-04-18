@@ -43,8 +43,6 @@ Freq/           Frequency/CDF construction for stratification
 AtomXYZ/        Coordinate types, distance utilities, benchmark .xyz files
 CsvInterface/   Fortran ↔ OCaml CSV bridge
 Analysis/       R scripts (CsvCombine.R, Plot.R), saved logs and plots
-docs/           theory.pdf and planned documentation
-pdb_to_xyz/     PDB → XYZ conversion scripts (legacy, WIP)
 ```
 
 ## Configuring stratEst
@@ -62,7 +60,7 @@ By default, stratEst samples atoms once using q(1) and reuses the same drawn set
 
 Seven strategies control how the sample budget is split between the heavy and light strata. Let h, l = heavy/light strata; a ∈ (0,1) = sampling fraction; budget = ⌈a × totalPopulation⌉.
 
-To switch strategies, ensure lines 123–237 are fully commented out, then uncomment the block for your chosen strategy:
+To switch strategies, ensure code in lines 123–237 are fully commented out, then uncomment the block for your chosen strategy:
 
 #### i. Neyman Allocation — NA (lines 123–148)
 
