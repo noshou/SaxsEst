@@ -10,14 +10,6 @@ subroutine growPtrList(cl)
     call move_alloc(tmp, cl%ptrs)
 end subroutine growPtrList
 
-!> @brief Creates a frequency table of unique atom types from an atom array.
-!> @details Uses a perfect hash map with O(n) construction. Builds parallel
-!>          arrays for counts, representative atoms, and coordinate pointer lists,
-!>          then compacts into a frequencies object with no empty slots.
-!> @param[in] atoms  Array of atoms to tabulate
-!> @return Allocated frequencies object with unique atom types, counts, and coordinates
-!! Creates a frequency table of unique atom types from an array of atoms in O(n) time.
-!!
 !! Algorithm:
 !!   Uses a perfect hash map to count occurrences of each unique atom/ion type.
 !!   Atom names can take the forms: a, aa, a#+, aa#+, a#-, aa#- (where a is a 

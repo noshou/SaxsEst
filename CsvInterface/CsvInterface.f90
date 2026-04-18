@@ -29,12 +29,10 @@ contains
     !! @return path of output
     subroutine estWrap(est, pth)
         
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         type(estimate), intent(in)   :: est
         character(len=*), intent(in) :: pth
         character(len=:, kind=c_char), allocatable, target :: csvPath
         character(len=256), allocatable :: pathBuild
-        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         ! Initialize OCaml runtime on first call
         if (.not. isInit) then

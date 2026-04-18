@@ -23,7 +23,6 @@
 !!                  array of q vs I_real (intensityEstimate type)
 function debyeEst(atoms, qVals) result(intensityEstimate)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input parameters
     type(atom), intent(in)      :: atoms(:)
     real(c_double), intent(in)  :: qVals(:)
@@ -49,7 +48,6 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
     real(c_double)              :: dst
     real(c_double)              :: est            ! estimate of intensity at I(Q)
     real(c_double)              :: norm
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     ! initialize variables
     nQVals = size(qVals)
@@ -68,25 +66,18 @@ function debyeEst(atoms, qVals) result(intensityEstimate)
         do i = 1, nAtoms
             atomI = atoms(i)
             atomIFormFact = atomI%formFactor(qVal)
-            
-            do j = 1, nAtoms
-                ! edge case: sin(x)/x is assumed to = 1,
-                ! therefore, when i == j (ie: we are at the same atom)
-                ! we add atomIFormFact * conjg(atomIFormFact)
-                if (i == j) then
-                    est = est + real(atomIFormFact * conjg(atomIFormFact), kind=c_double)
-                else
-                    atomJ = atoms(j)
-                    atomJFormFact = atomJ%formFactor(qVal)
-                    dst = qVal * abs(atomI%distCart(atomJ))
+            est = est + real(atomIFormFact * conjg(atomIFormFact), kind=c_double)
+            do j = i + 1, nAtoms
+                atomJ = atoms(j)
+                atomJFormFact = atomJ%formFactor(qVal)
+                dst = qVal * abs(atomI%distCart(atomJ))
 
-                    ! turns out because of weird symmetry we can
-                    ! ignore the complex part (since the summation over
-                    ! all pairs is symmetric and therefore real)
-                    atomicContrib = real(atomIFormFact * conjg(atomJFormFact), kind=c_double)
-                    radialContrib = sinc(dst)
-                    est = est + atomicContrib * radialContrib
-                end if
+                ! turns out because of weird symmetry we can
+                ! ignore the complex part (since the summation over
+                ! all pairs is symmetric and therefore real)
+                atomicContrib = real(atomIFormFact * conjg(atomJFormFact), kind=c_double)
+                radialContrib = sinc(dst)
+                est = est + 2.0_c_double * atomicContrib * radialContrib
             end do
         end do
         intensity(qIJ) = est / norm

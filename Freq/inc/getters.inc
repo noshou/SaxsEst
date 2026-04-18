@@ -1,11 +1,11 @@
-! getters.inc
-!> @brief Calculate form factor weights for each unique atom type
+
+!> Calculate form factor weights for each unique atom type
 !> @param[in] this The frequencies instance
 !> @param[in] q The scattering vector magnitude
+!> 
 !> @return Array of complex form factor weights
 function getWeights(this, q) result(list)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance
     class(frequencies), intent(in)  :: this
     
@@ -15,7 +15,6 @@ function getWeights(this, q) result(list)
     complex(c_double),  allocatable :: list(:)
     type(atom)                      :: atm
     integer                         :: i
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     allocate(list(this%nUnique))
     do i = 1, this%nUnique
@@ -24,19 +23,18 @@ function getWeights(this, q) result(list)
     end do
 end function getWeights
 
-!> @brief Get frequency counts for each unique atom type
+!> Get frequency counts for each unique atom type
 !> @param[in] this The frequencies instance
+!> 
 !> @return Array of integer frequencies
 function getFreqs(this) result(list)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance
     class(frequencies), intent(in)  :: this
     
     ! local variables
     integer,            allocatable :: list(:)
     integer                         :: i
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     allocate(list(this%nUnique))
     do i = 1, this%nUnique
@@ -44,14 +42,14 @@ function getFreqs(this) result(list)
     end do
 end function getFreqs
 
-!> @brief Returns the mean of the magnitudes of the weights for a given  
+!> Returns the mean of the magnitudes of the weights for a given  
 !> randomly selected weight is greater than a given weight's magnitude.
 !> @param[in] this   The frequencies instance
 !> @param[in] q      The q value
+!> 
 !> @return the mean
 function getMean(this, q) result(mean)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance
     class(frequencies), intent(in)  :: this
     
@@ -61,7 +59,6 @@ function getMean(this, q) result(mean)
     ! local variables
     real(c_double)                  :: mean 
     integer                         :: i
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     mean = 0.0_c_double
     do i = 1, this%nUnique
@@ -70,16 +67,41 @@ function getMean(this, q) result(mean)
     mean = mean / real(this%nItems, kind=c_double)
 end function getMean
 
-!> @brief Returns a CDF for atom types with form factor magnitude <= the mean.
-!> @details Filters the frequency table into a "light" stratum containing atom
-!>          types whose form factor magnitude is at or below the mean. Used for
-!>          stratified sampling where the light stratum is sampled less aggressively.
+!> Computes the mean and standard deviation of the magnitudes of a cdf.
+!! @param[inout] cdf_       CDF of complex form factor weights
+!! @param[in]    cdfFreqs   Parallel list of frequencies
+subroutine calcCdfMeanStDv(cdf_, cdfFreqs)
+    type(cdf),      intent(inout) :: cdf_
+    integer,        intent(in)    :: cdfFreqs(:)
+    integer                       :: i
+    real(c_double), parameter     :: tolerance = 1.0e-10_c_double
+
+    ! calculate mean
+    cdf_%mean = 0.0_c_double
+    do i = 1, size(cdf_%weights)
+        cdf_%mean = cdf_%mean + real(cdfFreqs(i), kind=c_double) * abs(cdf_%weights(i))
+    end do
+    cdf_%mean = cdf_%mean / real(sum(cdfFreqs), kind=c_double)
+
+    ! calculate standard deviation
+    cdf_%stdv = 0.0_c_double
+    do i = 1, size(cdf_%weights)
+        cdf_%stdv = cdf_%stdv + real(cdfFreqs(i), kind=c_double) * (abs(cdf_%weights(i)) - cdf_%mean) ** 2
+    end do
+    cdf_%stdv = sqrt(cdf_%stdv / real(cdf_%population - 1, kind=c_double))
+    if (abs(cdf_%stdv) <= tolerance .or. ieee_is_nan(cdf_%stdv)) cdf_%stdv = 0.0_c_double
+end subroutine calcCdfMeanStDv
+
+!> Returns a CDF for atom types with form factor magnitude <= the mean.
+!> Filters the frequency table into a "light" stratum containing atom
+!> types whose form factor magnitude is at or below the mean. Used for
+!>  stratified sampling where the light stratum is sampled less aggressively.
 !> @param[in] this   The frequencies instance
 !> @param[in] q      The q value
+!> 
 !> @return Allocated CDF for light stratum, with weights, cumulative probs, and coords
 function getLight(this, q) result(cdf____)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance 
     class(frequencies), intent(in)  :: this
     
@@ -95,7 +117,6 @@ function getLight(this, q) result(cdf____)
     real(c_double)                  :: cmpThis, cmpThat
     integer                         :: i, j
     real(c_double),     parameter   :: tolerance = 1.0e-10_c_double
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     cmpThis = this%mean(q)
     j = 0
@@ -120,17 +141,16 @@ function getLight(this, q) result(cdf____)
     allocate(cdf____,    source = buildCdf(weights, freqs__, coords_, atoms__))
 end function getLight
 
-!> @brief Returns a CDF for atom types with form factor magnitude > the mean.
-!> @details Filters the frequency table into a "heavy" stratum containing atom
-!>          types whose form factor magnitude exceeds the mean. For proteins,
-!>          this stratum is typically very small (e.g., metals, heavier atoms).
-!>          Returns unallocated if no atom types exceed the mean.
+!>  Returns a CDF for atom types with form factor magnitude > the mean.
+!>  Filters the frequency table into a "heavy" stratum containing atom
+!> types whose form factor magnitude exceeds the mean. For proteins,
+!> this stratum is typically very small (e.g., metals, heavier atoms).
 !> @param[in] this   The frequencies instance
 !> @param[in] q      The q value
-!> @return Allocated CDF for heavy stratum if heavy atoms exist, unallocated otherwise
+!>
+!> Allocated CDF for heavy stratum if heavy atoms exist, unallocated otherwise
 function getHeavy(this, q) result(cdf____)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! instance 
     class(frequencies), intent(in)  :: this
     
@@ -146,7 +166,6 @@ function getHeavy(this, q) result(cdf____)
     real(c_double)                  :: cmpThis, cmpThat
     integer                         :: i, j
     real(c_double),     parameter   :: tolerance = 1.0e-10_c_double
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     cmpThis = this%mean(q)
     j = 0
@@ -173,18 +192,18 @@ function getHeavy(this, q) result(cdf____)
     end if
 end function getHeavy
 
-!> @brief Constructs an ordered CDF from parallel arrays of weights, frequencies, and coordinates.
-!> @details Computes discrete probabilities from frequency counts, sorts all parallel
-!>          arrays by ascending weight magnitude, then builds cumulative probabilities.
-!>          Uses a bubble sort since the number of unique atom types is typically very small.
+!> Constructs an ordered CDF from parallel arrays of weights, frequencies, and coordinates.
+!> Computes discrete probabilities from frequency counts, sorts all parallel
+!> arrays by ascending weight magnitude, then builds cumulative probabilities.
+!> Uses a bubble sort since the number of unique atom types is typically very small.
 !> @param[in] w Complex form factor weights per atom type
 !> @param[in] f Integer frequency counts per atom type
 !> @param[in] c Coordinate pointer lists per atom type
 !> @param[in] a Array of input atoms  
-!> @return CDF with sorted weights, cumulative probabilities, coordinates, and total population
+!> 
+!> @return CDF with weights, cumulative probabilities, coordinates, total population, mean, and std
 function buildCdf(w, f, c, a) result(cdf_)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     complex(c_double),  intent(in)  :: w(:) 
     integer,            intent(in)  :: f(:)
@@ -199,12 +218,11 @@ function buildCdf(w, f, c, a) result(cdf_)
     real(c_double),     parameter   :: tolerance = 1.0e-10_c_double
     type(cdf)                       :: cdf_
     complex(c_double)               :: wTmp
-    real(c_double)                  :: pTmp, sizeReal, currPmf
+    real(c_double)                  :: pTmp, sizeReal, currPmf, mean
     type(coordPtrList)              :: cTmp
     integer                         :: i,j
     type(atom),         allocatable :: atoms(:)
     type(atom)                      :: aTmp
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
     ! calculate discrete probabilities
@@ -244,8 +262,7 @@ function buildCdf(w, f, c, a) result(cdf_)
     end do
 
     ! cdf is probability that a randomly selected value is leq
-    ! than a given value. pmf gives us the probability that it is 
-    ! equal to a given value
+    ! than a given value. 
     culmProbs(1) = probs(1)
     do i = 2, size(weights)
         culmProbs(i) = culmProbs(i-1) + probs(i)
@@ -257,5 +274,5 @@ function buildCdf(w, f, c, a) result(cdf_)
     allocate(cdf_%culmProbs, source = culmProbs)
     allocate(cdf_%coords,    source = coordsList)
     cdf_%population = sum(frequencies_)
-    
+    call calcCdfMeanStDv(cdf_, frequencies_)
 end function buildCdf

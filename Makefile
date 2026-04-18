@@ -12,6 +12,7 @@ RUNINFO ?= rinf
 
 # check for valgrind at parse time (1 = found, 0 = not found)
 HAS_VALGRIND := $(shell which valgrind >/dev/null && echo 1 || echo 0)
+
 # ============================================================================
 # BUILD TARGETS
 # ============================================================================
@@ -33,7 +34,8 @@ release:
 	$(RUNINFO); \
 	$(MAKE) --no-print-directory -f BuildRelease.mk all && \
 			./_build/release/exe/SaxsEst ./_build/release/xyz_modules.txt $$dir \
-		) 2>&1 | tee "$$dir/$$(basename $$dir).log"
+		) 2>&1 | tee "$$dir/$$(basename $$dir).log" && \
+		./totalExeTime.sh "$$dir/$$(basename $$dir).log"
 
 # Build debug binary via BuildDebug.mk, then run it.
 # If valgrind is available, the binary is run under valgrind with full
@@ -55,7 +57,8 @@ debug:
 	$(MAKE) --no-print-directory -f BuildDebug.mk all && \
 			valgrind --leak-check=full --track-origins=yes --log-file="$$dir/$$(basename $$dir)_valgrind.log" \
 			./_build/debug/exe/SaxsEst_DEBUG ./_build/debug/xyz_modules.txt $$dir \
-		) 2>&1 | tee "$$dir/$$(basename $$dir).log"
+		) 2>&1 | tee "$$dir/$$(basename $$dir).log" && \
+		./totalExeTime.sh "$$dir/$$(basename $$dir).log"
 else
 debug:
 	@echo "Valgrind not found, running without memory analysis"; \
@@ -72,7 +75,8 @@ debug:
 	$(RUNINFO); \
 	$(MAKE) --no-print-directory -f BuildDebug.mk all && \
 			./_build/debug/exe/SaxsEst_DEBUG ./_build/debug/xyz_modules.txt $$dir \
-		) 2>&1 | tee "$$dir/$$(basename $$dir).log"
+		) 2>&1 | tee "$$dir/$$(basename $$dir).log" && \
+		./totalExeTime.sh "$$dir/$$(basename $$dir).log"
 endif
 
 clean:

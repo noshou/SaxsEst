@@ -104,14 +104,14 @@ module Main
 
                 ! define output file paths for potential cleanup
                 fp1  = trim(outDir)//"/"//"debye_"//trim(name)//".csv"
-                fp2  = trim(outDir)//"/"//"strat{s=0.50}_"//trim(name)//".csv"
-                fp3  = trim(outDir)//"/"//"strat{s=0.45}_"//trim(name)//".csv"
-                fp4  = trim(outDir)//"/"//"strat{s=0.40}_"//trim(name)//".csv"
-                fp5  = trim(outDir)//"/"//"strat{s=0.35}_"//trim(name)//".csv"
-                fp6  = trim(outDir)//"/"//"strat{s=0.30}_"//trim(name)//".csv"
-                fp7  = trim(outDir)//"/"//"strat{s=0.25}_"//trim(name)//".csv"
-                fp8  = trim(outDir)//"/"//"strat{s=0.20}_"//trim(name)//".csv"
-                fp9  = trim(outDir)//"/"//"strat{s=0.15}_"//trim(name)//".csv"
+                fp2  = trim(outDir)//"/"//"strat{a=0.50}_"//trim(name)//".csv"
+                fp3  = trim(outDir)//"/"//"strat{a=0.45}_"//trim(name)//".csv"
+                fp4  = trim(outDir)//"/"//"strat{a=0.40}_"//trim(name)//".csv"
+                fp5  = trim(outDir)//"/"//"strat{a=0.35}_"//trim(name)//".csv"
+                fp6  = trim(outDir)//"/"//"strat{a=0.30}_"//trim(name)//".csv"
+                fp7  = trim(outDir)//"/"//"strat{a=0.25}_"//trim(name)//".csv"
+                fp8  = trim(outDir)//"/"//"strat{a=0.20}_"//trim(name)//".csv"
+                fp9  = trim(outDir)//"/"//"strat{a=0.15}_"//trim(name)//".csv"
                 fp10 = trim(outDir)//"/"//"propo{e=0.450}_"//trim(name)//".csv"
                 fp11 = trim(outDir)//"/"//"propo{e=0.440}_"//trim(name)//".csv"
                 fp12 = trim(outDir)//"/"//"propo{e=0.430}_"//trim(name)//".csv"
@@ -171,7 +171,7 @@ module Main
     !> @brief Subprocess entry point for single-molecule SAXS analysis.
     !> @details Runs three estimations and combines results:
     !>   1. Debye radial (exact pairwise, O(mn²)) → debye_<name>.csv
-    !>   2. Stratified (importance-sampled, uses a2 as sample fraction) → strat_<name>.csv
+    !>   2. Stratified (importance-sampled, uses a2 as stratum size upper bound) → strat_<name>.csv
     !>   3. Proportional (frequency-weighted, uses a1 as advice param) → propo_<name>.csv
     !>
     !> Any ERROR STOP terminates only this subprocess; the parent catches
@@ -197,13 +197,13 @@ module Main
             type(estimate) :: debye, strat, prop
 
             ! parameter arrays
-            real(c_double) :: eVals(8), sVals(8)
+            real(c_double) :: eVals(8), aVals(8)
             integer :: i
             character(len=32) :: paramStr
 
             eVals = [0.450_c_double, 0.440_c_double, 0.430_c_double, 0.420_c_double,  &
                     0.410_c_double, 0.400_c_double, 0.390_c_double, 0.380_c_double]
-            sVals = [0.50_c_double, 0.45_c_double, 0.40_c_double, 0.35_c_double, &
+            aVals = [0.50_c_double, 0.45_c_double, 0.40_c_double, 0.35_c_double, &
                     0.30_c_double, 0.25_c_double, 0.20_c_double, 0.15_c_double]
 
             ! load atoms for this molecule
@@ -225,13 +225,13 @@ module Main
             print*, "timing: ", debye%timing, "s"
 
             ! ── Stratified (one run per s value) ─────────────────────
-            do i = 1, size(sVals)
-                write(paramStr, '(F4.2)') sVals(i)
-                pathEst = trim(outDir)//"/"//"strat{s="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
+            do i = 1, size(aVals)
+                write(paramStr, '(F4.2)') aVals(i)
+                pathEst = trim(outDir)//"/"//"strat{a="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
 
                 print*, ""
-                print*, "Running stratEst  s=", trim(adjustl(paramStr)), "..."
-                strat = stratEst(freq, qVals, sVals(i))
+                print*, "Running stratEst  a=", trim(adjustl(paramStr)), "..."
+                strat = stratEst(freq, qVals, aVals(i))
                 call estWrap(strat, pathEst)
                 print*, "timing: ", strat%timing, "s"
             end do
@@ -253,9 +253,9 @@ module Main
             cmd =   "Rscript SaxsEst/CsvCombine.R "// &
                     trim(outDir)//" "//trim(name)//" "//trim(pathDebye)
 
-            do i = 1, size(sVals)
-                write(paramStr, '(F4.2)') sVals(i)
-                cmd = cmd//" "//trim(outDir)//"/"//"strat{s="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
+            do i = 1, size(aVals)
+                write(paramStr, '(F4.2)') aVals(i)
+                cmd = cmd//" "//trim(outDir)//"/"//"strat{a="//trim(adjustl(paramStr))//"}_"//trim(name)//".csv"
             end do
             do i = 1, size(eVals)
                 write(paramStr, '(F5.3)') eVals(i)

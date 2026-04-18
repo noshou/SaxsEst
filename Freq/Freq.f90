@@ -1,29 +1,24 @@
-!> @brief Frequency distribution module for SAXS intensity estimation.
-!> @details Provides types and procedures for building frequency tables of
-!>          unique atom types, constructing cumulative distribution functions (CDFs),
-!>          and stratifying atoms into heavy/light strata for sampling.
+!> Frequency distribution module for SAXS intensity estimation.
+!> Provides types and procedures for building frequency tables of
+!> unique atom types, constructing cumulative distribution functions (CDFs),
+!> and stratifying atoms into heavy/light strata for sampling.
 module Freq 
     use iso_c_binding, only: c_double
     use AtomXYZ
+    use, intrinsic  :: ieee_arithmetic
+
     implicit none
     public
-    
-    ! coord type from AtomXYZ for reference
-    ! type :: coord
-    !     real(c_double) :: x  !< X-coordinate
-    !     real(c_double) :: y  !< Y-coordinate
-    !     real(c_double) :: z  !< Z-coordinate
-    ! end type coord
 
-    !> @brief Pointer to a single coordinate
+    !> Pointer to a single coordinate
     type :: coordPtr
-        type(coord), pointer :: coord_ => null()
+        type(coord), pointer :: coord_ => null() !> pointer to a cooridnate
     end type coordPtr
     
-    !> @brief Growable list of coordinate pointers for a single atom type
+    !> Growable list of coordinate pointers for a single atom type
     type :: coordPtrList
-        type(coordPtr), allocatable :: ptrs(:)
-        integer :: n = 0
+        type(coordPtr), allocatable :: ptrs(:) !> pointer to coordinates
+        integer :: n = 0 !> number of coordinates in this list
     end type coordPtrList
 
     !> Frequency distribution of a weight (form factor)
@@ -56,11 +51,13 @@ module Freq
     !> Note that atoms contain "dummy atoms" and should NOT be used
     !> for sampling; only for form factor calculation.
     type :: cdf 
-        complex(c_double),  allocatable :: weights(:)
-        real(c_double),     allocatable :: culmProbs(:)
-        type(coordPtrList), allocatable :: coords(:)
-        type(atom),         allocatable :: atoms(:)  
-        integer                         :: population
+        complex(c_double),  allocatable :: weights(:)   !> parallel list of weights
+        real(c_double),     allocatable :: culmProbs(:) !> parallel list of cumulative probabilities
+        type(coordPtrList), allocatable :: coords(:)    !> parallel list-of-list of valid coordinates
+        type(atom),         allocatable :: atoms(:)     !> parallel list of dummy atoms)
+        integer                         :: population   !> total number of atoms contained in cdf
+        real(c_double)                  :: mean         !> mean magnitude of cdf
+        real(c_double)                  :: stdv         !> standard deviation of cdf
     end type cdf
     
     contains

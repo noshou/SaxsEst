@@ -1,0 +1,2289 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.18.15-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Wed Mar  4 13:50:11 UTC 2026 aarch64 GNU/Linux
+===================
+compiling: AtomXYZ/xyz_tmp/xyz_AntiterminatorHairpin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_BacteriorhodopsinArEnv.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_RhccCarborane.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Selenow.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Stripak.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TeicoplaninUbiquitin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TetToxHcGT1b.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VancomycinLacticAcid.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VATPaseLiRotor.f90
+compiling: AtomXYZ/xyz_tmp/xyz_XyloseIsomerase.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/SaxsEst
+==================================
+ 
+ ====================
+ Analyzing:    AntiterminatorHairpin
+ Number of atoms (n):        1027
+ 
+ 
+ Running debyeEst...
+ timing:    4.1605960000000000      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            341
+ light samples:            173
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.1543999999999848E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            307
+ light samples:            156
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    7.4487999999999666E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            273
+ light samples:            138
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.9492000000000544E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            239
+ light samples:            121
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.5917000000000208E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            205
+ light samples:            104
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.3994999999999997E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            171
+ light samples:             87
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.4064000000000085E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            137
+ light samples:             69
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.5558000000000405E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            103
+ light samples:             52
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.0250000000002828E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=        1027 ...
+ timing:   0.39266599999999929      s
+ 
+ Running propoEst  ε=0.440; ñ=        1027 ...
+ timing:   0.39248499999999975      s
+ 
+ Running propoEst  ε=0.430; ñ=        1027 ...
+ timing:   0.39255400000000051      s
+ 
+ Running propoEst  ε=0.420; ñ=        1027 ...
+ timing:   0.39254099999999958      s
+ 
+ Running propoEst  ε=0.410; ñ=        1027 ...
+ timing:   0.39256400000000014      s
+ 
+ Running propoEst  ε=0.400; ñ=        1027 ...
+ timing:   0.39260400000000040      s
+ 
+ Running propoEst  ε=0.390; ñ=        1027 ...
+ timing:   0.39255400000000051      s
+ 
+ Running propoEst  ε=0.380; ñ=        1027 ...
+ timing:   0.39249400000000012      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_AntiterminatorHairpin.csv 
+ Finished analysis of AntiterminatorHairpin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    BacteriorhodopsinArEnv
+ Number of atoms (n):        2236
+ 
+ 
+ Running debyeEst...
+ timing:    17.863121000000000      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            382
+ light samples:            736
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.42733199999999982      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            344
+ light samples:            663
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.34731500000000182      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            306
+ light samples:            589
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.27603399999999922      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            268
+ light samples:            516
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.21386199999999889      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            230
+ light samples:            442
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.15565699999999794      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            191
+ light samples:            368
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.10934299999999908      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            153
+ light samples:            295
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    7.0918999999999954E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            115
+ light samples:            221
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.9789999999999992E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2236 ...
+ timing:    2.0501439999999995      s
+ 
+ Running propoEst  ε=0.440; ñ=        2236 ...
+ timing:    2.0500270000000000      s
+ 
+ Running propoEst  ε=0.430; ñ=        2236 ...
+ timing:    2.0503739999999979      s
+ 
+ Running propoEst  ε=0.420; ñ=        2236 ...
+ timing:    2.0498740000000026      s
+ 
+ Running propoEst  ε=0.410; ñ=        2236 ...
+ timing:    2.0497569999999996      s
+ 
+ Running propoEst  ε=0.400; ñ=        2236 ...
+ timing:    2.0501159999999992      s
+ 
+ Running propoEst  ε=0.390; ñ=        2236 ...
+ timing:    2.0503240000000034      s
+ 
+ Running propoEst  ε=0.380; ñ=        2236 ...
+ timing:    2.0508730000000028      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_BacteriorhodopsinArEnv.csv 
+ Finished analysis of BacteriorhodopsinArEnv
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Plastocyanin
+ Number of atoms (n):        1117
+ 
+ 
+ Running debyeEst...
+ timing:    5.0303230000000001      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            280
+ light samples:            279
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.10359300000000005      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            252
+ light samples:            252
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    8.5732000000000141E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            224
+ light samples:            224
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.7880000000000607E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            196
+ light samples:            196
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.2086000000000077E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            168
+ light samples:            168
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.8003999999999927E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            140
+ light samples:            140
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.6898000000000089E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            112
+ light samples:            112
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.7452999999999719E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:             84
+ light samples:             84
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.0031000000000567E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1117 ...
+ timing:   0.51431100000000018      s
+ 
+ Running propoEst  ε=0.440; ñ=        1117 ...
+ timing:   0.51406699999999983      s
+ 
+ Running propoEst  ε=0.430; ñ=        1117 ...
+ timing:   0.51417399999999969      s
+ 
+ Running propoEst  ε=0.420; ñ=        1117 ...
+ timing:   0.51434800000000003      s
+ 
+ Running propoEst  ε=0.410; ñ=        1117 ...
+ timing:   0.51413399999999942      s
+ 
+ Running propoEst  ε=0.400; ñ=        1117 ...
+ timing:   0.51387900000000108      s
+ 
+ Running propoEst  ε=0.390; ñ=        1117 ...
+ timing:   0.51402500000000018      s
+ 
+ Running propoEst  ε=0.380; ñ=        1117 ...
+ timing:   0.51412400000000069      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_Plastocyanin.csv 
+ Finished analysis of Plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    RhccCarborane
+ Number of atoms (n):        3426
+ 
+ 
+ Running debyeEst...
+ timing:    44.955160999999997      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            860
+ light samples:            853
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.0234909999999999      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            774
+ light samples:            768
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.82979399999999970      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            688
+ light samples:            683
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.65525999999999840      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            602
+ light samples:            598
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.50447300000000439      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            516
+ light samples:            512
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.37063699999999500      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            430
+ light samples:            427
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.25852199999999925      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            344
+ light samples:            342
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.16675299999999993      s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            258
+ light samples:            256
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.4520000000002824E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        3426 ...
+ timing:    4.8860579999999985      s
+ 
+ Running propoEst  ε=0.440; ñ=        3426 ...
+ timing:    4.8864850000000004      s
+ 
+ Running propoEst  ε=0.430; ñ=        3426 ...
+ timing:    4.8857749999999953      s
+ 
+ Running propoEst  ε=0.420; ñ=        3426 ...
+ timing:    4.8843189999999979      s
+ 
+ Running propoEst  ε=0.410; ñ=        3426 ...
+ timing:    4.8858239999999995      s
+ 
+ Running propoEst  ε=0.400; ñ=        3426 ...
+ timing:    4.8858280000000036      s
+ 
+ Running propoEst  ε=0.390; ñ=        3426 ...
+ timing:    4.8856870000000043      s
+ 
+ Running propoEst  ε=0.380; ñ=        3426 ...
+ timing:    4.8839439999999996      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_RhccCarborane.csv 
+ Finished analysis of RhccCarborane
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Selenow
+ Number of atoms (n):        2773
+ 
+ 
+ Running debyeEst...
+ timing:    28.498840000000001      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            534
+ light samples:            853
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.64803099999999958      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            481
+ light samples:            768
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.52615300000000076      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            428
+ light samples:            682
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.41593600000000208      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            374
+ light samples:            597
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.31981299999999990      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            321
+ light samples:            512
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.23568099999999959      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            267
+ light samples:            427
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.16405099999999706      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            214
+ light samples:            341
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.10688799999999787      s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            161
+ light samples:            256
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.1037999999999926E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2773 ...
+ timing:    3.0484530000000021      s
+ 
+ Running propoEst  ε=0.440; ñ=        2773 ...
+ timing:    3.0481920000000002      s
+ 
+ Running propoEst  ε=0.430; ñ=        2773 ...
+ timing:    3.0476290000000006      s
+ 
+ Running propoEst  ε=0.420; ñ=        2773 ...
+ timing:    3.0482699999999952      s
+ 
+ Running propoEst  ε=0.410; ñ=        2773 ...
+ timing:    3.0474010000000007      s
+ 
+ Running propoEst  ε=0.400; ñ=        2773 ...
+ timing:    3.0480479999999943      s
+ 
+ Running propoEst  ε=0.390; ñ=        2773 ...
+ timing:    3.0486550000000037      s
+ 
+ Running propoEst  ε=0.380; ñ=        2773 ...
+ timing:    3.0518840000000012      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_Selenow.csv 
+ Finished analysis of Selenow
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Stripak
+ Number of atoms (n):       16613
+ 
+ 
+ Running debyeEst...
+ERROR in getF0: Element "Zn" not found
+ERROR STOP 
+
+Error termination. Backtrace:
+#0  0xffff24ba1797 in ???
+#1  0xffff24ba2577 in ???
+#2  0xffff24ba3b57 in ???
+#3  0x4092fb in ???
+#4  0x408e07 in ???
+#5  0x40a907 in ???
+#6  0x411d93 in ???
+#7  0x4041a3 in ???
+#8  0x408477 in ???
+#9  0x403923 in ???
+#10  0xffff248d621b in ???
+#11  0xffff248d62fb in ???
+#12  0x4039af in ???
+#13  0xffffffffffffffff in ???
+ 
+ **************************************
+ ABORTING Stripak; CONTINUING ANALYSIS...
+ **************************************
+ ====================
+ 
+ ====================
+ Analyzing:    TeicoplaninUbiquitin
+ Number of atoms (n):         768
+ 
+ 
+ Running debyeEst...
+ timing:    2.1598489999999999      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            144
+ light samples:            241
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.0014000000000003E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            130
+ light samples:            217
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.0797999999999668E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            115
+ light samples:            193
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.2455999999999818E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            101
+ light samples:            169
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.5151000000000145E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:             87
+ light samples:            145
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.9050000000000011E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:             72
+ light samples:            121
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.3256999999999852E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:             58
+ light samples:             97
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    8.7929999999998287E-003 s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:             44
+ light samples:             73
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.3349999999996456E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         768 ...
+ timing:   0.23204500000000028      s
+ 
+ Running propoEst  ε=0.440; ñ=         768 ...
+ timing:   0.23186300000000015      s
+ 
+ Running propoEst  ε=0.430; ñ=         768 ...
+ timing:   0.23188800000000009      s
+ 
+ Running propoEst  ε=0.420; ñ=         768 ...
+ timing:   0.23183199999999982      s
+ 
+ Running propoEst  ε=0.410; ñ=         768 ...
+ timing:   0.23175999999999997      s
+ 
+ Running propoEst  ε=0.400; ñ=         768 ...
+ timing:   0.23166699999999985      s
+ 
+ Running propoEst  ε=0.390; ñ=         768 ...
+ timing:   0.23171299999999961      s
+ 
+ Running propoEst  ε=0.380; ñ=         768 ...
+ timing:   0.23186199999999957      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_TeicoplaninUbiquitin.csv 
+ Finished analysis of TeicoplaninUbiquitin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    TetToxHcGT1b
+ Number of atoms (n):        3859
+ 
+ 
+ Running debyeEst...
+ timing:    54.794588000000005      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            726
+ light samples:           1204
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:    1.3011029999999977      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            654
+ light samples:           1084
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:    1.0562470000000062      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            581
+ light samples:            963
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.82479299999999967      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            509
+ light samples:            843
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.62993699999999819      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            436
+ light samples:            723
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.46586200000000133      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            363
+ light samples:            602
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.32282199999999506      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            291
+ light samples:            482
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.20816199999999441      s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            218
+ light samples:            362
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.11819799999999958      s
+ 
+ Running propoEst  ε=0.450; ñ=        3859 ...
+ timing:    5.9862049999999911      s
+ 
+ Running propoEst  ε=0.440; ñ=        3859 ...
+ timing:    5.9883669999999967      s
+ 
+ Running propoEst  ε=0.430; ñ=        3859 ...
+ timing:    5.9880600000000044      s
+ 
+ Running propoEst  ε=0.420; ñ=        3859 ...
+ timing:    5.9862229999999954      s
+ 
+ Running propoEst  ε=0.410; ñ=        3859 ...
+ timing:    5.9868210000000062      s
+ 
+ Running propoEst  ε=0.400; ñ=        3859 ...
+ timing:    5.9824500000000000      s
+ 
+ Running propoEst  ε=0.390; ñ=        3859 ...
+ timing:    5.9812440000000038      s
+ 
+ Running propoEst  ε=0.380; ñ=        3859 ...
+ timing:    5.9837690000000094      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_TetToxHcGT1b.csv 
+ Finished analysis of TetToxHcGT1b
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    VancomycinLacticAcid
+ Number of atoms (n):         536
+ 
+ 
+ Running debyeEst...
+ timing:    1.1699500000000000      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            120
+ light samples:            148
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.4306999999999856E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            108
+ light samples:            134
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.0197000000000020E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:             96
+ light samples:            119
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.6070000000000029E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:             84
+ light samples:            104
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.2604999999999977E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:             72
+ light samples:             89
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.3479999999999119E-003 s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:             60
+ light samples:             74
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.6489999999999050E-003 s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:             48
+ light samples:             60
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.4910000000000228E-003 s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:             36
+ light samples:             45
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.6759999999999007E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         536 ...
+ timing:   0.12134099999999992      s
+ 
+ Running propoEst  ε=0.440; ñ=         536 ...
+ timing:   0.12134099999999992      s
+ 
+ Running propoEst  ε=0.430; ñ=         536 ...
+ timing:   0.12132499999999991      s
+ 
+ Running propoEst  ε=0.420; ñ=         536 ...
+ timing:   0.12127299999999996      s
+ 
+ Running propoEst  ε=0.410; ñ=         536 ...
+ timing:   0.12148900000000018      s
+ 
+ Running propoEst  ε=0.400; ñ=         536 ...
+ timing:   0.12134800000000001      s
+ 
+ Running propoEst  ε=0.390; ñ=         536 ...
+ timing:   0.12134700000000009      s
+ 
+ Running propoEst  ε=0.380; ñ=         536 ...
+ timing:   0.12134199999999984      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_VancomycinLacticAcid.csv 
+ Finished analysis of VancomycinLacticAcid
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    VATPaseLiRotor
+ Number of atoms (n):       12831
+ 
+ 
+ Running debyeEst...
+ timing:    597.15478700000006      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           2225
+ light samples:           4191
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    14.476626999999894      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           2003
+ light samples:           3772
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    11.758631000000037      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           1780
+ light samples:           3353
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    9.3007969999999887      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:           1558
+ light samples:           2934
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    7.1411540000000286      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:           1335
+ light samples:           2515
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    5.2443260000000009      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:           1113
+ light samples:           2096
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    3.6588699999999790      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            890
+ light samples:           1677
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    2.3609140000000934      s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            668
+ light samples:           1258
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    1.3118499999999358      s
+ 
+ Running propoEst  ε=0.450; ñ=       12831 ...
+ timing:    67.150607000000036      s
+ 
+ Running propoEst  ε=0.440; ñ=       12831 ...
+ timing:    67.155844000000002      s
+ 
+ Running propoEst  ε=0.430; ñ=       12831 ...
+ timing:    67.151690000000031      s
+ 
+ Running propoEst  ε=0.420; ñ=       12831 ...
+ timing:    67.109921999999983      s
+ 
+ Running propoEst  ε=0.410; ñ=       12831 ...
+ timing:    67.115579000000025      s
+ 
+ Running propoEst  ε=0.400; ñ=       12831 ...
+ timing:    67.108706999999981      s
+ 
+ Running propoEst  ε=0.390; ñ=       12831 ...
+ timing:    67.112245000000030      s
+ 
+ Running propoEst  ε=0.380; ñ=       12831 ...
+ timing:    67.114996000000019      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_VATPaseLiRotor.csv 
+ Finished analysis of VATPaseLiRotor
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    XyloseIsomerase
+ Number of atoms (n):        6614
+ 
+ 
+ Running debyeEst...
+ timing:    166.07623999999998      s
+ 
+ Running stratEst  a=0.50...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           1383
+ light samples:           1924
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.8468599999999924      s
+ 
+ Running stratEst  a=0.45...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           1245
+ light samples:           1732
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.1220720000000028      s
+ 
+ Running stratEst  a=0.40...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           1107
+ light samples:           1540
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.4751039999999875      s
+ 
+ Running stratEst  a=0.35...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            969
+ light samples:           1347
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.8953060000000050      s
+ 
+ Running stratEst  a=0.30...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            830
+ light samples:           1155
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.3931089999999813      s
+ 
+ Running stratEst  a=0.25...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            692
+ light samples:            962
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.96973700000000917      s
+ 
+ Running stratEst  a=0.20...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            554
+ light samples:            770
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.62229200000001583      s
+ 
+ Running stratEst  a=0.15...
+ 
+ proportional sampling
+   -> heavySamples = ⌈heavyPopulation * a⌉
+   -> lightSamples = ⌈lightPopulation * a⌉
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            415
+ light samples:            578
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.34993700000001127      s
+ 
+ Running propoEst  ε=0.450; ñ=        6614 ...
+ timing:    18.165146999999990      s
+ 
+ Running propoEst  ε=0.440; ñ=        6614 ...
+ timing:    18.164900999999986      s
+ 
+ Running propoEst  ε=0.430; ñ=        6614 ...
+ timing:    18.171072000000009      s
+ 
+ Running propoEst  ε=0.420; ñ=        6614 ...
+ timing:    18.167387000000019      s
+ 
+ Running propoEst  ε=0.410; ñ=        6614 ...
+ timing:    18.162232000000017      s
+ 
+ Running propoEst  ε=0.400; ñ=        6614 ...
+ timing:    18.168391999999983      s
+ 
+ Running propoEst  ε=0.390; ñ=        6614 ...
+ timing:    18.169167999999956      s
+ 
+ Running propoEst  ε=0.380; ñ=        6614 ...
+ timing:    18.171081000000015      s
+ 
+raw analysis saved at: Analysis/2026-04-03/analysis_XyloseIsomerase.csv 
+ Finished analysis of XyloseIsomerase
+STOP 0
+ ====================
+Warning messages:
+1: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+2: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+3: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+4: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+ 
+ All molecules processed.
+TOTAL EXECUTION TIME: 1825.98 s

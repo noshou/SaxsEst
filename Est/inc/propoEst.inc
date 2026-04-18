@@ -1,4 +1,4 @@
-!! Calculates an estimated weight for the propagator based on a k-d tree structure
+!> Calculates an estimated weight for the propagator based on a k-d tree structure
 !! containing weights and their frequencies. The estimation uses a sample size
 !! determined by the accuracy parameter epsilon and scaling factor a.
 !! The sample size is calculated as: s = ⌈√(24*a)/e⌉ + 1
@@ -20,14 +20,12 @@
 !! @return wEst    Complex conjugate of the estimated propagator weight
 function propEstCalc(k, q, a, e) result(wEst)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     type(frequencies),  intent(in) :: k
     real(c_double),     intent(in) :: a, q,  e  
     complex(c_double)              :: wEst, tot    
     complex(c_double), allocatable :: w(:)
     integer, allocatable           :: f(:)
     integer                        :: s, sChoose2, cChoose2, i 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     ! Allocate space for list of weights and frequencies
     allocate(w, source=k%weights(q)); allocate(f, source=k%freqs())
@@ -57,7 +55,7 @@ function propEstCalc(k, q, a, e) result(wEst)
 
 end function propEstCalc
 
-!! Docstring needs updating (add normalization constant)
+!> Docstring needs updating (add normalization constant)
 !! Computes scattering intensity I(Q) for a given set of Q values using a radial
 !! contribution method with proportional weight estimation. The intensity is calculated
 !! using atomic form factors and pairwise distance contributions via the sinc function.
@@ -82,7 +80,6 @@ end function propEstCalc
 !!                      - Calculated intensity values I(Q)
 function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     type(frequencies),  intent(in)  :: k
     real(c_double),     intent(in)  :: a 
@@ -94,12 +91,10 @@ function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
     real(c_double), allocatable     :: intensity(:)
     integer                         :: nAtoms, nQVals, i, j, qIJ
     real(kind=real64)               :: start, finish
-    real                            :: rate
     type(estimate)                  :: intensityEstimate
     type(atom)                      :: atomI
     complex(c_double)               :: wEst, atomIFormFact
     real(c_double)                  :: qVal, radialContrib, atomicContrib, dst, est, norm
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! start timer
     call cpu_time(start)
@@ -128,8 +123,6 @@ function propoEst(k, atoms, qVals, a, e) result(intensityEstimate)
                     radialContrib = sinc(dst)
                     est = est + atomicContrib * radialContrib
                 else
-                    ! since self is not picked up in radial search, 
-                    ! we add the case of atomIFormFact * conj(atomIFormFact)
                     est = est + real(atomIFormFact * conjg(atomIFormFact), kind=c_double)  
                 end if
             end do 

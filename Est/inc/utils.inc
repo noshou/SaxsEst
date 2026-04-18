@@ -8,10 +8,10 @@
 !! @param[in] f     Finish time of clock
 !! @param[in] q     Array of Q values
 !! @param[in] i     Array of intensity estimates
-!! @return e        C-interoperable intensity_est structure with pointers to allocated data
-function newIntensity(s, f, r, q, i) result(e)
+!!
+!! @return         C-interoperable intensity_est structure with pointers to allocated data
+function newIntensity(s, f, q, i) result(e)
     
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ! input variables
     real(kind=real64), intent(in)            :: s, f
     real(c_double), dimension(:), intent(in) :: q, i
@@ -28,7 +28,6 @@ function newIntensity(s, f, r, q, i) result(e)
     ! check if targets allocated - free if they are
     if (allocated(qCpy)) then; deallocate(qCpy); end if
     if (allocated(iCpy)) then; deallocate(iCpy); end if
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! copy over data to c pointers
     allocate(qCpy(size(q))); allocate(iCpy(size(i)))
@@ -48,13 +47,12 @@ end function newIntensity
 !> Cardinal sine function: sinc(x) = sin(x)/x
 !! Returns 1 for x ≈ 0 to avoid division by zero
 !! @param[in] x  Input value
+!!
 !! @return sinc(x), with limit value 1 as x→0
 pure function sinc(x) result(res)
 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     real(c_double), intent(in) :: x
     real(c_double)             :: res   
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     if (abs(x) <= 1e-9_c_double) then  
         res = 1.0_c_double

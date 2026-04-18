@@ -311,6 +311,12 @@
     - Capturing neon – the first experimental structure of neon trapped within a metal–organic environment
  - C60BuckyBallHe.xyz
     - X-ray observation of a helium atom and placing a nitrogen atom inside He@C60 and He@C70
+  - CoiledCoil.xyz
+    - Coiled-coil protein origami triangle
+  - HelixBundle.xyz
+    - Cryo EM of 3D DNA origami 16 helix bundle
+  - NanoBarrel.xyz
+    - Folding DNA into a lipid-conjugated nano-barrel for controlled reconstitution of membrane proteins
 # 2026-03-09
  - removing interactive CLI, will remove automated run
  - since pdb-2-xyz is borked, used https://sciencecodons.com/tools/pdb-to-xyz-converter/ (citation included), Open Babel (two citations), and atomic simuilation envrionment + numpy for He@C70 + MOF
@@ -326,5 +332,71 @@
  - proportional error: the absolute difference is large where intensity is large (low q) and small where intensity is small (high q). The estimator isn't worse at low q in any meaningful sense, it's just that the quantity being estimated is bigger there. This means absolute difference plots are misleading, so switched to percent difference instead.
  - realized I was using *wall clock* time and not *cpu time* so time measurements are borked (who could've figured that????)
      - switched to cpu time :) 
+- fibrogen is borked (only carbon) but showed huge bug
+  - monoatomic molecules do NOT work for strat est; cause segmentation fault 
+  - after thesis is done, need to fix
+# 2026-03-12
+  - changed ratio for strat est to heavyCdf%population / (heavyCdf%population + lightCdf%population)
+  - for pairwise computation, Array[i] + Array[j] == Array[j] + Array[i], therefore we only need to calculate Array[i] + Array[j] once. We can achieve this by  first splitting up the sum into three parts:
+    1. sum where i == j (diagonal entries)
+    2. sum where i > j (lower triangular entry)
+    3. sum where i < j (upper triangular entry)
+  - since the sum of the lower triangular and upper triangular are identical, we can half the work by simply dropping the lower triangular matrix and multiplying the result of the upper triangular matrix by two.
 
+# 2026-03-18
+   - got interrupted in executing phi baseplate; so only did down to e = 0.420 
+     - nano barrel and phi baseplate alone took around 5 days to execute, so not redoing phi baseplate. most important info is done
+   - executing rest of dataset; will use as final dataset
  
+# 2026-04-01
+   - changing proportional sampling in stratEst to neyman allocation
+   - setting upper/lower bounds (1, #num_atoms - 1) for sampling sizes
+     - https://www150.statcan.gc.ca/n1/en/pub/12-001-x/2024002/article/00003-eng.pdf?st=5705yne
+   - note: this algorithm will NOT WORK for non-homogenous atoms 
+   - in stratEst strict sample size is transformed to upper bound for stratum size (ie: maximum of a*#atoms - 2 can be sampled in total, and a minimum of 2 atoms must be picked)
+   - neyman allocation failed
+     - stratification by element type with proportional allocation reduces variance on the form factor axis, and that's the best you can do without stratifying on the distance axis. Neyman fails here not because the method is wrong, but because the variance you can estimate (form factor spread) isn't the variance that matters (spatial).
+   - recalculating cdf at each q creates MASSIVE blowup in variance
+   - original calculations were much better: q values are stable enough not to change bins - one sample is enough
+     - adds *significant* noise if we recalculate at each q value 
+
+# 2026-04-02
+   - messed up stratified estimate sampling - normalizing by sample size ** 2 instead of total population
+     - sample of n atoms gives you n^2 pair terms. However, we are trying to *estimate* the true value, so we must divide by total size ** 2 lest we get the blowups observed
+   - testing following with fixed sampling and resampling cdf for each q
+      - neyman allocation
+         - stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+         - strataBudget = ⌈a * total population⌉
+         - minimum stratum size: 2
+         - maximum stratum size: strataBudget - 2
+         - heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+         - lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+         - totalSamples = heavySamples + lightSamples
+      - proportional sampling
+         - heavySamples = ⌈heavyPopulation * a⌉
+         - lightSamples = ⌈lightPopulation * a⌉
+         - totalSamples = heavySamples + lightSamples
+      - heavy-rounded proportional sampling
+         - totalSamples = ⌈a * total population⌉
+         - heavySamples = ⌈heavyPopulation * a⌉
+         - lightSamples = totalSamples - heavySamples
+      - light-rounded proportional sampling
+         - totalSamples = ⌈a * total population⌉
+         - lightSamples = ⌈lightPopulation * a⌉
+         - heavySamples = totalSamples - lightSamples
+      - mean-weighted sampling
+        - strataBudget = ⌈a * total population⌉
+        - sumStratMean = meanLight + meanHeavy
+        - heavySamples = ⌈meanHeavy/(sumStratMean) * strataBudget⌉
+        - lightSamples = ⌈meanLight/(sumStratMean) * strataBudget⌉
+        - totalSamples = heavySamples + lightSamples
+      - heavy-rounded mean-weighted sampling
+         - totalSamples = ⌈a * total population⌉
+         - sumStratMean = meanLight + meanHeavy
+         - heavySamples = ⌈meanHeavy/(sumStratMean) * totalSamples⌉
+         - lightSamples = totalSamples - heavySamples
+      - light-rounded mean-weighted sampling
+         - totalSamples = ⌈a * total population⌉
+         - sumStratMean = meanLight + meanHeavy
+         - lightSamples = ⌈meanLight/(sumStratMean) * totalSamples⌉
+         - heavySamples = totalSamples - lightSamples

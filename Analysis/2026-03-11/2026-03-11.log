@@ -1,0 +1,1195 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.18.15-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Wed Mar  4 13:50:11 UTC 2026 aarch64 GNU/Linux
+===================
+compiling: AtomXYZ/xyz_tmp/xyz_Aerolysin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_AntiterminatorHairpin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_ArginaseI.f90
+compiling: AtomXYZ/xyz_tmp/xyz_BacteriorhodopsinArEnv.f90
+compiling: AtomXYZ/xyz_tmp/xyz_C60BuckyBallHe.f90
+compiling: AtomXYZ/xyz_tmp/xyz_CollagenLikePeptide.f90
+compiling: AtomXYZ/xyz_tmp/xyz_CytosolAminopeptidase.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Elf2Nucleosome.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Fibrogen.f90
+compiling: AtomXYZ/xyz_tmp/xyz_FM197H.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Gb1v29Sem.f90
+compiling: AtomXYZ/xyz_tmp/xyz_GPx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Lg3Endorepellin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_MtCorB.f90
+compiling: AtomXYZ/xyz_tmp/xyz_MutSADPBeF3DNA.f90
+compiling: AtomXYZ/xyz_tmp/xyz_MyosinII10s.f90
+compiling: AtomXYZ/xyz_tmp/xyz_NeonMOF.f90
+compiling: AtomXYZ/xyz_tmp/xyz_NeuB.f90
+compiling: AtomXYZ/xyz_tmp/xyz_PHGDH.f90
+compiling: AtomXYZ/xyz_tmp/xyz_PhiTEBaseplate.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_PsGQuadraplex.f90
+compiling: AtomXYZ/xyz_tmp/xyz_RhccCarborane.f90
+compiling: AtomXYZ/xyz_tmp/xyz_RuBisCo.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Selenow.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Stripak.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TeicoplaninUbiquitin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TetToxHcGT1b.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VancomycinLacticAcid.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VATPaseLiRotor.f90
+compiling: AtomXYZ/xyz_tmp/xyz_XyloseIsomerase.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/SaxsEst
+==================================
+ 
+ ====================
+ Analyzing:    Aerolysin
+ Number of atoms (n):       23303
+ 
+ 
+ Running debyeEst...
+ timing:    3926.6808529999998      s
+ 
+ Running stratEst  s=0.50...
+ timing:    99.653098999999656      s
+ 
+ Running stratEst  s=0.45...
+ timing:    80.501545999999962      s
+ 
+ Running stratEst  s=0.40...
+ timing:    63.727703000000474      s
+ 
+ Running stratEst  s=0.35...
+ timing:    48.730659000000742      s
+ 
+ Running stratEst  s=0.30...
+ timing:    35.805118999999650      s
+ 
+ Running stratEst  s=0.25...
+ timing:    24.877037000000200      s
+ 
+ Running stratEst  s=0.20...
+ timing:    15.920257999999194      s
+ 
+ Running stratEst  s=0.15...
+ timing:    8.9787690000002840      s
+ 
+ Running propoEst  ε=0.450; ñ=       23303 ...
+ timing:    218.45379800000046      s
+ 
+ Running propoEst  ε=0.440; ñ=       23303 ...
+ timing:    218.41637700000047      s
+ 
+ Running propoEst  ε=0.430; ñ=       23303 ...
+ timing:    218.41138700000010      s
+ 
+ Running propoEst  ε=0.420; ñ=       23303 ...
+ timing:    218.40249200000017      s
+ 
+ Running propoEst  ε=0.410; ñ=       23303 ...
+ timing:    218.40812499999993      s
+ 
+ Running propoEst  ε=0.400; ñ=       23303 ...
+ timing:    218.44182100000035      s
+ 
+ Running propoEst  ε=0.390; ñ=       23303 ...
+ timing:    218.46766699999989      s
+ 
+ Running propoEst  ε=0.380; ñ=       23303 ...
+ timing:    218.44489200000044      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_Aerolysin.csv 
+ Finished analysis of Aerolysin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    AntiterminatorHairpin
+ Number of atoms (n):        1027
+ 
+ 
+ Running debyeEst...
+ timing:    8.2349139999999998      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.18624699999999983      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.15090799999999938      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.11952600000000047      s
+ 
+ Running stratEst  s=0.35...
+ timing:    9.1860000000000497E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    6.7823999999999884E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    4.6701999999999799E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    3.0160000000000409E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    1.7407000000000394E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1027 ...
+ timing:   0.39296700000000051      s
+ 
+ Running propoEst  ε=0.440; ñ=        1027 ...
+ timing:   0.39320999999999984      s
+ 
+ Running propoEst  ε=0.430; ñ=        1027 ...
+ timing:   0.39312999999999931      s
+ 
+ Running propoEst  ε=0.420; ñ=        1027 ...
+ timing:   0.39318800000000032      s
+ 
+ Running propoEst  ε=0.410; ñ=        1027 ...
+ timing:   0.39311800000000119      s
+ 
+ Running propoEst  ε=0.400; ñ=        1027 ...
+ timing:   0.39308199999999971      s
+ 
+ Running propoEst  ε=0.390; ñ=        1027 ...
+ timing:   0.39306500000000000      s
+ 
+ Running propoEst  ε=0.380; ñ=        1027 ...
+ timing:   0.39322600000000030      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_AntiterminatorHairpin.csv 
+ Finished analysis of AntiterminatorHairpin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    ArginaseI
+ Number of atoms (n):        5075
+ 
+ 
+ Running debyeEst...
+ timing:    197.08778300000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:    4.4883740000000216      s
+ 
+ Running stratEst  s=0.45...
+ timing:    3.6430249999999944      s
+ 
+ Running stratEst  s=0.40...
+ timing:    2.8583480000000066      s
+ 
+ Running stratEst  s=0.35...
+ timing:    2.1943430000000035      s
+ 
+ Running stratEst  s=0.30...
+ timing:    1.6108450000000119      s
+ 
+ Running stratEst  s=0.25...
+ timing:    1.1166139999999984      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.72009800000000723      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.41277999999999793      s
+ 
+ Running propoEst  ε=0.450; ñ=        5075 ...
+ timing:    10.766258999999991      s
+ 
+ Running propoEst  ε=0.440; ñ=        5075 ...
+ timing:    10.764484000000010      s
+ 
+ Running propoEst  ε=0.430; ñ=        5075 ...
+ timing:    10.757453999999996      s
+ 
+ Running propoEst  ε=0.420; ñ=        5075 ...
+ timing:    10.758398000000000      s
+ 
+ Running propoEst  ε=0.410; ñ=        5075 ...
+ timing:    10.759480999999994      s
+ 
+ Running propoEst  ε=0.400; ñ=        5075 ...
+ timing:    10.758770999999967      s
+ 
+ Running propoEst  ε=0.390; ñ=        5075 ...
+ timing:    10.765075999999965      s
+ 
+ Running propoEst  ε=0.380; ñ=        5075 ...
+ timing:    10.763170000000002      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_ArginaseI.csv 
+ Finished analysis of ArginaseI
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    BacteriorhodopsinArEnv
+ Number of atoms (n):        2236
+ 
+ 
+ Running debyeEst...
+ timing:    35.387171000000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.86382700000000057      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.70164400000000171      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.56730100000000050      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.43602599999999825      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.32021600000000205      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.21902699999999697      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.14033999999999480      s
+ 
+ Running stratEst  s=0.15...
+ timing:    7.9733000000004495E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2236 ...
+ timing:    2.0516000000000005      s
+ 
+ Running propoEst  ε=0.440; ñ=        2236 ...
+ timing:    2.0516280000000009      s
+ 
+ Running propoEst  ε=0.430; ñ=        2236 ...
+ timing:    2.0513219999999990      s
+ 
+ Running propoEst  ε=0.420; ñ=        2236 ...
+ timing:    2.0514569999999992      s
+ 
+ Running propoEst  ε=0.410; ñ=        2236 ...
+ timing:    2.0514160000000032      s
+ 
+ Running propoEst  ε=0.400; ñ=        2236 ...
+ timing:    2.0514519999999976      s
+ 
+ Running propoEst  ε=0.390; ñ=        2236 ...
+ timing:    2.0516359999999949      s
+ 
+ Running propoEst  ε=0.380; ñ=        2236 ...
+ timing:    2.0512639999999962      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_BacteriorhodopsinArEnv.csv 
+ Finished analysis of BacteriorhodopsinArEnv
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    C60BuckyBallHe
+ Number of atoms (n):       24947
+ 
+ 
+ Running debyeEst...
+ timing:    4372.3444769999996      s
+ 
+ Running stratEst  s=0.50...
+ timing:    111.45699800000057      s
+ 
+ Running stratEst  s=0.45...
+ timing:    90.719715000000178      s
+ 
+ Running stratEst  s=0.40...
+ timing:    71.813573999999790      s
+ 
+ Running stratEst  s=0.35...
+ timing:    55.071866000000227      s
+ 
+ Running stratEst  s=0.30...
+ timing:    40.926551000000472      s
+ 
+ Running stratEst  s=0.25...
+ timing:    28.061646000000110      s
+ 
+ Running stratEst  s=0.20...
+ timing:    18.033009000000675      s
+ 
+ Running stratEst  s=0.15...
+ timing:    10.179892000000109      s
+ 
+ Running propoEst  ε=0.450; ñ=       24947 ...
+ timing:    320.02962099999968      s
+ 
+ Running propoEst  ε=0.440; ñ=       24947 ...
+ timing:    320.06445999999960      s
+ 
+ Running propoEst  ε=0.430; ñ=       24947 ...
+ timing:    320.17958700000054      s
+ 
+ Running propoEst  ε=0.420; ñ=       24947 ...
+ timing:    320.18630800000028      s
+ 
+ Running propoEst  ε=0.410; ñ=       24947 ...
+ timing:    319.99625500000002      s
+ 
+ Running propoEst  ε=0.400; ñ=       24947 ...
+ timing:    320.04716999999982      s
+ 
+ Running propoEst  ε=0.390; ñ=       24947 ...
+ timing:    320.09408999999960      s
+ 
+ Running propoEst  ε=0.380; ñ=       24947 ...
+ timing:    320.09144899999956      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_C60BuckyBallHe.csv 
+ Finished analysis of C60BuckyBallHe
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    CollagenLikePeptide
+ Number of atoms (n):         674
+ 
+ 
+ Running debyeEst...
+ timing:    3.4184209999999999      s
+ 
+ Running stratEst  s=0.50...
+ timing:    8.0868999999999858E-002 s
+ 
+ Running stratEst  s=0.45...
+ timing:    6.5058000000000060E-002 s
+ 
+ Running stratEst  s=0.40...
+ timing:    5.1460000000000061E-002 s
+ 
+ Running stratEst  s=0.35...
+ timing:    3.9445999999999870E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    2.9379999999999740E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    2.0237000000000283E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    1.3201000000000018E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    7.5479999999998881E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         674 ...
+ timing:   0.17429800000000029      s
+ 
+ Running propoEst  ε=0.440; ñ=         674 ...
+ timing:   0.17424300000000015      s
+ 
+ Running propoEst  ε=0.430; ñ=         674 ...
+ timing:   0.17421299999999995      s
+ 
+ Running propoEst  ε=0.420; ñ=         674 ...
+ timing:   0.17429299999999959      s
+ 
+ Running propoEst  ε=0.410; ñ=         674 ...
+ timing:   0.17435899999999993      s
+ 
+ Running propoEst  ε=0.400; ñ=         674 ...
+ timing:   0.17435000000000045      s
+ 
+ Running propoEst  ε=0.390; ñ=         674 ...
+ timing:   0.17424899999999965      s
+ 
+ Running propoEst  ε=0.380; ñ=         674 ...
+ timing:   0.17427299999999946      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_CollagenLikePeptide.csv 
+ Finished analysis of CollagenLikePeptide
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    CytosolAminopeptidase
+ Number of atoms (n):       26148
+ 
+ 
+ Running debyeEst...
+ timing:    5108.2197980000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    123.45090999999957      s
+ 
+ Running stratEst  s=0.45...
+ timing:    100.09582000000046      s
+ 
+ Running stratEst  s=0.40...
+ timing:    79.075313999999707      s
+ 
+ Running stratEst  s=0.35...
+ timing:    60.719624999999724      s
+ 
+ Running stratEst  s=0.30...
+ timing:    44.598954000000049      s
+ 
+ Running stratEst  s=0.25...
+ timing:    30.916637000000264      s
+ 
+ Running stratEst  s=0.20...
+ timing:    19.813400000000001      s
+ 
+ Running stratEst  s=0.15...
+ timing:    11.145317999999861      s
+ 
+ Running propoEst  ε=0.450; ñ=       26148 ...
+ timing:    290.00089399999979      s
+ 
+ Running propoEst  ε=0.440; ñ=       26148 ...
+ timing:    289.99212299999999      s
+ 
+ Running propoEst  ε=0.430; ñ=       26148 ...
+ timing:    290.01063700000032      s
+ 
+ Running propoEst  ε=0.420; ñ=       26148 ...
+ timing:    289.98446699999931      s
+ 
+ Running propoEst  ε=0.410; ñ=       26148 ...
+ timing:    290.00941699999930      s
+ 
+ Running propoEst  ε=0.400; ñ=       26148 ...
+ timing:    289.94506399999955      s
+ 
+ Running propoEst  ε=0.390; ñ=       26148 ...
+ timing:    289.94039199999952      s
+ 
+ Running propoEst  ε=0.380; ñ=       26148 ...
+ timing:    289.98912899999959      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_CytosolAminopeptidase.csv 
+ Finished analysis of CytosolAminopeptidase
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Elf2Nucleosome
+ Number of atoms (n):       12529
+ 
+ 
+ Running debyeEst...
+ timing:    1163.9689270000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    28.592121000000134      s
+ 
+ Running stratEst  s=0.45...
+ timing:    23.166512000000012      s
+ 
+ Running stratEst  s=0.40...
+ timing:    18.253722000000153      s
+ 
+ Running stratEst  s=0.35...
+ timing:    14.047790999999961      s
+ 
+ Running stratEst  s=0.30...
+ timing:    10.239459000000124      s
+ 
+ Running stratEst  s=0.25...
+ timing:    7.1320359999999710      s
+ 
+ Running stratEst  s=0.20...
+ timing:    4.5464230000000043      s
+ 
+ Running stratEst  s=0.15...
+ timing:    2.6044899999999416      s
+ 
+ Running propoEst  ε=0.450; ñ=       12529 ...
+ timing:    62.265090000000100      s
+ 
+ Running propoEst  ε=0.440; ñ=       12529 ...
+ timing:    62.273147999999992      s
+ 
+ Running propoEst  ε=0.430; ñ=       12529 ...
+ timing:    62.273034000000052      s
+ 
+ Running propoEst  ε=0.420; ñ=       12529 ...
+ timing:    62.264711999999918      s
+ 
+ Running propoEst  ε=0.410; ñ=       12529 ...
+ timing:    62.270285000000058      s
+ 
+ Running propoEst  ε=0.400; ñ=       12529 ...
+ timing:    62.262122999999974      s
+ 
+ Running propoEst  ε=0.390; ñ=       12529 ...
+ timing:    62.259584999999788      s
+ 
+ Running propoEst  ε=0.380; ñ=       12529 ...
+ timing:    62.268811000000142      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_Elf2Nucleosome.csv 
+ Finished analysis of Elf2Nucleosome
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Fibrogen
+ Number of atoms (n):        1950
+ 
+ 
+ Running debyeEst...
+ timing:    23.891901000000001      s
+ 
+ Running stratEst  s=0.50...
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0xffff768b1797 in ???
+#1  0xffff768b057f in ???
+#2  0xffff76a90947 in ???
+#3  0xffff7666d7d8 in ???
+#4  0x41289b in ???
+#5  0x4042bf in ???
+#6  0x4097c7 in ???
+#7  0x403863 in ???
+#8  0xffff765e621b in ???
+#9  0xffff765e62fb in ???
+#10  0x4038ef in ???
+#11  0xffffffffffffffff in ???
+ 
+ **************************************
+ ABORTING Fibrogen; CONTINUING ANALYSIS...
+ **************************************
+   Deleted: Analysis/2026-03-11/debye_Fibrogen.csv
+ ====================
+ 
+ ====================
+ Analyzing:    FM197H
+ Number of atoms (n):       14735
+ 
+ 
+ Running debyeEst...
+ timing:    1638.7737970000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    38.862513000000035      s
+ 
+ Running stratEst  s=0.45...
+ timing:    31.534415999999965      s
+ 
+ Running stratEst  s=0.40...
+ timing:    24.884639000000107      s
+ 
+ Running stratEst  s=0.35...
+ timing:    19.035829999999805      s
+ 
+ Running stratEst  s=0.30...
+ timing:    14.021101000000044      s
+ 
+ Running stratEst  s=0.25...
+ timing:    9.8010610000001179      s
+ 
+ Running stratEst  s=0.20...
+ timing:    6.2655970000000707      s
+ 
+ Running stratEst  s=0.15...
+ timing:    3.5233609999997952      s
+ 
+ Running propoEst  ε=0.450; ñ=       14735 ...
+ timing:    92.010319999999865      s
+ 
+ Running propoEst  ε=0.440; ñ=       14735 ...
+ timing:    92.072142999999869      s
+ 
+ Running propoEst  ε=0.430; ñ=       14735 ...
+ timing:    92.076945999999907      s
+ 
+ Running propoEst  ε=0.420; ñ=       14735 ...
+ timing:    92.038681999999881      s
+ 
+ Running propoEst  ε=0.410; ñ=       14735 ...
+ timing:    92.031383000000005      s
+ 
+ Running propoEst  ε=0.400; ñ=       14735 ...
+ timing:    92.042788999999630      s
+ 
+ Running propoEst  ε=0.390; ñ=       14735 ...
+ timing:    92.066318000000138      s
+ 
+ Running propoEst  ε=0.380; ñ=       14735 ...
+ timing:    92.059424000000035      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_FM197H.csv 
+ Finished analysis of FM197H
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Gb1v29Sem
+ Number of atoms (n):        1985
+ 
+ 
+ Running debyeEst...
+ timing:    30.658962000000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.68743999999999872      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.55751400000000118      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.44432800000000228      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.34003100000000330      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.25071100000000257      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.17435599999999596      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.11206300000000624      s
+ 
+ Running stratEst  s=0.15...
+ timing:    6.3125999999996907E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1985 ...
+ timing:    1.6471799999999988      s
+ 
+ Running propoEst  ε=0.440; ñ=        1985 ...
+ timing:    1.6461410000000001      s
+ 
+ Running propoEst  ε=0.430; ñ=        1985 ...
+ timing:    1.6464660000000038      s
+ 
+ Running propoEst  ε=0.420; ñ=        1985 ...
+ timing:    1.6466919999999945      s
+ 
+ Running propoEst  ε=0.410; ñ=        1985 ...
+ timing:    1.6462880000000055      s
+ 
+ Running propoEst  ε=0.400; ñ=        1985 ...
+ timing:    1.6469680000000011      s
+ 
+ Running propoEst  ε=0.390; ñ=        1985 ...
+ timing:    1.6468820000000051      s
+ 
+ Running propoEst  ε=0.380; ñ=        1985 ...
+ timing:    1.6465360000000047      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_Gb1v29Sem.csv 
+ Finished analysis of Gb1v29Sem
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    GPx
+ Number of atoms (n):        3111
+ 
+ 
+ Running debyeEst...
+ timing:    71.623715999999988      s
+ 
+ Running stratEst  s=0.50...
+ timing:    1.7238660000000010      s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.3944499999999920      s
+ 
+ Running stratEst  s=0.40...
+ timing:    1.1060810000000032      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.84757900000001030      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.62330500000000200      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.43322400000000982      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.27818000000000609      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.15677900000000022      s
+ 
+ Running propoEst  ε=0.450; ñ=        3111 ...
+ timing:    3.9836389999999966      s
+ 
+ Running propoEst  ε=0.440; ñ=        3111 ...
+ timing:    3.9822630000000032      s
+ 
+ Running propoEst  ε=0.430; ñ=        3111 ...
+ timing:    3.9818959999999919      s
+ 
+ Running propoEst  ε=0.420; ñ=        3111 ...
+ timing:    3.9807919999999939      s
+ 
+ Running propoEst  ε=0.410; ñ=        3111 ...
+ timing:    3.9808029999999945      s
+ 
+ Running propoEst  ε=0.400; ñ=        3111 ...
+ timing:    3.9841459999999955      s
+ 
+ Running propoEst  ε=0.390; ñ=        3111 ...
+ timing:    3.9823099999999982      s
+ 
+ Running propoEst  ε=0.380; ñ=        3111 ...
+ timing:    3.9852580000000017      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_GPx.csv 
+ Finished analysis of GPx
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Lg3Endorepellin
+ Number of atoms (n):        1653
+ 
+ 
+ Running debyeEst...
+ timing:    20.445110000000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.46426800000000057      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.37751400000000146      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.30090600000000123      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.23070399999999935      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.16892099999999743      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.11785599999999974      s
+ 
+ Running stratEst  s=0.20...
+ timing:    7.5680000000001968E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    4.2477000000001652E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1653 ...
+ timing:    1.1373370000000023      s
+ 
+ Running propoEst  ε=0.440; ñ=        1653 ...
+ timing:    1.1356509999999993      s
+ 
+ Running propoEst  ε=0.430; ñ=        1653 ...
+ timing:    1.1350749999999969      s
+ 
+ Running propoEst  ε=0.420; ñ=        1653 ...
+ timing:    1.1350840000000026      s
+ 
+ Running propoEst  ε=0.410; ñ=        1653 ...
+ timing:    1.1351760000000013      s
+ 
+ Running propoEst  ε=0.400; ñ=        1653 ...
+ timing:    1.1350810000000031      s
+ 
+ Running propoEst  ε=0.390; ñ=        1653 ...
+ timing:    1.1353340000000003      s
+ 
+ Running propoEst  ε=0.380; ñ=        1653 ...
+ timing:    1.1361610000000013      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_Lg3Endorepellin.csv 
+ Finished analysis of Lg3Endorepellin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    MtCorB
+ Number of atoms (n):       10065
+ 
+ 
+ Running debyeEst...
+ timing:    767.10891800000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:    18.401254999999992      s
+ 
+ Running stratEst  s=0.45...
+ timing:    14.928617999999915      s
+ 
+ Running stratEst  s=0.40...
+ timing:    11.821003000000019      s
+ 
+ Running stratEst  s=0.35...
+ timing:    9.0498069999999871      s
+ 
+ Running stratEst  s=0.30...
+ timing:    6.6421880000000328      s
+ 
+ Running stratEst  s=0.25...
+ timing:    4.6269869999999855      s
+ 
+ Running stratEst  s=0.20...
+ timing:    2.9445770000000948      s
+ 
+ Running stratEst  s=0.15...
+ timing:    1.6522469999999885      s
+ 
+ Running propoEst  ε=0.450; ñ=       10065 ...
+ timing:    42.408636000000001      s
+ 
+ Running propoEst  ε=0.440; ñ=       10065 ...
+ timing:    42.378969999999981      s
+ 
+ Running propoEst  ε=0.430; ñ=       10065 ...
+ timing:    42.400071000000025      s
+ 
+ Running propoEst  ε=0.420; ñ=       10065 ...
+ timing:    42.405150000000049      s
+ 
+ Running propoEst  ε=0.410; ñ=       10065 ...
+ timing:    42.397610999999984      s
+ 
+ Running propoEst  ε=0.400; ñ=       10065 ...
+ timing:    42.398263000000043      s
+ 
+ Running propoEst  ε=0.390; ñ=       10065 ...
+ timing:    42.390920000000051      s
+ 
+ Running propoEst  ε=0.380; ñ=       10065 ...
+ timing:    42.400848999999880      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_MtCorB.csv 
+ Finished analysis of MtCorB
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    MutSADPBeF3DNA
+ Number of atoms (n):       13089
+ 
+ 
+ Running debyeEst...
+ timing:    1244.3946010000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:    31.267413999999917      s
+ 
+ Running stratEst  s=0.45...
+ timing:    25.317203000000063      s
+ 
+ Running stratEst  s=0.40...
+ timing:    19.958591000000069      s
+ 
+ Running stratEst  s=0.35...
+ timing:    15.292657999999847      s
+ 
+ Running stratEst  s=0.30...
+ timing:    11.241146000000072      s
+ 
+ Running stratEst  s=0.25...
+ timing:    7.8086379999999735      s
+ 
+ Running stratEst  s=0.20...
+ timing:    4.9988899999998466      s
+ 
+ Running stratEst  s=0.15...
+ timing:    2.8208870000000843      s
+ 
+ Running propoEst  ε=0.450; ñ=       13089 ...
+ timing:    68.413215000000037      s
+ 
+ Running propoEst  ε=0.440; ñ=       13089 ...
+ timing:    68.418545000000222      s
+ 
+ Running propoEst  ε=0.430; ñ=       13089 ...
+ timing:    68.414899999999989      s
+ 
+ Running propoEst  ε=0.420; ñ=       13089 ...
+ timing:    68.415134999999964      s
+ 
+ Running propoEst  ε=0.410; ñ=       13089 ...
+ timing:    68.415000000000191      s
+ 
+ Running propoEst  ε=0.400; ñ=       13089 ...
+ timing:    68.409550999999965      s
+ 
+ Running propoEst  ε=0.390; ñ=       13089 ...
+ timing:    68.394158999999945      s
+ 
+ Running propoEst  ε=0.380; ñ=       13089 ...
+ timing:    68.415025000000014      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_MutSADPBeF3DNA.csv 
+ Finished analysis of MutSADPBeF3DNA
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    MyosinII10s
+ Number of atoms (n):       22081
+ 
+ 
+ Running debyeEst...
+ timing:    3533.1856960000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:    89.438973999999689      s
+ 
+ Running stratEst  s=0.45...
+ timing:    72.512970000000223      s
+ 
+ Running stratEst  s=0.40...
+ timing:    57.325397999999950      s
+ 
+ Running stratEst  s=0.35...
+ timing:    43.980146999999761      s
+ 
+ Running stratEst  s=0.30...
+ timing:    32.215206999999737      s
+ 
+ Running stratEst  s=0.25...
+ timing:    22.370618999999806      s
+ 
+ Running stratEst  s=0.20...
+ timing:    14.267124999999851      s
+ 
+ Running stratEst  s=0.15...
+ timing:    8.0644069999998464      s
+ 
+ Running propoEst  ε=0.450; ñ=       22081 ...
+ timing:    196.73952400000007      s
+ 
+ Running propoEst  ε=0.440; ñ=       22081 ...
+ timing:    196.75539200000003      s
+ 
+ Running propoEst  ε=0.430; ñ=       22081 ...
+ timing:    196.77289800000017      s
+ 
+ Running propoEst  ε=0.420; ñ=       22081 ...
+ timing:    196.75147900000047      s
+ 
+ Running propoEst  ε=0.410; ñ=       22081 ...
+ timing:    196.74609599999985      s
+ 
+ Running propoEst  ε=0.400; ñ=       22081 ...
+ timing:    196.72879299999931      s
+ 
+ Running propoEst  ε=0.390; ñ=       22081 ...
+ timing:    196.77473599999939      s
+ 
+ Running propoEst  ε=0.380; ñ=       22081 ...
+ timing:    196.76687200000015      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_MyosinII10s.csv 
+ Finished analysis of MyosinII10s
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    NeonMOF
+ Number of atoms (n):        4941
+ 
+ 
+ Running debyeEst...
+ timing:    193.02431200000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    4.4519339999999943      s
+ 
+ Running stratEst  s=0.45...
+ timing:    3.6038150000000257      s
+ 
+ Running stratEst  s=0.40...
+ timing:    2.8334670000000131      s
+ 
+ Running stratEst  s=0.35...
+ timing:    2.1666969999999992      s
+ 
+ Running stratEst  s=0.30...
+ timing:    1.5908520000000124      s
+ 
+ Running stratEst  s=0.25...
+ timing:    1.1072309999999845      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.70894400000000246      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.40035699999998542      s
+ 
+ Running propoEst  ε=0.450; ñ=        4941 ...
+ timing:    12.805644999999998      s
+ 
+ Running propoEst  ε=0.440; ñ=        4941 ...
+ timing:    12.805979999999977      s
+ 
+ Running propoEst  ε=0.430; ñ=        4941 ...
+ timing:    12.806516000000016      s
+ 
+ Running propoEst  ε=0.420; ñ=        4941 ...
+ timing:    12.807414999999963      s
+ 
+ Running propoEst  ε=0.410; ñ=        4941 ...
+ timing:    12.805420999999967      s
+ 
+ Running propoEst  ε=0.400; ñ=        4941 ...
+ timing:    12.803886999999975      s
+ 
+ Running propoEst  ε=0.390; ñ=        4941 ...
+ timing:    12.804897000000039      s
+ 
+ Running propoEst  ε=0.380; ñ=        4941 ...
+ timing:    12.806366000000025      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_NeonMOF.csv 
+ Finished analysis of NeonMOF
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    NeuB
+ Number of atoms (n):        2873
+ 
+ 
+ Running debyeEst...
+ timing:    60.810796000000003      s
+ 
+ Running stratEst  s=0.50...
+ timing:    1.5181630000000013      s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.2387060000000005      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.97566599999999681      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.75094299999999237      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.54946199999999124      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.38360899999999276      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.24343199999999854      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.13571500000000469      s
+ 
+ Running propoEst  ε=0.450; ñ=        2873 ...
+ timing:    3.3689380000000000      s
+ 
+ Running propoEst  ε=0.440; ñ=        2873 ...
+ timing:    3.3683529999999990      s
+ 
+ Running propoEst  ε=0.430; ñ=        2873 ...
+ timing:    3.3691400000000016      s
+ 
+ Running propoEst  ε=0.420; ñ=        2873 ...
+ timing:    3.3687070000000006      s
+ 
+ Running propoEst  ε=0.410; ñ=        2873 ...
+ timing:    3.3690990000000056      s
+ 
+ Running propoEst  ε=0.400; ñ=        2873 ...
+ timing:    3.3689940000000007      s
+ 
+ Running propoEst  ε=0.390; ñ=        2873 ...
+ timing:    3.3693119999999936      s
+ 
+ Running propoEst  ε=0.380; ñ=        2873 ...
+ timing:    3.3696549999999945      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_NeuB.csv 
+ Finished analysis of NeuB
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    PHGDH
+ Number of atoms (n):        4847
+ 
+ 
+ Running debyeEst...
+ timing:    173.53166299999998      s
+ 
+ Running stratEst  s=0.50...
+ timing:    4.2036900000000230      s
+ 
+ Running stratEst  s=0.45...
+ timing:    3.4039539999999988      s
+ 
+ Running stratEst  s=0.40...
+ timing:    2.6899070000000052      s
+ 
+ Running stratEst  s=0.35...
+ timing:    2.0592060000000174      s
+ 
+ Running stratEst  s=0.30...
+ timing:    1.5141889999999876      s
+ 
+ Running stratEst  s=0.25...
+ timing:    1.0489819999999952      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.67152300000000764      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.37946399999998448      s
+ 
+ Running propoEst  ε=0.450; ñ=        4847 ...
+ timing:    9.7221450000000118      s
+ 
+ Running propoEst  ε=0.440; ñ=        4847 ...
+ timing:    9.7206630000000018      s
+ 
+ Running propoEst  ε=0.430; ñ=        4847 ...
+ timing:    9.7203020000000038      s
+ 
+ Running propoEst  ε=0.420; ñ=        4847 ...
+ timing:    9.7214079999999967      s
+ 
+ Running propoEst  ε=0.410; ñ=        4847 ...
+ timing:    9.7217839999999853      s
+ 
+ Running propoEst  ε=0.400; ñ=        4847 ...
+ timing:    9.7194420000000150      s
+ 
+ Running propoEst  ε=0.390; ñ=        4847 ...
+ timing:    9.7201520000000130      s
+ 
+ Running propoEst  ε=0.380; ñ=        4847 ...
+ timing:    9.7207349999999906      s
+ 
+raw analysis saved at: Analysis/2026-03-11/analysis_PHGDH.csv 
+ Finished analysis of PHGDH
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    PhiTEBaseplate
+ Number of atoms (n):      191733
+ 
+ 
+ Running debyeEst...

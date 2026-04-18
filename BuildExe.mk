@@ -3,8 +3,7 @@
 #
 # Provides common variables, library builds, and link rules shared by
 # BuildRelease.mk and BuildDebug.mk.  Each of those files sets BLD_DIR,
-# CFLAGS, BUILD_TYPE, MAIN_EXE, and optionally PDB_TARGET before
-# including this file.
+# CFLAGS, BUILD_TYPE, MAIN_EXE before including this file.
 #
 # Library dependency order:
 #   FormFact  (scattering factor tables, parsed from CSV/JSON via OCaml)

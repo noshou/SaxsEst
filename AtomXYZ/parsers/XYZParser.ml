@@ -1,9 +1,17 @@
-(* module parses an xyz file and returns appropriate fortran module *)
+(* xyz_to_fortran.ml — Parses .xyz molecular coordinate files and emits Fortran modules.
+ *
+ * Each input .xyz file (CSV or TSV) is converted to a standalone Fortran module
+ * (xyz_<name>_mod.f90) containing:
+ *   - Element symbols and x/y/z coordinate arrays as compile-time parameters
+ *   - A get_atoms_xyz_<name>() function that returns an array of atom objects
+ *
+ * Usage: xyz_to_fortran <input.xyz> [<input2.xyz> ...]
+ *)
 
 exception Malformed_xyzEntry of string
 exception Malformed_xyzFile of string
 
-(* Simple record type for parsed atom data *)
+(** Parsed atom: element symbol and Cartesian coordinates in Angstroms. *)
 type atom_data = {
   element: string;
   x: float;
@@ -11,15 +19,15 @@ type atom_data = {
   z: float;
 }
 
-(* matches tab/space-delimited files (TSV) *)
+(** Matches tab/space-delimited rows: Element  x  y  z *)
 let reTSV = Str.regexp (
-  "^\\([A-Za-z][A-Za-z0-9]*[+-]?\\)[ \t]+" ^  
+  "^\\([A-Za-z][A-Za-z0-9]*[+-]?\\)[ \t]+" ^
   "\\(-?[0-9]+\\.[0-9]+\\)[ \t]+" ^
   "\\(-?[0-9]+\\.[0-9]+\\)[ \t]+" ^
   "\\(-?[0-9]+\\.[0-9]+\\)$"
 )
 
-(* matches comma-delimited files (CSV) *)
+(** Matches comma-delimited rows: Element, x, y, z *)
 let reCSV = Str.regexp(
   "^\\([A-Za-z]+\\)[ \t]*,[ \t]*" ^
   "\\(-?[0-9]+\\.[0-9]+\\)[ \t]*,[ \t]*" ^
@@ -27,22 +35,27 @@ let reCSV = Str.regexp(
   "\\(-?[0-9]+\\.[0-9]+\\)$"
 )
 
-(** loads an xyz file (tsv or csv) from a file path.
-    Returns a list of atom_data records *)
+(** Load atoms from an .xyz file at [fp].
+
+    Expects standard XYZ format:
+      - Line 1: atom count (digits extracted, tolerates trailing whitespace/BOM)
+      - Line 2: comment (skipped)
+      - Lines 3+: element x y z (CSV or TSV, auto-detected from first data row)
+
+    @raise Malformed_xyzFile if the header is invalid or delimiter is unrecognized.
+    @raise Malformed_xyzEntry if a data row doesn't match the detected format. *)
 let loadXYZ fp =
 
-  (* initialize mutable empty list of atoms *)
-  let atoms = ref [] in 
-  
-  (* read first line (#atoms) and skip second line of xyz file*)
-  let f = open_in fp in 
-  
-  try 
-    
-    (* Read first line and extract ONLY digits *)
+  let atoms = ref [] in
+  let f = open_in fp in
+
+  try
+
+    (* Extract atom count from first line, filtering to digits only
+       to tolerate BOM or trailing whitespace *)
     let firstLine = input_line f in
-    let size = 
-      let digits_only = 
+    let size =
+      let digits_only =
         String.to_seq firstLine
         |> Seq.filter (fun c -> c >= '0' && c <= '9')
         |> String.of_seq
@@ -51,14 +64,14 @@ let loadXYZ fp =
         raise (Malformed_xyzFile ("First line must contain atom count"))
       else
         int_of_string digits_only
-    in    
-    
-    let _ = input_line f in 
-    
-    (* first data row parsing *)
-    let row = String.trim(input_line f) in 
-    
-    (* detect delim type *)
+    in
+
+    (* Skip comment line *)
+    let _ = input_line f in
+
+    (* Auto-detect delimiter from first data row *)
+    let row = String.trim(input_line f) in
+
     let _delimType =
       if Str.string_match reTSV row 0 then
         reTSV
@@ -66,9 +79,8 @@ let loadXYZ fp =
         reCSV
       else
         raise (Malformed_xyzFile "xyz file must be csv or tsv!")
-    in 
-    
-    (* error message *)
+    in
+
     let errmsg m =
       if _delimType == reTSV then
         "Expected tsv; got: " ^ m
@@ -77,129 +89,97 @@ let loadXYZ fp =
       else
         "Unknown delimiter; got: " ^ m
     in
-    if (Str.string_match _delimType row 0) then 
-      begin
-        
-        (* parse data from first row *)     
-        let element = Str.matched_group 1 row in 
-        let x = float_of_string (Str.matched_group 2 row) in
-        let y = float_of_string (Str.matched_group 3 row) in
-        let z = float_of_string (Str.matched_group 4 row) in
-        atoms := {element; x; y; z} :: !atoms;
-      end 
-    else 
-      raise (Malformed_xyzEntry (errmsg row))
-    ;
-    
-    (* parse rest of file *)
-    let itr = ref 1 in (* have already seen first item *)
-    while !itr < size do 
-      let row = String.trim (input_line f) in 
-      if (Str.string_match _delimType row 0) then 
+
+    (* Parse a single row into an atom_data and prepend to atoms *)
+    let parse_row row =
+      if (Str.string_match _delimType row 0) then
         begin
-          let element = Str.matched_group 1 row in 
+          let element = Str.matched_group 1 row in
           let x = float_of_string (Str.matched_group 2 row) in
           let y = float_of_string (Str.matched_group 3 row) in
           let z = float_of_string (Str.matched_group 4 row) in
           atoms := {element; x; y; z} :: !atoms;
-        end 
-      else 
+        end
+      else
         raise (Malformed_xyzEntry (errmsg row))
-      ;
+    in
+
+    (* First data row was already read for delimiter detection *)
+    parse_row row;
+
+    (* Parse remaining rows *)
+    let itr = ref 1 in
+    while !itr < size do
+      let row = String.trim (input_line f) in
+      parse_row row;
       itr := !itr + 1
     done;
     close_in f;
-    List.rev !atoms  
-  with 
-  | End_of_file -> close_in f; List.rev !atoms 
+    List.rev !atoms
+  with
+  | End_of_file -> close_in f; List.rev !atoms
   | e -> close_in_noerr f; raise e
 
 
-(** writes atomic coordinate data to a Fortran module *)
-let xyz_toFortran xyz_fp = 
-  
-  (* get basename *)
+(** Emit a Fortran module file (xyz_<name>_mod.f90) from an .xyz file.
+
+    The generated module contains element symbols and coordinates as parameter
+    arrays, plus a get_atoms_xyz_<name>() function that constructs atom objects
+    via the AtomXYZ interface. *)
+let xyz_toFortran xyz_fp =
+
   let base_name = "xyz_" ^ (Filename.chop_extension (Filename.basename xyz_fp)) in
-  
-  (* load atoms from xyz file *)
   let atoms = loadXYZ xyz_fp in
-  
-  (* extract data into separate lists *)
+
   let elements = List.map (fun atom -> atom.element) atoms in
   let x_coords = List.map (fun atom -> atom.x) atoms in
   let y_coords = List.map (fun atom -> atom.y) atoms in
   let z_coords = List.map (fun atom -> atom.z) atoms in
-  
-  (* open output file *)
+
   let oc = open_out (base_name ^ ".f90") in
-  
-  (* write module header *)
+
+  (* --- Module header --- *)
   Printf.fprintf oc "!! Atomic coordinate data from XYZ file\n";
   Printf.fprintf oc "!! This module provides raw coordinate data for use with AtomXYZ\n";
   Printf.fprintf oc "module %s_mod\n" base_name;
   Printf.fprintf oc "    use iso_c_binding, only: c_double\n";
   Printf.fprintf oc "    implicit none\n\n";
   Printf.fprintf oc "    private\n\n";
-  
-  (* public interface *)
+
+  (* --- Visibility declarations --- *)
   Printf.fprintf oc "    ! Public interface\n";
   Printf.fprintf oc "    public  :: nAtoms\n";
   Printf.fprintf oc "    private :: elements, x_coords, y_coords, z_coords\n";
   Printf.fprintf oc "    public  :: get_atoms_%s" base_name;
 
-  
-  (* module data *)
+  (* --- Parameter data (element symbols + coordinates) --- *)
   Printf.fprintf oc "    ! Module data\n";
   Printf.fprintf oc "    integer, parameter :: nAtoms = %d\n\n" (List.length atoms);
-  
-  (* write element names *)
-  Printf.fprintf oc "    ! Element symbols\n";
-  Printf.fprintf oc "    character(len=4), parameter :: elements(%d) = [ &\n" (List.length elements);
-  List.iteri (fun idx elem ->
-    if idx == 0 then
-      Printf.fprintf oc "            '%-4s'" elem
-    else
-      Printf.fprintf oc ", &\n            '%-4s'" elem
-  ) elements;
-  Printf.fprintf oc " ]\n\n";
-  
-  (* write x coordinates *)
-  Printf.fprintf oc "    ! X coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(c_double), parameter :: x_coords(%d) = [ &\n" (List.length x_coords);
-  List.iteri (fun idx x ->
-    if idx == 0 then
-      Printf.fprintf oc "            %f_c_double" x
-    else
-      Printf.fprintf oc ", &\n            %f_c_double" x
-  ) x_coords;
-  Printf.fprintf oc " ]\n\n";
-  
-  (* write y coordinates *)
-  Printf.fprintf oc "    ! Y coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(c_double), parameter :: y_coords(%d) = [ &\n" (List.length y_coords);
-  List.iteri (fun idx y ->
-    if idx == 0 then
-      Printf.fprintf oc "            %f_c_double" y
-    else
-      Printf.fprintf oc ", &\n            %f_c_double" y
-  ) y_coords;
-  Printf.fprintf oc " ]\n\n";
-  
-  (* write z coordinates *)
-  Printf.fprintf oc "    ! Z coordinates (Angstroms)\n";
-  Printf.fprintf oc "    real(c_double), parameter :: z_coords(%d) = [ &\n" (List.length z_coords);
-  List.iteri (fun idx z ->
-    if idx == 0 then
-      Printf.fprintf oc "            %f_c_double" z
-    else
-      Printf.fprintf oc ", &\n            %f_c_double" z
-  ) z_coords;
-  Printf.fprintf oc " ]\n\n";
-  
-  (* write methods *)
+
+  (* Helper: write a Fortran parameter array with a formatting function per element *)
+  let write_array label type_str len fmt_elem lst =
+    Printf.fprintf oc "    ! %s\n" label;
+    Printf.fprintf oc "    %s, parameter :: %s(%d) = [ &\n" type_str label len;
+    List.iteri (fun idx v ->
+      if idx == 0 then
+        Printf.fprintf oc "            %s" (fmt_elem v)
+      else
+        Printf.fprintf oc ", &\n            %s" (fmt_elem v)
+    ) lst;
+    Printf.fprintf oc " ]\n\n"
+  in
+
+  write_array "elements" "character(len=4)" (List.length elements)
+    (Printf.sprintf "'%-4s'") elements;
+  write_array "x_coords" "real(c_double)" (List.length x_coords)
+    (Printf.sprintf "%f_c_double") x_coords;
+  write_array "y_coords" "real(c_double)" (List.length y_coords)
+    (Printf.sprintf "%f_c_double") y_coords;
+  write_array "z_coords" "real(c_double)" (List.length z_coords)
+    (Printf.sprintf "%f_c_double") z_coords;
+
+  (* --- get_atoms function --- *)
   Printf.fprintf oc "contains\n\n";
-  
-  (* get_atoms function - returns array of atom objects *)
   Printf.fprintf oc "    ! Returns all atoms as an array of atom objects\n";
   Printf.fprintf oc "    ! Requires: use AtomXYZ, only: atom, coord, createAtom\n";
   Printf.fprintf oc "    function get_atoms_%s() result(atoms)\n" base_name;
@@ -214,12 +194,11 @@ let xyz_toFortran xyz_fp =
   Printf.fprintf oc "            atoms(i) = createAtom(position, elements(i))\n";
   Printf.fprintf oc "        end do\n";
   Printf.fprintf oc "    end function get_atoms_%s\n\n" base_name;
-  
-  (* close module *)
+
   Printf.fprintf oc "end module %s_mod\n" base_name;
   close_out oc
 
-(* Main entry point; allows multiple inputs to be sent and parsed at the same time *)
+(** Entry point. Processes each .xyz argument into a Fortran module. *)
 let () =
   if Array.length Sys.argv < 2 then begin
     Printf.eprintf "Usage: %s <input.xyz> [<input2.xyz> ...]\n" Sys.argv.(0);
@@ -227,9 +206,8 @@ let () =
   end;
 
   let arg_count = Array.length Sys.argv in
-  let i = ref 1 in (* since Sys.argv(0) is name of file, we start at pos 1 *)
-
+  let i = ref 1 in
   while !i <> arg_count do
-      xyz_toFortran Sys.argv.(!i);
-      i := !i + 1 
+    xyz_toFortran Sys.argv.(!i);
+    i := !i + 1
   done

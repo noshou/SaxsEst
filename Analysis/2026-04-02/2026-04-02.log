@@ -1,0 +1,2609 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.18.15-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Wed Mar  4 13:50:11 UTC 2026 aarch64 GNU/Linux
+===================
+compiling: AtomXYZ/xyz_tmp/xyz_AntiterminatorHairpin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_BacteriorhodopsinArEnv.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_RhccCarborane.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Selenow.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Stripak.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TeicoplaninUbiquitin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TetToxHcGT1b.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VancomycinLacticAcid.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VATPaseLiRotor.f90
+compiling: AtomXYZ/xyz_tmp/xyz_XyloseIsomerase.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/SaxsEst
+==================================
+ 
+ ====================
+ Analyzing:    AntiterminatorHairpin
+ Number of atoms (n):        1027
+ 
+ 
+ Running debyeEst...
+ timing:    4.1256529999999998      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            512
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.1192999999999635E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            461
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    7.4087999999999710E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            409
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.8470000000000688E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            358
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.5186000000000170E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            307
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.3496999999999666E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            255
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.3621000000000336E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            204
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.5365999999999325E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            153
+ light samples:              2
+ 
+ heavy cdf size:          682
+ heavy cdf mean:    14.497044021519701     
+ heavy cdf stdv:    3.8433505455088643     
+ 
+ light cdf size:          345
+ light cdf mean:    1.9999769926071547     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    8.9989999999993131E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=        1027 ...
+ timing:   0.39276299999999953      s
+ 
+ Running propoEst  ε=0.440; ñ=        1027 ...
+ timing:   0.39261899999999983      s
+ 
+ Running propoEst  ε=0.430; ñ=        1027 ...
+ timing:   0.39278700000000022      s
+ 
+ Running propoEst  ε=0.420; ñ=        1027 ...
+ timing:   0.39245300000000061      s
+ 
+ Running propoEst  ε=0.410; ñ=        1027 ...
+ timing:   0.39276799999999934      s
+ 
+ Running propoEst  ε=0.400; ñ=        1027 ...
+ timing:   0.39272699999999983      s
+ 
+ Running propoEst  ε=0.390; ñ=        1027 ...
+ timing:   0.39261100000000049      s
+ 
+ Running propoEst  ε=0.380; ñ=        1027 ...
+ timing:   0.39245500000000000      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_AntiterminatorHairpin.csv 
+ Finished analysis of AntiterminatorHairpin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    BacteriorhodopsinArEnv
+ Number of atoms (n):        2236
+ 
+ 
+ Running debyeEst...
+ timing:    17.888104999999999      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           1116
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.43046499999999810      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           1005
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.35490499999999869      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            893
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.27871400000000079      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            781
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.21624999999999872      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            669
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.15872799999999998      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            557
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.11176100000000133      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            446
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    7.1307999999998373E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            334
+ light samples:              2
+ 
+ heavy cdf size:          764
+ heavy cdf mean:    16.853909922397715     
+ heavy cdf stdv:    5.5184316216654787     
+ 
+ light cdf size:         1472
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.1173999999998045E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2236 ...
+ timing:    2.0537819999999982      s
+ 
+ Running propoEst  ε=0.440; ñ=        2236 ...
+ timing:    2.0541780000000003      s
+ 
+ Running propoEst  ε=0.430; ñ=        2236 ...
+ timing:    2.0544909999999987      s
+ 
+ Running propoEst  ε=0.420; ñ=        2236 ...
+ timing:    2.0529830000000011      s
+ 
+ Running propoEst  ε=0.410; ñ=        2236 ...
+ timing:    2.0539740000000002      s
+ 
+ Running propoEst  ε=0.400; ñ=        2236 ...
+ timing:    2.0533040000000007      s
+ 
+ Running propoEst  ε=0.390; ñ=        2236 ...
+ timing:    2.0538099999999986      s
+ 
+ Running propoEst  ε=0.380; ñ=        2236 ...
+ timing:    2.0535069999999962      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_BacteriorhodopsinArEnv.csv 
+ Finished analysis of BacteriorhodopsinArEnv
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Plastocyanin
+ Number of atoms (n):        1117
+ 
+ 
+ Running debyeEst...
+ timing:    4.9960749999999994      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            557
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.10503499999999999      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            501
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    8.5605000000000153E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            445
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.8522999999999890E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            389
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.4796999999999763E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            334
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.1525000000000034E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            278
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.8617999999999810E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            222
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.8733999999999362E-002 s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            166
+ light samples:              2
+ 
+ heavy cdf size:          559
+ heavy cdf mean:    15.686086129027368     
+ heavy cdf stdv:    2.2701500570045470     
+ 
+ light cdf size:          558
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.0839999999999961E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1117 ...
+ timing:   0.51904699999999959      s
+ 
+ Running propoEst  ε=0.440; ñ=        1117 ...
+ timing:   0.51478200000000029      s
+ 
+ Running propoEst  ε=0.430; ñ=        1117 ...
+ timing:   0.51471499999999981      s
+ 
+ Running propoEst  ε=0.420; ñ=        1117 ...
+ timing:   0.51461899999999972      s
+ 
+ Running propoEst  ε=0.410; ñ=        1117 ...
+ timing:   0.51477499999999932      s
+ 
+ Running propoEst  ε=0.400; ñ=        1117 ...
+ timing:   0.51480700000000024      s
+ 
+ Running propoEst  ε=0.390; ñ=        1117 ...
+ timing:   0.51494800000000041      s
+ 
+ Running propoEst  ε=0.380; ñ=        1117 ...
+ timing:   0.51467499999999866      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_Plastocyanin.csv 
+ Finished analysis of Plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    RhccCarborane
+ Number of atoms (n):        3426
+ 
+ 
+ Running debyeEst...
+ timing:    44.557243999999997      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           1711
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.0225879999999989      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           1540
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.83404099999999914      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           1369
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.65416100000000199      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:           1198
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.49955299999999880      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:           1026
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.37058799999999792      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            855
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.26019900000000007      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            684
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.16666000000000025      s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            512
+ light samples:              2
+ 
+ heavy cdf size:         1720
+ heavy cdf mean:    13.238482539531374     
+ heavy cdf stdv:    1.8887928472338069     
+ 
+ light cdf size:         1706
+ light cdf mean:    1.9999769926071544     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.3491000000000213E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        3426 ...
+ timing:    4.8780830000000037      s
+ 
+ Running propoEst  ε=0.440; ñ=        3426 ...
+ timing:    4.8783469999999980      s
+ 
+ Running propoEst  ε=0.430; ñ=        3426 ...
+ timing:    4.8801240000000021      s
+ 
+ Running propoEst  ε=0.420; ñ=        3426 ...
+ timing:    4.8801329999999936      s
+ 
+ Running propoEst  ε=0.410; ñ=        3426 ...
+ timing:    4.8785019999999975      s
+ 
+ Running propoEst  ε=0.400; ñ=        3426 ...
+ timing:    4.8782940000000110      s
+ 
+ Running propoEst  ε=0.390; ñ=        3426 ...
+ timing:    4.8787379999999985      s
+ 
+ Running propoEst  ε=0.380; ñ=        3426 ...
+ timing:    4.8785940000000068      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_RhccCarborane.csv 
+ Finished analysis of RhccCarborane
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Selenow
+ Number of atoms (n):        2773
+ 
+ 
+ Running debyeEst...
+ timing:    28.493166000000002      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           1385
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.64745100000000022      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           1246
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.52680300000000102      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           1108
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.41799899999999823      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            969
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.32129899999999978      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            830
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.23831200000000052      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            692
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.17006799999999700      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            553
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.10831800000000058      s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            414
+ light samples:              2
+ 
+ heavy cdf size:         1068
+ heavy cdf mean:    15.506596916975669     
+ heavy cdf stdv:    3.6407688697595555     
+ 
+ light cdf size:         1705
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.2152000000001095E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2773 ...
+ timing:    3.0534990000000022      s
+ 
+ Running propoEst  ε=0.440; ñ=        2773 ...
+ timing:    3.0542749999999970      s
+ 
+ Running propoEst  ε=0.430; ñ=        2773 ...
+ timing:    3.0546039999999977      s
+ 
+ Running propoEst  ε=0.420; ñ=        2773 ...
+ timing:    3.0538489999999996      s
+ 
+ Running propoEst  ε=0.410; ñ=        2773 ...
+ timing:    3.0550459999999973      s
+ 
+ Running propoEst  ε=0.400; ñ=        2773 ...
+ timing:    3.0546180000000049      s
+ 
+ Running propoEst  ε=0.390; ñ=        2773 ...
+ timing:    3.0548870000000008      s
+ 
+ Running propoEst  ε=0.380; ñ=        2773 ...
+ timing:    3.0548870000000008      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_Selenow.csv 
+ Finished analysis of Selenow
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Stripak
+ Number of atoms (n):       16613
+ 
+ 
+ Running debyeEst...
+ERROR in getF0: Element "Zn" not found
+ERROR STOP 
+
+Error termination. Backtrace:
+#0  0xffffa6cc1797 in ???
+#1  0xffffa6cc2577 in ???
+#2  0xffffa6cc3b57 in ???
+#3  0x4092fb in ???
+#4  0x408e07 in ???
+#5  0x40a907 in ???
+#6  0x411fd3 in ???
+#7  0x4041a3 in ???
+#8  0x408477 in ???
+#9  0x403923 in ???
+#10  0xffffa69f621b in ???
+#11  0xffffa69f62fb in ???
+#12  0x4039af in ???
+#13  0xffffffffffffffff in ???
+ 
+ **************************************
+ ABORTING Stripak; CONTINUING ANALYSIS...
+ **************************************
+ ====================
+ 
+ ====================
+ Analyzing:    TeicoplaninUbiquitin
+ Number of atoms (n):         768
+ 
+ 
+ Running debyeEst...
+ timing:    2.1369209999999996      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            382
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.0283999999999995E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            344
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.1294999999999860E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            306
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.2446999999999893E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            267
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.5461999999999652E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            229
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.8831000000000042E-002 s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            190
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.3325000000000031E-002 s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            152
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    8.8779999999997194E-003 s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            114
+ light samples:              2
+ 
+ heavy cdf size:          287
+ heavy cdf mean:    15.373850918460800     
+ heavy cdf stdv:    2.0575720821603576     
+ 
+ light cdf size:          481
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    5.2179999999997229E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         768 ...
+ timing:   0.23165799999999992      s
+ 
+ Running propoEst  ε=0.440; ñ=         768 ...
+ timing:   0.23168299999999986      s
+ 
+ Running propoEst  ε=0.430; ñ=         768 ...
+ timing:   0.23164700000000016      s
+ 
+ Running propoEst  ε=0.420; ñ=         768 ...
+ timing:   0.23157799999999984      s
+ 
+ Running propoEst  ε=0.410; ñ=         768 ...
+ timing:   0.23168800000000012      s
+ 
+ Running propoEst  ε=0.400; ñ=         768 ...
+ timing:   0.23164799999999985      s
+ 
+ Running propoEst  ε=0.390; ñ=         768 ...
+ timing:   0.23174999999999990      s
+ 
+ Running propoEst  ε=0.380; ñ=         768 ...
+ timing:   0.23160099999999995      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_TeicoplaninUbiquitin.csv 
+ Finished analysis of TeicoplaninUbiquitin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    TetToxHcGT1b
+ Number of atoms (n):        3859
+ 
+ 
+ Running debyeEst...
+ timing:    54.353317000000004      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           1448
+ light samples:            483
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:    1.3045279999999977      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           1304
+ light samples:            434
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:    1.0551049999999975      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           1159
+ light samples:            386
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.84048800000000057      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:           1014
+ light samples:            338
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.63719300000000345      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            869
+ light samples:            290
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.47357699999999880      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            724
+ light samples:            242
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.32919299999999652      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            580
+ light samples:            193
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.21099199999999740      s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            435
+ light samples:            145
+ 
+ heavy cdf size:         1452
+ heavy cdf mean:    15.282748647338227     
+ heavy cdf stdv:    1.7232216486921288     
+ 
+ light cdf size:         2407
+ light cdf mean:    9.9776157152329219E-003
+ light cdf stdv:   0.34606649099655601     
+ sampling type:   sample only first q value
+ timing:   0.12048500000000217      s
+ 
+ Running propoEst  ε=0.450; ñ=        3859 ...
+ timing:    5.9833320000000043      s
+ 
+ Running propoEst  ε=0.440; ñ=        3859 ...
+ timing:    5.9841299999999933      s
+ 
+ Running propoEst  ε=0.430; ñ=        3859 ...
+ timing:    5.9821030000000093      s
+ 
+ Running propoEst  ε=0.420; ñ=        3859 ...
+ timing:    5.9813189999999992      s
+ 
+ Running propoEst  ε=0.410; ñ=        3859 ...
+ timing:    5.9824219999999997      s
+ 
+ Running propoEst  ε=0.400; ñ=        3859 ...
+ timing:    5.9822439999999943      s
+ 
+ Running propoEst  ε=0.390; ñ=        3859 ...
+ timing:    5.9840049999999962      s
+ 
+ Running propoEst  ε=0.380; ñ=        3859 ...
+ timing:    5.9835309999999993      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_TetToxHcGT1b.csv 
+ Finished analysis of TetToxHcGT1b
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    VancomycinLacticAcid
+ Number of atoms (n):         536
+ 
+ 
+ Running debyeEst...
+ timing:    1.1302829999999999      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:            266
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.4950999999999945E-002 s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:            240
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.0606000000000124E-002 s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:            213
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.6488999999999976E-002 s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:            186
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.2688999999999950E-002 s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:            159
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    9.4700000000000895E-003 s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:            132
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    6.6940000000001998E-003 s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:            106
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    4.6260000000000190E-003 s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:             79
+ light samples:              2
+ 
+ heavy cdf size:          240
+ heavy cdf mean:    15.722437296388078     
+ heavy cdf stdv:   0.71908961880771849     
+ 
+ light cdf size:          296
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.7820000000000622E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         536 ...
+ timing:   0.12079900000000010      s
+ 
+ Running propoEst  ε=0.440; ñ=         536 ...
+ timing:   0.12082199999999998      s
+ 
+ Running propoEst  ε=0.430; ñ=         536 ...
+ timing:   0.12077899999999997      s
+ 
+ Running propoEst  ε=0.420; ñ=         536 ...
+ timing:   0.12075999999999998      s
+ 
+ Running propoEst  ε=0.410; ñ=         536 ...
+ timing:   0.12075600000000009      s
+ 
+ Running propoEst  ε=0.400; ñ=         536 ...
+ timing:   0.12078400000000000      s
+ 
+ Running propoEst  ε=0.390; ñ=         536 ...
+ timing:   0.12079700000000004      s
+ 
+ Running propoEst  ε=0.380; ñ=         536 ...
+ timing:   0.12084699999999993      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_VancomycinLacticAcid.csv 
+ Finished analysis of VancomycinLacticAcid
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    VATPaseLiRotor
+ Number of atoms (n):       12831
+ 
+ 
+ Running debyeEst...
+ timing:    592.37725300000000      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           5563
+ light samples:            854
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    14.502565000000004      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           5006
+ light samples:            769
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    11.756394000000000      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           4451
+ light samples:            683
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    9.2944739999999229      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:           3894
+ light samples:            598
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    7.1321470000000318      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:           3338
+ light samples:            513
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    5.2352509999999484      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:           2782
+ light samples:            427
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    3.6447040000000470      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:           2226
+ light samples:            342
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    2.3482409999999163      s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:           1669
+ light samples:            257
+ 
+ heavy cdf size:         4449
+ heavy cdf mean:    15.534471577583489     
+ heavy cdf stdv:    2.5468835019019678     
+ 
+ light cdf size:         8382
+ light cdf mean:    6.0074673865730297     
+ light cdf stdv:   0.20739843660141202     
+ sampling type:   sample only first q value
+ timing:    1.3137309999999616      s
+ 
+ Running propoEst  ε=0.450; ñ=       12831 ...
+ timing:    67.120333999999957      s
+ 
+ Running propoEst  ε=0.440; ñ=       12831 ...
+ timing:    67.110462999999982      s
+ 
+ Running propoEst  ε=0.430; ñ=       12831 ...
+ timing:    67.126227999999969      s
+ 
+ Running propoEst  ε=0.420; ñ=       12831 ...
+ timing:    67.119363000000021      s
+ 
+ Running propoEst  ε=0.410; ñ=       12831 ...
+ timing:    67.108472000000006      s
+ 
+ Running propoEst  ε=0.400; ñ=       12831 ...
+ timing:    67.135895000000005      s
+ 
+ Running propoEst  ε=0.390; ñ=       12831 ...
+ timing:    67.096874999999955      s
+ 
+ Running propoEst  ε=0.380; ñ=       12831 ...
+ timing:    67.141159000000016      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_VATPaseLiRotor.csv 
+ Finished analysis of VATPaseLiRotor
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    XyloseIsomerase
+ Number of atoms (n):        6614
+ 
+ 
+ Running debyeEst...
+ timing:    165.86390200000000      s
+ 
+ Running stratEst  a=0.50...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.50000000000000000     
+ 
+ heavy samples:           3305
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.8661720000000059      s
+ 
+ Running stratEst  a=0.45...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.45000000000000001     
+ 
+ heavy samples:           2975
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    3.1408860000000232      s
+ 
+ Running stratEst  a=0.40...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.40000000000000002     
+ 
+ heavy samples:           2644
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    2.4819430000000011      s
+ 
+ Running stratEst  a=0.35...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.34999999999999998     
+ 
+ heavy samples:           2313
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.9006900000000257      s
+ 
+ Running stratEst  a=0.30...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.29999999999999999     
+ 
+ heavy samples:           1983
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:    1.3941599999999994      s
+ 
+ Running stratEst  a=0.25...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.25000000000000000     
+ 
+ heavy samples:           1652
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.97288099999997257      s
+ 
+ Running stratEst  a=0.20...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.20000000000000001     
+ 
+ heavy samples:           1321
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.62817000000001144      s
+ 
+ Running stratEst  a=0.15...
+ 
+ neyman allocation
+   -> stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+   -> strataBudget = ⌈a * total population⌉
+   -> minimum stratum size: 2
+   -> maximum stratum size: strataBudget - 2
+   -> heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+   -> totalSamples = heavySamples + lightSamples
+ 
+ q value:            0.0000000000000000     
+ advice param:      0.14999999999999999     
+ 
+ heavy samples:            991
+ light samples:              2
+ 
+ heavy cdf size:         2766
+ heavy cdf mean:    15.326759120078711     
+ heavy cdf stdv:    1.2392565743095849     
+ 
+ light cdf size:         3848
+ light cdf mean:    12.008060513282821     
+ light cdf stdv:    0.0000000000000000     
+ sampling type:   sample only first q value
+ timing:   0.35169399999998063      s
+ 
+ Running propoEst  ε=0.450; ñ=        6614 ...
+ timing:    18.142739000000006      s
+ 
+ Running propoEst  ε=0.440; ñ=        6614 ...
+ timing:    18.153714000000008      s
+ 
+ Running propoEst  ε=0.430; ñ=        6614 ...
+ timing:    18.152448000000021      s
+ 
+ Running propoEst  ε=0.420; ñ=        6614 ...
+ timing:    18.153865000000025      s
+ 
+ Running propoEst  ε=0.410; ñ=        6614 ...
+ timing:    18.149016999999986      s
+ 
+ Running propoEst  ε=0.400; ñ=        6614 ...
+ timing:    18.154285000000016      s
+ 
+ Running propoEst  ε=0.390; ñ=        6614 ...
+ timing:    18.148931000000005      s
+ 
+ Running propoEst  ε=0.380; ñ=        6614 ...
+ timing:    18.153322000000003      s
+ 
+raw analysis saved at: Analysis/2026-04-02/analysis_XyloseIsomerase.csv 
+ Finished analysis of XyloseIsomerase
+STOP 0
+ ====================
+Warning messages:
+1: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+2: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+3: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+4: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+ 
+ All molecules processed.
+TOTAL EXECUTION TIME: 1819.98 s

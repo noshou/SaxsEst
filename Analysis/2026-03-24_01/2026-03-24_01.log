@@ -1,0 +1,844 @@
+=== System Info ===
+Architecture:                            aarch64
+CPU op-mode(s):                          64-bit
+Byte Order:                              Little Endian
+CPU(s):                                  8
+On-line CPU(s) list:                     0-7
+Vendor ID:                               Apple
+Model name:                              Blizzard-M2
+Model:                                   0
+Thread(s) per core:                      1
+Core(s) per socket:                      4
+Socket(s):                               1
+Stepping:                                0x1
+Frequency boost:                         disabled
+CPU(s) scaling MHz:                      100%
+CPU max MHz:                             2424.0000
+CPU min MHz:                             600.0000
+BogoMIPS:                                48.00
+Linux asahi-box 6.18.15-400.asahi.fc42.aarch64+16k #1 SMP PREEMPT_DYNAMIC Wed Mar  4 13:50:11 UTC 2026 aarch64 GNU/Linux
+===================
+compiling: AtomXYZ/xyz_tmp/xyz_Gb1v29Sem.f90
+compiling: AtomXYZ/xyz_tmp/xyz_GPx.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Lg3Endorepellin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_NeonMOF.f90
+compiling: AtomXYZ/xyz_tmp/xyz_NeuB.f90
+compiling: AtomXYZ/xyz_tmp/xyz_PHGDH.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Plastocyanin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_PsGQuadraplex.f90
+compiling: AtomXYZ/xyz_tmp/xyz_RhccCarborane.f90
+compiling: AtomXYZ/xyz_tmp/xyz_Selenow.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TeicoplaninUbiquitin.f90
+compiling: AtomXYZ/xyz_tmp/xyz_TetToxHcGT1b.f90
+compiling: AtomXYZ/xyz_tmp/xyz_VancomycinLacticAcid.f90
+==================================
+Compilation complete (Release)
+Compiled xyz molecules: _build/release/xyz_modules.txt
+Executable: _build/release/exe/SaxsEst
+==================================
+ 
+ ====================
+ Analyzing:    Gb1v29Sem
+ Number of atoms (n):        1985
+ 
+ 
+ Running debyeEst...
+ timing:    15.657023000000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.32755500000000026      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.26536299999999891      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.20987999999999829      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.16180699999999959      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.11925600000000003      s
+ 
+ Running stratEst  s=0.25...
+ timing:    8.3361000000000018E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    5.3937999999998709E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    3.0961000000001349E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1985 ...
+ timing:    1.6475510000000000      s
+ 
+ Running propoEst  ε=0.440; ñ=        1985 ...
+ timing:    1.6466219999999971      s
+ 
+ Running propoEst  ε=0.430; ñ=        1985 ...
+ timing:    1.6472809999999996      s
+ 
+ Running propoEst  ε=0.420; ñ=        1985 ...
+ timing:    1.6472040000000021      s
+ 
+ Running propoEst  ε=0.410; ñ=        1985 ...
+ timing:    1.6473519999999979      s
+ 
+ Running propoEst  ε=0.400; ñ=        1985 ...
+ timing:    1.6480310000000031      s
+ 
+ Running propoEst  ε=0.390; ñ=        1985 ...
+ timing:    1.6484450000000024      s
+ 
+ Running propoEst  ε=0.380; ñ=        1985 ...
+ timing:    1.6474700000000020      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_Gb1v29Sem.csv 
+ Finished analysis of Gb1v29Sem
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    GPx
+ Number of atoms (n):        3111
+ 
+ 
+ Running debyeEst...
+ timing:    36.210895999999998      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.81494899999999859      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.66079399999999566      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.52440899999999857      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.40265800000000240      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.29668000000000205      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.20653400000000488      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.13411200000000179      s
+ 
+ Running stratEst  s=0.15...
+ timing:    7.4995000000001255E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        3111 ...
+ timing:    3.9260919999999970      s
+ 
+ Running propoEst  ε=0.440; ñ=        3111 ...
+ timing:    3.9282679999999957      s
+ 
+ Running propoEst  ε=0.430; ñ=        3111 ...
+ timing:    3.9283519999999967      s
+ 
+ Running propoEst  ε=0.420; ñ=        3111 ...
+ timing:    3.9273769999999999      s
+ 
+ Running propoEst  ε=0.410; ñ=        3111 ...
+ timing:    3.9277110000000022      s
+ 
+ Running propoEst  ε=0.400; ñ=        3111 ...
+ timing:    3.9269250000000042      s
+ 
+ Running propoEst  ε=0.390; ñ=        3111 ...
+ timing:    3.9306720000000013      s
+ 
+ Running propoEst  ε=0.380; ñ=        3111 ...
+ timing:    3.9289149999999893      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_GPx.csv 
+ Finished analysis of GPx
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Lg3Endorepellin
+ Number of atoms (n):        1653
+ 
+ 
+ Running debyeEst...
+ timing:    10.636151999999999      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.22167499999999940      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.17987600000000015      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.14282299999999992      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.10968100000000014      s
+ 
+ Running stratEst  s=0.30...
+ timing:    8.0948999999998605E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    5.6969999999999743E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    3.6868999999999374E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    2.0917000000000741E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        1653 ...
+ timing:    1.1346569999999989      s
+ 
+ Running propoEst  ε=0.440; ñ=        1653 ...
+ timing:    1.1351879999999994      s
+ 
+ Running propoEst  ε=0.430; ñ=        1653 ...
+ timing:    1.1354640000000007      s
+ 
+ Running propoEst  ε=0.420; ñ=        1653 ...
+ timing:    1.1351160000000018      s
+ 
+ Running propoEst  ε=0.410; ñ=        1653 ...
+ timing:    1.1345419999999997      s
+ 
+ Running propoEst  ε=0.400; ñ=        1653 ...
+ timing:    1.1349060000000009      s
+ 
+ Running propoEst  ε=0.390; ñ=        1653 ...
+ timing:    1.1349249999999991      s
+ 
+ Running propoEst  ε=0.380; ñ=        1653 ...
+ timing:    1.1351860000000009      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_Lg3Endorepellin.csv 
+ Finished analysis of Lg3Endorepellin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    NeonMOF
+ Number of atoms (n):        4941
+ 
+ 
+ Running debyeEst...
+ timing:    97.132918000000004      s
+ 
+ Running stratEst  s=0.50...
+ timing:    2.0956979999999987      s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.6946490000000125      s
+ 
+ Running stratEst  s=0.40...
+ timing:    1.3456850000000031      s
+ 
+ Running stratEst  s=0.35...
+ timing:    1.0276989999999984      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.75725100000001078      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.52623499999999979      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.33878500000000145      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.19214900000000057      s
+ 
+ Running propoEst  ε=0.450; ñ=        4941 ...
+ timing:    12.803275999999997      s
+ 
+ Running propoEst  ε=0.440; ñ=        4941 ...
+ timing:    12.802479000000019      s
+ 
+ Running propoEst  ε=0.430; ñ=        4941 ...
+ timing:    12.804342999999989      s
+ 
+ Running propoEst  ε=0.420; ñ=        4941 ...
+ timing:    12.802229000000011      s
+ 
+ Running propoEst  ε=0.410; ñ=        4941 ...
+ timing:    12.799058000000002      s
+ 
+ Running propoEst  ε=0.400; ñ=        4941 ...
+ timing:    12.796248000000020      s
+ 
+ Running propoEst  ε=0.390; ñ=        4941 ...
+ timing:    12.801861000000002      s
+ 
+ Running propoEst  ε=0.380; ñ=        4941 ...
+ timing:    12.802076000000000      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_NeonMOF.csv 
+ Finished analysis of NeonMOF
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    NeuB
+ Number of atoms (n):        2873
+ 
+ 
+ Running debyeEst...
+ timing:    31.162064000000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.69888800000000018      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.56630500000000339      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.44900400000000218      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.34516299999999944      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.25436700000000201      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.17768999999999835      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.11552600000000268      s
+ 
+ Running stratEst  s=0.15...
+ timing:    6.4093999999997209E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2873 ...
+ timing:    3.3679339999999982      s
+ 
+ Running propoEst  ε=0.440; ñ=        2873 ...
+ timing:    3.3677149999999969      s
+ 
+ Running propoEst  ε=0.430; ñ=        2873 ...
+ timing:    3.3691010000000006      s
+ 
+ Running propoEst  ε=0.420; ñ=        2873 ...
+ timing:    3.3664890000000014      s
+ 
+ Running propoEst  ε=0.410; ñ=        2873 ...
+ timing:    3.3649029999999982      s
+ 
+ Running propoEst  ε=0.400; ñ=        2873 ...
+ timing:    3.3653519999999943      s
+ 
+ Running propoEst  ε=0.390; ñ=        2873 ...
+ timing:    3.3666330000000002      s
+ 
+ Running propoEst  ε=0.380; ñ=        2873 ...
+ timing:    3.3676809999999975      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_NeuB.csv 
+ Finished analysis of NeuB
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    PHGDH
+ Number of atoms (n):        4847
+ 
+ 
+ Running debyeEst...
+ timing:    88.769990000000007      s
+ 
+ Running stratEst  s=0.50...
+ timing:    1.9905760000000043      s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.6212820000000079      s
+ 
+ Running stratEst  s=0.40...
+ timing:    1.2740539999999925      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.97558799999998769      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.71958000000000766      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.50010699999999986      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.32101000000000113      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.18196199999999862      s
+ 
+ Running propoEst  ε=0.450; ñ=        4847 ...
+ timing:    9.7164939999999973      s
+ 
+ Running propoEst  ε=0.440; ñ=        4847 ...
+ timing:    9.7191260000000028      s
+ 
+ Running propoEst  ε=0.430; ñ=        4847 ...
+ timing:    9.7204279999999983      s
+ 
+ Running propoEst  ε=0.420; ñ=        4847 ...
+ timing:    9.7206099999999935      s
+ 
+ Running propoEst  ε=0.410; ñ=        4847 ...
+ timing:    9.7193090000000097      s
+ 
+ Running propoEst  ε=0.400; ñ=        4847 ...
+ timing:    9.7236130000000003      s
+ 
+ Running propoEst  ε=0.390; ñ=        4847 ...
+ timing:    9.7218530000000101      s
+ 
+ Running propoEst  ε=0.380; ñ=        4847 ...
+ timing:    9.7202059999999904      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_PHGDH.csv 
+ Finished analysis of PHGDH
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Plastocyanin
+ Number of atoms (n):        1117
+ 
+ 
+ Running debyeEst...
+ timing:    5.0298470000000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:    9.9366999999999983E-002 s
+ 
+ Running stratEst  s=0.45...
+ timing:    8.0688999999999567E-002 s
+ 
+ Running stratEst  s=0.40...
+ timing:    6.4119999999999955E-002 s
+ 
+ Running stratEst  s=0.35...
+ timing:    4.9580999999999875E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    3.6946999999999619E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    2.5623999999999647E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    1.6547000000000089E-002 s
+ 
+ Running stratEst  s=0.15...
+ timing:    9.6319999999998629E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=        1117 ...
+ timing:   0.51461300000000065      s
+ 
+ Running propoEst  ε=0.440; ñ=        1117 ...
+ timing:   0.51454899999999970      s
+ 
+ Running propoEst  ε=0.430; ñ=        1117 ...
+ timing:   0.51459199999999949      s
+ 
+ Running propoEst  ε=0.420; ñ=        1117 ...
+ timing:   0.51521000000000061      s
+ 
+ Running propoEst  ε=0.410; ñ=        1117 ...
+ timing:   0.51453499999999952      s
+ 
+ Running propoEst  ε=0.400; ñ=        1117 ...
+ timing:   0.51449700000000043      s
+ 
+ Running propoEst  ε=0.390; ñ=        1117 ...
+ timing:   0.51446499999999951      s
+ 
+ Running propoEst  ε=0.380; ñ=        1117 ...
+ timing:   0.51519899999999907      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_Plastocyanin.csv 
+ Finished analysis of Plastocyanin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    PsGQuadraplex
+ Number of atoms (n):         622
+ 
+ 
+ Running debyeEst...
+ timing:    1.6440830000000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:    3.0294999999999961E-002 s
+ 
+ Running stratEst  s=0.45...
+ timing:    2.4934000000000012E-002 s
+ 
+ Running stratEst  s=0.40...
+ timing:    1.9975000000000076E-002 s
+ 
+ Running stratEst  s=0.35...
+ timing:    1.5291000000000166E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    1.1246000000000089E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    8.0500000000001126E-003 s
+ 
+ Running stratEst  s=0.20...
+ timing:    5.3589999999998916E-003 s
+ 
+ Running stratEst  s=0.15...
+ timing:    3.2520000000000326E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         622 ...
+ timing:   0.16312400000000005      s
+ 
+ Running propoEst  ε=0.440; ñ=         622 ...
+ timing:   0.16313899999999992      s
+ 
+ Running propoEst  ε=0.430; ñ=         622 ...
+ timing:   0.16317300000000001      s
+ 
+ Running propoEst  ε=0.420; ñ=         622 ...
+ timing:   0.16340000000000021      s
+ 
+ Running propoEst  ε=0.410; ñ=         622 ...
+ timing:   0.16329299999999991      s
+ 
+ Running propoEst  ε=0.400; ñ=         622 ...
+ timing:   0.16333400000000031      s
+ 
+ Running propoEst  ε=0.390; ñ=         622 ...
+ timing:   0.16371100000000016      s
+ 
+ Running propoEst  ε=0.380; ñ=         622 ...
+ timing:   0.16331500000000032      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_PsGQuadraplex.csv 
+ Finished analysis of PsGQuadraplex
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    RhccCarborane
+ Number of atoms (n):        3426
+ 
+ 
+ Running debyeEst...
+ timing:    45.040151000000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.98738900000000029      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.80172999999999917      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.63564399999999921      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.48972400000000249      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.35802499999999782      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.25018599999999935      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.16039700000000323      s
+ 
+ Running stratEst  s=0.15...
+ timing:    9.1205000000002201E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        3426 ...
+ timing:    4.8847719999999981      s
+ 
+ Running propoEst  ε=0.440; ñ=        3426 ...
+ timing:    4.8848529999999997      s
+ 
+ Running propoEst  ε=0.430; ñ=        3426 ...
+ timing:    4.8852809999999991      s
+ 
+ Running propoEst  ε=0.420; ñ=        3426 ...
+ timing:    4.8853140000000010      s
+ 
+ Running propoEst  ε=0.410; ñ=        3426 ...
+ timing:    4.8857670000000013      s
+ 
+ Running propoEst  ε=0.400; ñ=        3426 ...
+ timing:    4.8866040000000055      s
+ 
+ Running propoEst  ε=0.390; ñ=        3426 ...
+ timing:    4.8867120000000028      s
+ 
+ Running propoEst  ε=0.380; ñ=        3426 ...
+ timing:    4.8893320000000102      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_RhccCarborane.csv 
+ Finished analysis of RhccCarborane
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    Selenow
+ Number of atoms (n):        2773
+ 
+ 
+ Running debyeEst...
+ timing:    28.497565000000002      s
+ 
+ Running stratEst  s=0.50...
+ timing:   0.63174099999999811      s
+ 
+ Running stratEst  s=0.45...
+ timing:   0.51282400000000194      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.40585599999999999      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.31947300000000212      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.23106599999999844      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.16088399999999936      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.10334900000000147      s
+ 
+ Running stratEst  s=0.15...
+ timing:    5.8809000000000111E-002 s
+ 
+ Running propoEst  ε=0.450; ñ=        2773 ...
+ timing:    3.0501030000000000      s
+ 
+ Running propoEst  ε=0.440; ñ=        2773 ...
+ timing:    3.0495459999999994      s
+ 
+ Running propoEst  ε=0.430; ñ=        2773 ...
+ timing:    3.0514969999999977      s
+ 
+ Running propoEst  ε=0.420; ñ=        2773 ...
+ timing:    3.0505410000000026      s
+ 
+ Running propoEst  ε=0.410; ñ=        2773 ...
+ timing:    3.0500340000000037      s
+ 
+ Running propoEst  ε=0.400; ñ=        2773 ...
+ timing:    3.0495659999999987      s
+ 
+ Running propoEst  ε=0.390; ñ=        2773 ...
+ timing:    3.0498650000000040      s
+ 
+ Running propoEst  ε=0.380; ñ=        2773 ...
+ timing:    3.0487339999999961      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_Selenow.csv 
+ Finished analysis of Selenow
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    TeicoplaninUbiquitin
+ Number of atoms (n):         768
+ 
+ 
+ Running debyeEst...
+ timing:    2.1541920000000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    4.8524000000000012E-002 s
+ 
+ Running stratEst  s=0.45...
+ timing:    3.9530999999999761E-002 s
+ 
+ Running stratEst  s=0.40...
+ timing:    3.1728000000000200E-002 s
+ 
+ Running stratEst  s=0.35...
+ timing:    2.4341999999999864E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    1.8177000000000110E-002 s
+ 
+ Running stratEst  s=0.25...
+ timing:    1.2585000000000068E-002 s
+ 
+ Running stratEst  s=0.20...
+ timing:    8.2879999999998510E-003 s
+ 
+ Running stratEst  s=0.15...
+ timing:    4.9019999999999619E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         768 ...
+ timing:   0.23173200000000005      s
+ 
+ Running propoEst  ε=0.440; ñ=         768 ...
+ timing:   0.23174600000000023      s
+ 
+ Running propoEst  ε=0.430; ñ=         768 ...
+ timing:   0.23171300000000006      s
+ 
+ Running propoEst  ε=0.420; ñ=         768 ...
+ timing:   0.23174999999999990      s
+ 
+ Running propoEst  ε=0.410; ñ=         768 ...
+ timing:   0.23179300000000014      s
+ 
+ Running propoEst  ε=0.400; ñ=         768 ...
+ timing:   0.23166600000000015      s
+ 
+ Running propoEst  ε=0.390; ñ=         768 ...
+ timing:   0.23184199999999988      s
+ 
+ Running propoEst  ε=0.380; ñ=         768 ...
+ timing:   0.23170000000000002      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_TeicoplaninUbiquitin.csv 
+ Finished analysis of TeicoplaninUbiquitin
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    TetToxHcGT1b
+ Number of atoms (n):        3859
+ 
+ 
+ Running debyeEst...
+ timing:    54.693933000000001      s
+ 
+ Running stratEst  s=0.50...
+ timing:    1.2543469999999957      s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.0239830000000012      s
+ 
+ Running stratEst  s=0.40...
+ timing:   0.80669000000000324      s
+ 
+ Running stratEst  s=0.35...
+ timing:   0.61689499999999953      s
+ 
+ Running stratEst  s=0.30...
+ timing:   0.45526199999999761      s
+ 
+ Running stratEst  s=0.25...
+ timing:   0.31947299999999501      s
+ 
+ Running stratEst  s=0.20...
+ timing:   0.20271799999999729      s
+ 
+ Running stratEst  s=0.15...
+ timing:   0.11514299999999622      s
+ 
+ Running propoEst  ε=0.450; ñ=        3859 ...
+ timing:    5.9793319999999994      s
+ 
+ Running propoEst  ε=0.440; ñ=        3859 ...
+ timing:    5.9820469999999943      s
+ 
+ Running propoEst  ε=0.430; ñ=        3859 ...
+ timing:    5.9792779999999937      s
+ 
+ Running propoEst  ε=0.420; ñ=        3859 ...
+ timing:    5.9796089999999964      s
+ 
+ Running propoEst  ε=0.410; ñ=        3859 ...
+ timing:    5.9782490000000053      s
+ 
+ Running propoEst  ε=0.400; ñ=        3859 ...
+ timing:    5.9822089999999974      s
+ 
+ Running propoEst  ε=0.390; ñ=        3859 ...
+ timing:    5.9814329999999956      s
+ 
+ Running propoEst  ε=0.380; ñ=        3859 ...
+ timing:    5.9802580000000063      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_TetToxHcGT1b.csv 
+ Finished analysis of TetToxHcGT1b
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+STOP 0
+ ====================
+ 
+ ====================
+ Analyzing:    VancomycinLacticAcid
+ Number of atoms (n):         536
+ 
+ 
+ Running debyeEst...
+ timing:    1.1375430000000000      s
+ 
+ Running stratEst  s=0.50...
+ timing:    2.3560999999999943E-002 s
+ 
+ Running stratEst  s=0.45...
+ timing:    1.9182000000000032E-002 s
+ 
+ Running stratEst  s=0.40...
+ timing:    1.5317000000000025E-002 s
+ 
+ Running stratEst  s=0.35...
+ timing:    1.1828999999999867E-002 s
+ 
+ Running stratEst  s=0.30...
+ timing:    8.9190000000001213E-003 s
+ 
+ Running stratEst  s=0.25...
+ timing:    6.2420000000000808E-003 s
+ 
+ Running stratEst  s=0.20...
+ timing:    4.1910000000000558E-003 s
+ 
+ Running stratEst  s=0.15...
+ timing:    2.4599999999999067E-003 s
+ 
+ Running propoEst  ε=0.450; ñ=         536 ...
+ timing:   0.12104100000000018      s
+ 
+ Running propoEst  ε=0.440; ñ=         536 ...
+ timing:   0.12091500000000011      s
+ 
+ Running propoEst  ε=0.430; ñ=         536 ...
+ timing:   0.12098399999999998      s
+ 
+ Running propoEst  ε=0.420; ñ=         536 ...
+ timing:   0.12091999999999992      s
+ 
+ Running propoEst  ε=0.410; ñ=         536 ...
+ timing:   0.12101499999999987      s
+ 
+ Running propoEst  ε=0.400; ñ=         536 ...
+ timing:   0.12091699999999994      s
+ 
+ Running propoEst  ε=0.390; ñ=         536 ...
+ timing:   0.12092000000000014      s
+ 
+ Running propoEst  ε=0.380; ñ=         536 ...
+ timing:   0.12084000000000028      s
+ 
+raw analysis saved at: Analysis/2026-03-24_01/analysis_VancomycinLacticAcid.csv 
+ Finished analysis of VancomycinLacticAcid
+STOP 0
+ ====================
+Warning messages:
+1: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+2: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+3: Removed 208 rows containing missing values or values outside the scale range
+(`geom_line()`). 
+4: Removed 208 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+ 
+ All molecules processed.
+TOTAL EXECUTION TIME: 833.36 s
