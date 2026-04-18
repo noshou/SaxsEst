@@ -1,135 +1,96 @@
-# Please note that...
-This project is being **activley developed**! It is not fully validated yet, and is still undergoing **major** revisions. 
-The automated analysis will change over time and will eventually be removed or completley refactored. 
+# SaxsEst
 
-The software is currently beign validated on:
-**WIP**
+## Status
+- Not fully validated. Use for research and experimentation.
+- See theory.pdf for detailed background theory and motivations.
 
-# SaxsEst    Plastocyanin
+## Summary
+SaxsEst is a high-performance Fortran codebase for estimating Small Angle X-ray Scattering (SAXS) intensity profiles from atomic coordinate files (XYZ). It implements:
+- Debye estimator (exact O(N^2) pairwise computation)
+- Proportional estimator (propoEst)
+- Stratified estimator (stratEst)
 
-A high-performance Fortran-based tool for estimating Small Angle X-ray Scattering (SAXS) intensities from molecular structures, 
-implementing and adapting algorithms from [Better Sum Estimation via Weighted Sampling](https://arxiv.org/abs/2110.14948v1) 
-
-## Overview
-
-SaxsEst is a scientific computation software designed to estimate SAXS intensity profiles from atomic coordinates. It implements two complementary estimation approaches:
-
-- **Debye Estimation**
-- **Proportional Estimation**
-- **Harmonic Estimation** (work in progress; see better sum paper)
-- **Hybrid Estimator** (work in progress; see better sum paper)
-- **Combined Estimator** (work in progress; combines all three for better estimation)
 ## Requirements
+- Fortran 90+ compiler (gfortran recommended)
+- GNU make
+- OCaml runtime (for CSV export bridge) - if you use CsvInterface features
+- Standard POSIX utilities (bash, coreutils)
+- iso_c_binding (Fortran intrinsic)
 
-- **Fortran Compiler**: Fortran 90 or later (e.g., gfortran, ifort)
-- **Make**: GNU Make for building
-- **OCaml Runtime**: For CSV export functionality
-- **Standard Libraries**: iso_c_binding for C interoperability
+## Build & Run
+This will automatically evaluate all .xyz files in the AtomXYZ/data dir 
+and generate a report.
 
-## Building
+    ./saxsEst.sh [--debug] [--help]
 
-### Prerequisites
-Ensure you have a Fortran compiler, opam, C compiler and Make installed.
+## Outputs
+- CSV files with Q vs I(Q) for each estimator
+- Timing statistics
+- Analysis logs in Analysis/
 
-### Build Commands
+## Project layout
+- SaxsEst/        - CLI + top-level program
+- Est/            - estimators and sampling code (Est/Est.f90 + inc/*.inc)
+- FormFact/       - atomic form factors and anomalous data
+- Freq/           - frequency / CDF construction for stratification
+- AtomXYZ/        - coordinate types, distance utilities
+- CsvInterface/   - Fortran ↔ OCaml CSV bridge
+- pdb_to_xyz/     - (legacy / WIP) PDB → XYZ scripts (some parts noted WIP)
+- Analysis/       - saved analysis and logs
+- docs/           - theory.pdf and planned documentation
 
-Build the project using the provided Makefile:
 
-```bash
-# Clean build
-make clean
+## Important: how to toggle different behaviours in stratEst.inc
+- There are two orthogonal toggles:
+  A) Whether you sample only once (using q(1)) and reuse the same samples for all q values, OR resample for each q (resample per q).
+  B) The allocation strategy to derive how many heavy vs light samples to draw:
+     - Neyman allocation (variance-driven)
+     - Proportional sampling
+     - Heavy-rounded proportional
+     - Light-rounded proportional
+     - Mean-weighted sampling (active by default in the code)
+     - Heavy-rounded mean-weighted (active in current build)
+- The file Est/inc/stratEst.inc contains commented blocks showing all strategies and the resample option. Below are step-by-step edits for both toggles.
 
-# Debug build (with debugging symbols)
-make debug
-
-# Release build (optimized)
-make release
-```
-
-Build outputs will be created in the appropriate directories.
-
-## Usage
-
-### Automated Analysis
-
-Run batch analysis on multiple molecular systems with varying parameters:
-
-```bash
-# Standard analysis with epsilon values from 0.01 to 0.50
-./automate-run.sh
-
-# Debug mode analysis
-./automate-run-debug.sh
-```
-
-### PDB to XYZ Conversion
-
-Convert PDB (Protein Data Bank) files to XYZ format:
-
-```bash
-./pdb_to_xyz input.pdb output.xyz
-```
-
-Or with interactive prompts:
-```bash
-./pdb_to_xyz
-```
-
-### Command-Line Interface
-
-Run single-molecule analysis through the CLI:
-
-```bash
-./SaxsEst <xyz_modules_path> <output_directory>
-```
-
-The CLI will prompt for:
-- **Advice parameter (a)**: Controls estimation parameters
-- **Epsilon (ε)**: Precision/approximation parameter
-
-### Output
-
-Analysis produces CSV files containing:
-- Scattering vector (Q) values in Å⁻¹
-- Intensity estimates from both Debye and proportional methods
-- Weight distributions for form factors
-- Comparative analysis between estimation methods
-
-## Project Structure
-
-```
-.
-├── SaxsEst/              # Main CLI application module
-├── Est/                  # Intensity estimation algorithms
-├── FormFact/             # Atomic form factor calculations
-│   ├── F0Factor.f90      # f0 form factor data & functions
-│   └── f1_f2.f90         # Anomalous scattering factors
-├── Freq/                 # Frequency & weight distributions
-├── AtomXYZ/              # Atomic coordinate types & operations
-├── CsvInterface/         # Fortran-OCaml CSV export bridge
-├── pdb_to_xyz/           # PDB file conversion utility
-├── Analysis/             # Analysis scripts & R utilities
-│   └── CsvCombine.R      # Combine analysis CSVs
-├── Makefile              # Main build configuration
-├── BuildRelease.mk       # Release build rules
-├── BuildDebug.mk         # Debug build rules
-├── BuildClean.mk         # Clean build rules
-└── docs/                 # Documentation
-```
-
-## Form Factor Data
-
-The software includes comprehensive atomic form factor data from:
-- **International Tables for Crystallography Vol. C**
-- DOI: 10.1107/97809553602060000600
-
-Supports 24 common elements and ions including:
-H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si, P, S, Cl, Ar, K, Ca, Mn²⁺, Cu²⁺, Se, Mg²⁺
-
-## License
-
-This project is licensed under the **GNU Lesser General Public License v2.1** - see the LICENSE file for details.
-
-## Authors
-
-- Nathan Ouedraogo (noshou)
+### A - Choosing sample-once vs resample-per-q
+- Default (current code): sampling only on first q value, then reusing `es` for each q.
+- To resample for each q do the following in Est/inc/stratEst.inc:
+    1. Comment out lines 355-358
+    2. Uncomment lines 360-362, 371, and 372
+### B - Choosing sampling method
+- Default (current code): heavy-rounded mean-weighted sampling is used
+- To pick between estimators do the following in Est/inc/stratEst.inc:
+    1. Ensure all code is commented out in lines 123 - 237
+    2. Pick an estimator and uncomment the related block:
+        i. Neyman Allocation (lines 123-148)
+            - stratumStDev = heavyStDv * heavyPopulation + lightStDv * lightPopulation
+            - strataBudget = ⌈a * total population⌉
+            - minimum stratum size: 2
+            - maximum stratum size: strataBudget - 2
+            - heavySamples = min(max(ceilling(strataBudget * (heavyStDv * heavyPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+            - lightSamples = min(max(ceilling(strataBudget * (lightStDv * lightPopulation)/(stratumStDev)), minimum stratum size), maximum stratum size)
+            - totalSamples = heavySamples + lightSamples
+        ii. Proportional Sampling (lines 154-161)
+            - heavySamples = ⌈heavyPopulation * a⌉
+            - lightSamples = ⌈lightPopulation * a⌉
+            - totalSamples = heavySamples + lightSamples
+        iii. Heavy-rounded Proportional Sampling (lines 167-173)
+            - totalSamples = ⌈a * total population⌉
+            - heavySamples = ⌈a * heavyPopulation⌉
+            - lightSamples = totalSamples - heavySamples
+        iv. Light-rounded Proportional Sampling (lines 179-185)
+            - totalSamples = ⌈a * total population⌉
+            - heavySamples = ⌈a * heavyPopulation⌉
+            - lightSamples = totalSamples - heavySamples
+        v. Mean-Weighted Sampling (lines 193-204)
+            - strataBudget = ⌈a * total population⌉
+            - sumStratMean = meanLight + meanHeavy
+            - heavySamples = ⌈meanHeavy/(sumStratMean) * strataBudget⌉
+            - lightSamples = ⌈meanLight/(sumStratMean) * strataBudget⌉
+            - totalSamples = heavySamples + lightSamples
+        vii. Light-Rounded Mean-Weighted Sampling (lines 228-237)
+            - totalSamples = ⌈a * total population⌉
+            - sumStratMean = meanLight + meanHeavy
+            - lightSamples = ⌈meanLight/(sumStratMean) * totalSamples⌉
+            - heavySamples = totalSamples - lightSamples
+        
